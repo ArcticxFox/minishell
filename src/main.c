@@ -12,28 +12,6 @@
 
 #include "../header/pipex.h"
 
-void handle_sigint(int sig)
-{
-	(void)sig;
-
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-// cette fonction sert a gerer Ctrl+C et Ctrl+/
-void init_signals(void)
-{
-	struct sigaction sa;
-
-	sa.sa_handler = handle_sigint;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-
-	sigaction(SIGINT, &sa, NULL);
-
-	signal(SIGQUIT, SIG_IGN);
-}
 // la fonction readline() elle return NULL quand on fait Ctrl+D,
 // line = null print exit car dans bash c'est ce qui ce passe
 int	main(void)

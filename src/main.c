@@ -21,7 +21,7 @@ void handle_sigint(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
-
+// cette fonction sert a gerer Ctrl+C et Ctrl+/
 void init_signals(void)
 {
 	struct sigaction sa;
@@ -34,7 +34,8 @@ void init_signals(void)
 
 	signal(SIGQUIT, SIG_IGN);
 }
-
+// la fonction readline() elle return NULL quand on fait Ctrl+D,
+// line = null print exit car dans bash c'est ce qui ce passe
 int	main(void)
 {
 	char *line;
@@ -43,7 +44,6 @@ int	main(void)
 	while (1)
 	{
 		line = readline("minishell> ");
-
 		if (!line) // Ctrl+D
 		{
 			printf("exit\n");

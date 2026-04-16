@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
-
+// c'est juste un strjoin qui free s1, pour sauver des lignes
 static char	*ft_strjoin_free(char *s1, char const *s2)
 {
 	char	*s3;
@@ -33,7 +33,11 @@ static char	*ft_strjoin_free(char *s1, char const *s2)
 	ft_strlcpy(&s3[len1], s2, ft_strlen(s2) + 1);
 	return (s3);
 }
-
+// cmd c'est ex: ls ou cat, etc.
+// getenv done un string de la variable environement PATH, elle contient des chemins
+// on la split pour avoir chaque chemin separement
+// mypath: c'est un join du chemin + / + cmd
+// access() avec flag F_OK, donne 0 si le fichier exist, -1 si il n'existe pas 
 char	*get_path(char *cmd)
 {
 	int		i = 0;
@@ -49,7 +53,7 @@ char	*get_path(char *cmd)
 		mypath = ft_strjoin_free(mypath, cmd);
 		if (access(mypath, F_OK) == 0)
 		{
-			printf("%s\n", mypath);
+			printf("%s\n", mypath); // a enlever plus tard.
 			return (mypath);
 		}
 		free(mypath);
@@ -59,6 +63,11 @@ char	*get_path(char *cmd)
 	return (NULL);
 }
 
+// forks(): creer un nouveau process qui est une copie.
+// pid < 0: fork() a echouer
+// pid == 0: on est dans le process enfant
+// pid > 0: on est dans le process parent
+// la creation du process enfant permet d'utiliser execve() sans l'arret du programme
 void	execute(char **args, char *path)
 {
 	pid_t	pid;
@@ -81,12 +90,12 @@ void	execute(char **args, char *path)
 	}
 }
 
+// pour exit la boucle, ecrit "exit" dans le terminal.
 int	main(int ac, char **av)
 {
 	char	**cmd_args;
 	char	*path;
 	char	*str;
-
 
 	(void)ac;
 	(void)av;

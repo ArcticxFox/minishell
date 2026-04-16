@@ -42,5 +42,6 @@ typedef struct	s_token
 	struct s_token	*next;
 }	t_token;
 
+void init_signals(void);
 
 #endif

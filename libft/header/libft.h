@@ -29,11 +29,11 @@ typedef struct s_flist
 	int		(*f)(va_list args);
 }	t_flist;
 
-// typedef struct stack
-// {
-// 	int				content;
-// 	struct stack	*next;
-// }	stack_t;
+typedef struct stack
+{
+	int				content;
+	struct stack	*next;
+}	stack_t;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

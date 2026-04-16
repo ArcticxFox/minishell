@@ -21,7 +21,7 @@ CC := cc
 CFLAGS += -Wall -Werror -Wextra -g
 
 UTILS = libft/libft.a
-NAME = pipex
+NAME = minishell
 
 all: make_msg $(NAME)
 

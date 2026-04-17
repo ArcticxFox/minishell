@@ -14,7 +14,7 @@ OBJ_DIR ?= ./obj
 SRC_DIR := ./src
 INC_DIR := ./header
 
-SRC := main.c
+SRC := main.c sig_handler.c
 OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC := cc

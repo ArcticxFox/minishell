@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/pipex.h"
+#include "../header/minishell.h"
 
 // la fonction readline() elle return NULL quand on fait Ctrl+D,
 // line = null print exit car dans bash c'est ce qui ce passe

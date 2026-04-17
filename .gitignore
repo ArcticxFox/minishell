@@ -1,0 +1,13 @@
+#Executables
+minishell
+a.out
+
+#Object files
+*.o
+obj/
+*.a
+
+# Editor files
+*~
+*.swp
+*.swo

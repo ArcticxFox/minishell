@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
-#include <signal.h>
+# include <signal.h>
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>

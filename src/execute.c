@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/pipex.h"
+#include "../header/minishell.h"
 // c'est juste un strjoin qui free s1, pour sauver des lignes
 static char	*ft_strjoin_free(char *s1, char const *s2)
 {

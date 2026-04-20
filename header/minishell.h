@@ -43,5 +43,11 @@ typedef struct	s_token
 }	t_token;
 
 void init_signals(void);
+t_token *ft_token_new(char *str, t_token_type token_type);
+t_token *ft_token_last(t_token *lst);
+void	ft_token_add_back(t_token **lst, t_token *new);
+void	ft_token_delete_front(t_token **stack);
+void	teste_token(void);
+
 
 #endif

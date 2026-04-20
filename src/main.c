@@ -19,6 +19,7 @@ int	main(void)
 	char *line;
 
 	init_signals();
+	teste_token();
 	while (1)
 	{
 		line = readline("minishell> ");

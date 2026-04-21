@@ -9,7 +9,7 @@ t_token	*ft_token_new(char *str, t_token_type token_type)
 		return (NULL);
 	new_node->next = NULL;
 	new_node->type = token_type;
-	new_node->str = ft_strdup(str);
+	new_node->str = str;
 	return (new_node);
 }
 

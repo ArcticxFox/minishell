@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/15 17:42:24 by ejones           ###   ########.fr       */
+/*   Updated: 2026/04/23 18:30:02 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 # include <readline/history.h>
 # include "../libft/header/libft.h"
 
+// typedef enum	e_quotes
+// {
+// 	NO_QUOTES,
+// 	SINGLE_QUOTE,
+// 	DOUBLE_QUOTES
+// }	t_quotes;
+
 typedef enum	e_token_type
 {
 	TOKEN_WORD,
@@ -37,17 +44,30 @@ typedef enum	e_token_type
 
 typedef struct	s_token
 {
-	char			*str;
+	int				expand;
+	char			*value;
 	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
 
-void init_signals(void);
-t_token *ft_token_new(char *str, t_token_type token_type);
-t_token *ft_token_last(t_token *lst);
-void	ft_token_add_back(t_token **lst, t_token *new);
-void	ft_token_delete_front(t_token **stack);
-void	teste_token(void);
+extern int	g_value_exit;
+
+void	init_signals(void);
+
+t_token	*ft_new_token(char *value, t_token_type type, int expand);
+t_token	*ft_last_token(t_token *lst);
+
+void	ft_add_token_back(t_token **lst, t_token *new);
+void	ft_delete_front_token(t_token **stack);
+
+
+char	*ft_strjoin_free(char *s1, char const *s2);
+// token.c
+t_token *lexer(char *line);
+
+// token_utils.c
+void	print_token(t_token *tokens);
+// void	add_token(t_token *tokens, char *value, t_token_type type, int expand);
 
 
 #endif

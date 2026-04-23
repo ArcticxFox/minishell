@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/04/15 14:10:30 by ejones           ###   ########.fr        #
+#    Updated: 2026/04/23 17:38:27 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ OBJ_DIR ?= ./obj
 SRC_DIR := ./src
 INC_DIR := ./header
 
-SRC := main.c sig_handler.c token.c chained_lst.c
+SRC := main.c sig_handler.c token.c token_utils.c
 OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 CC := cc

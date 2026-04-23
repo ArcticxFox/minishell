@@ -6,13 +6,13 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/15 17:17:20 by ejones           ###   ########.fr       */
+/*   Updated: 2026/04/23 15:42:26 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 // c'est juste un strjoin qui free s1, pour sauver des lignes
-static char	*ft_strjoin_free(char *s1, char const *s2)
+char	*ft_strjoin_free(char *s1, char const *s2)
 {
 	char	*s3;
 	size_t	len1;
@@ -37,7 +37,7 @@ static char	*ft_strjoin_free(char *s1, char const *s2)
 // getenv done un string de la variable environement PATH, elle contient des chemins
 // on la split pour avoir chaque chemin separement
 // mypath: c'est un join du chemin + / + cmd
-// access() avec flag F_OK, donne 0 si le fichier exist, -1 si il n'existe pas 
+// access() avec flag F_OK, donne 0 si le fichier exist, -1 si il n'existe pas
 char	*get_path(char *cmd)
 {
 	int		i = 0;
@@ -102,7 +102,7 @@ int	main(int ac, char **av)
 	while(1)
 	{
 		str = readline("minishell> ");
-		cmd_args = ft_split(str, ' ');
+		cmd_args = ft_split(str, ',');
 		if (!str || !ft_strncmp(str, "exit", 5))
 			return 0;
 		path = get_path(cmd_args[0]);

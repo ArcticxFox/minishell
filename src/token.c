@@ -1,34 +1,155 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
+/*   Updated: 2026/04/23 19:17:01 by ejones           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
-
-void	print_token(t_token *tokens)
+int	ft_is_whitespace(char c)
 {
-	while (tokens != NULL)
-	{
-		if (tokens->type == TOKEN_WORD)
-			printf("[WORD]      :\t%s\n", tokens->str);
-		else if (tokens->type == TOKEN_PIPE)
-			printf("[PIPE]      :\t%s\n", tokens->str);
- 		else if (tokens->type == TOKEN_REDIR_IN)
-			printf("[REDIR_IN]  :\t%s\n", tokens->str);
-		else if (tokens->type == TOKEN_REDIR_OUT)
-			printf("[REDIR_OUT] :\t%s\n", tokens->str);
-		else if (tokens->type == TOKEN_APPEND)
-			printf("[APPEND]    :\t%s\n", tokens->str);
-		else if (tokens->type == TOKEN_HEREDOC)
-			printf("[HERE_DOC]  :\t%s\n", tokens->str);
-		tokens = tokens->next;
-	}
+	if ((c >= 9 && c <= 13) || c == ' ')
+		return (1);
+	return (0);
+
 }
 
-void	teste_token(void)
+void	skip_whitespaces(char *line, int *i)
 {
-	t_token	*head = NULL;
-	
-	ft_token_add_back(&head, ft_token_new("hello", TOKEN_WORD));
-	ft_token_add_back(&head, ft_token_new("World", TOKEN_WORD));
-	ft_token_add_back(&head, ft_token_new("|", TOKEN_PIPE));
-	ft_token_add_back(&head, ft_token_new(">", TOKEN_REDIR_OUT));
-	
-	print_token(head);
+	while(line[*i] && ft_is_whitespace(line[*i]))
+		++(*i);
+}
+
+char	*extract_single_quotes(char *str, int *i)
+{
+	int		start;
+	char	*token;
+
+	start = *i;
+	if (str[*i] == '\'')
+		++(*i);
+	while (str[*i] && str[*i] != '\'')
+		++(*i);
+	if (str[*i] == '\'')
+		++(*i);
+	token = ft_substr(str, start, *i - start);
+	if (!token || (*i - start) <= 1)
+		return (NULL);
+	if (ft_is_whitespace(str[(*i) + 1]))
+		return (ft_strjoin_free(token, " "));
+	if (!token)
+		return (NULL);
+	return (token);
+}
+char	*extract_double_quotes(char *str, int *i)
+{
+	int		start;
+	char	*token;
+
+	start = *i;
+	if (str[*i] == '"')
+		++(*i);
+	while (str[*i] && str[*i] != '"')
+		++(*i);
+	if (str[*i] == '"')
+		++(*i);
+	token = ft_substr(str, start, *i - start);
+	if (!token || (*i - start) <= 1)
+		return (NULL);
+	if (ft_is_whitespace(str[(*i) + 1]))
+		return (ft_strjoin_free(token, " "));
+	if (!token)
+		return (NULL);
+	return (token);
+}
+
+char	*extract_word(char *str, int *i)
+{
+	int		start;
+	char	*word;
+
+	start = *i;
+
+	if (str[*i] == '\'')
+		word = extract_single_quotes(str, i);
+	else if (str[*i] == '"')
+		word = extract_double_quotes(str, i);
+	else
+	{
+		while(str[*i] && !ft_is_whitespace(str[*i])
+			&& str[*i] != '|' && str[*i] != '<' && str[*i] != '>')
+			++(*i);
+		word = ft_substr(str, start, *i - start);
+	}
+	if (!word)
+		return(NULL);
+	return (word);
+}
+
+int	check_special_char(t_token **token, char *s, int *i)
+{
+	if (s[*i] == '|')
+		*token = (ft_new_token("|", TOKEN_PIPE, 0));
+	else if (s[*i] == '>')
+	{
+		if (s[*i + 1] == '>')
+		{
+			++(*i);
+			*token = (ft_new_token(">>", TOKEN_APPEND, 0));
+		}
+		else
+			*token = (ft_new_token(">", TOKEN_REDIR_OUT, 0));
+	}
+	else if (s[*i] == '<')
+	{
+		if (s[*i + 1] == '<')
+		{
+			++(*i);
+			*token = (ft_new_token("<<", TOKEN_HEREDOC, 0));
+		}
+		else
+			*token = (ft_new_token("<", TOKEN_REDIR_IN, 0));
+	}
+	else
+		return (0);
+	return (1);
+}
+
+t_token *lexer(char *line)
+{
+	int		i = 0;
+	char	*str;
+	t_token	*token = NULL;
+	t_token	*tokens = NULL;
+
+	i = 0;
+	str = NULL;
+	token = NULL;
+	tokens = NULL;
+	while (line[i])
+	{
+		skip_whitespaces(line, &i);
+		if (check_special_char(&token, line, &i))
+		{
+			if (!token)
+				exit(0);
+			ft_add_token_back(&tokens, token);
+			++i;
+		}
+		else
+		{
+			str = extract_word(line, &i);
+			ft_add_token_back(&tokens, ft_new_token(str, TOKEN_WORD, 0));
+		}
+	}
+	print_token(tokens);
+	while (tokens)
+		ft_delete_front_token(&tokens);
+	return (NULL);
 }

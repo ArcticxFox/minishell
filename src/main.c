@@ -38,25 +38,25 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 // line = null print exit car dans bash c'est ce qui ce passe
 int	main(int ac, char **av)
 {
-	//char *line;
+	char *line;
 	(void)ac;
-	lexer(av[1]);
-	// init_signals();
-	// while (1)
-	// {
-	// 	line = readline("minishell> ");
-	// 	if (!line) // Ctrl+D
-	// 	{
-	// 		printf("exit\n");
-	// 		exit(0);
-	// 	}
-	// 	if (line[0] != '\0')
-	// 		add_history(line);
-
-	// 	printf("You typed: %s\n", line);
-	// 	lexer(line);
-	// 	printf("\n");
-	// 	free(line);
-	// }
+	(void)av;
+//	lexer(av[1]);
+	init_signals();
+	while (1)
+	{
+		line = readline("minishell> ");
+		if (!line) // Ctrl+D
+		{
+			printf("exit\n");
+			exit(0);
+		}
+		if (line[0] != '\0')
+			add_history(line);
+	 	//printf("You typed: %s\n", line);
+		lexer(line);
+		printf("\n");
+		free(line);
+	}
 	return (g_value_exit);
 }

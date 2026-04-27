@@ -51,23 +51,22 @@ typedef struct	s_token
 }	t_token;
 
 extern int	g_value_exit;
-
+// sig_handler.c
 void	init_signals(void);
 
+// token_utils.c
 t_token	*ft_new_token(char *value, t_token_type type, int expand);
 t_token	*ft_last_token(t_token *lst);
-
 void	ft_add_token_back(t_token **lst, t_token *new);
 void	ft_delete_front_token(t_token **stack);
 
-
+// ????????
 char	*ft_strjoin_free(char *s1, char const *s2);
 // token.c
 t_token *lexer(char *line);
 
 // token_utils.c
 void	print_token(t_token *tokens);
-// void	add_token(t_token *tokens, char *value, t_token_type type, int expand);
 
 
 #endif

@@ -65,12 +65,13 @@ t_token	*ft_new_token(char *value, t_token_type type, int expand)
 {
 	t_token	*new_token;
 
-
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
 	new_token->next = NULL;
 	new_token->expand = expand;
+	if (*value == '\'')
+		new_token->expand = 0;
 	new_token->type = type;
 	if (type == TOKEN_WORD)
 		new_token->value = value;

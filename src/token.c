@@ -83,7 +83,7 @@ char	*extract_word(char *str, int *i)
 	else
 	{
 		while(str[*i] && !ft_is_whitespace(str[*i])
-			&& str[*i] != '|' && str[*i] != '<' && str[*i] != '>')
+			&& str[*i] != '|' && str[*i] != '<' && str[*i] != '>' && str[*i] != '"' && str[*i] != '\'')
 			++(*i);
 		word = ft_substr(str, start, *i - start);
 	}
@@ -145,7 +145,7 @@ t_token *lexer(char *line)
 		else
 		{
 			str = extract_word(line, &i);
-			ft_add_token_back(&tokens, ft_new_token(str, TOKEN_WORD, 0));
+			ft_add_token_back(&tokens, ft_new_token(str, TOKEN_WORD, 1));
 		}
 	}
 	print_token(tokens);

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/23 19:26:01 by ejones           ###   ########.fr       */
+/*   Updated: 2026/04/28 16:53:18 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ void	print_token(t_token *tokens)
 	while (tokens != NULL)
 	{
 		if (tokens->type == TOKEN_WORD)
-			printf("[WORD]      :\t%s : %d\n", tokens->value, tokens->expand);
+			printf("[WORD]      :\t%s, %d\n", tokens->value, tokens->expand);
 		else if (tokens->type == TOKEN_PIPE)
-			printf("[PIPE]      :\t%s : %d\n", tokens->value, tokens->expand);
+			printf("[PIPE]      :\t%s, %d\n", tokens->value, tokens->expand);
  		else if (tokens->type == TOKEN_REDIR_IN)
-			printf("[REDIR_IN]  :\t%s : %d\n", tokens->value, tokens->expand);
+			printf("[REDIR_IN]  :\t%s, %d\n", tokens->value, tokens->expand);
 		else if (tokens->type == TOKEN_REDIR_OUT)
-			printf("[REDIR_OUT] :\t%s : %d\n", tokens->value, tokens->expand);
+			printf("[REDIR_OUT] :\t%s, %d\n", tokens->value, tokens->expand);
 		else if (tokens->type == TOKEN_APPEND)
-			printf("[APPEND]    :\t%s : %d\n", tokens->value, tokens->expand);
+			printf("[APPEND]    :\t%s, %d\n", tokens->value, tokens->expand);
 		else if (tokens->type == TOKEN_HEREDOC)
-			printf("[HERE_DOC]  :\t%s : %d\n", tokens->value, tokens->expand);
+			printf("[HERE_DOC]  :\t%s, %d\n", tokens->value, tokens->expand);
 		tokens = tokens->next;
 	}
 }
@@ -65,6 +65,8 @@ t_token	*ft_new_token(char *value, t_token_type type, int expand)
 {
 	t_token	*new_token;
 
+	if (!value)
+		return (NULL);
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/23 18:30:02 by ejones           ###   ########.fr       */
+/*   Updated: 2026/04/28 17:08:15 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ typedef enum	e_token_type
 	TOKEN_APPEND,
 	TOKEN_HEREDOC
 }	t_token_type;
+
+typedef struct	s_cmd
+{
+	char	*cmd;
+	char	**args;
+	t_cmd	*next;
+}	t_cmd;
 
 typedef struct	s_token
 {

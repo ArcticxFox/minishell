@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/23 19:17:01 by ejones           ###   ########.fr       */
+/*   Updated: 2026/04/28 16:52:35 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ char	*extract_single_quotes(char *str, int *i)
 		++(*i);
 	if (str[*i] == '\'')
 		++(*i);
-	token = ft_substr(str, start, *i - start);
-	if (!token || (*i - start) <= 1)
+	if ((*i - start) <= 1)
 		return (NULL);
-	if (ft_is_whitespace(str[(*i) + 1]))
+	token = ft_substr(str, start, *i - start);
+	if (!token)
+		return (NULL);
+	if (ft_is_whitespace(str[(*i)]))
 		return (ft_strjoin_free(token, " "));
 	if (!token)
 		return (NULL);
@@ -59,10 +61,12 @@ char	*extract_double_quotes(char *str, int *i)
 		++(*i);
 	if (str[*i] == '"')
 		++(*i);
+	if ((*i - start) <= 1)
+		return (NULL);
 	token = ft_substr(str, start, *i - start);
 	if (!token || (*i - start) <= 1)
 		return (NULL);
-	if (ft_is_whitespace(str[(*i) + 1]))
+	if (ft_is_whitespace(str[(*i)]))
 		return (ft_strjoin_free(token, " "));
 	if (!token)
 		return (NULL);
@@ -75,7 +79,7 @@ char	*extract_word(char *str, int *i)
 	char	*word;
 
 	start = *i;
-
+	word = NULL;
 	if (str[*i] == '\'')
 		word = extract_single_quotes(str, i);
 	else if (str[*i] == '"')
@@ -135,6 +139,8 @@ t_token *lexer(char *line)
 	while (line[i])
 	{
 		skip_whitespaces(line, &i);
+		if (!line[i])
+			break;
 		if (check_special_char(&token, line, &i))
 		{
 			if (!token)
@@ -145,6 +151,13 @@ t_token *lexer(char *line)
 		else
 		{
 			str = extract_word(line, &i);
+			if (!str)
+			{
+				ft_printf("syntax error");
+				while (tokens)
+					ft_delete_front_token(&tokens);
+				return (NULL);
+			}
 			ft_add_token_back(&tokens, ft_new_token(str, TOKEN_WORD, 1));
 		}
 	}

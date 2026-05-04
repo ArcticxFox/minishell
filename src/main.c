@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/23 18:30:36 by ejones           ###   ########.fr       */
+/*   Updated: 2026/04/28 17:23:51 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 int	main(int ac, char **av)
 {
 	char *line;
+	t_token	*tokens;
 	(void)ac;
 	(void)av;
-//	lexer(av[1]);
+
+	tokens = NULL;
 	init_signals();
 	while (1)
 	{
@@ -53,8 +55,8 @@ int	main(int ac, char **av)
 		}
 		if (line[0] != '\0')
 			add_history(line);
-	 	//printf("You typed: %s\n", line);
-		lexer(line);
+		tokens = lexer(line);
+		
 		printf("\n");
 		free(line);
 	}

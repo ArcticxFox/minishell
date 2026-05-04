@@ -6,23 +6,23 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:06:37 by ejones            #+#    #+#             */
-/*   Updated: 2026/01/02 13:57:47 by ejones           ###   ########.fr       */
+/*   Updated: 2026/04/30 16:25:55 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/libft.h"
 
-static void	*free_memory(char **split)
+void	*free_memory(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (split[i])
+	while (tab[i])
 	{
-		free(split[i]);
+		free(tab[i]);
 		i++;
 	}
-	free(split);
+	free(tab);
 	return (NULL);
 }
 

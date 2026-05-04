@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/28 17:08:15 by ejones           ###   ########.fr       */
+/*   Updated: 2026/04/30 17:01:52 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@
 # include <readline/history.h>
 # include "../libft/header/libft.h"
 
-// typedef enum	e_quotes
-// {
-// 	NO_QUOTES,
-// 	SINGLE_QUOTE,
-// 	DOUBLE_QUOTES
-// }	t_quotes;
+typedef enum	e_filetype
+{
+	OUTFILE = 1,
+	INFILE,
+	NOT_FILE
+}	t_filetype;
 
 typedef enum	e_token_type
 {
@@ -44,9 +44,10 @@ typedef enum	e_token_type
 
 typedef struct	s_cmd
 {
-	char	*cmd;
-	char	**args;
-	t_cmd	*next;
+	char		*cmd;
+	char		**args;
+	t_filetype	filetype;
+	t_cmd		*next;
 }	t_cmd;
 
 typedef struct	s_token
@@ -66,6 +67,10 @@ t_token	*ft_new_token(char *value, t_token_type type, int expand);
 t_token	*ft_last_token(t_token *lst);
 void	ft_add_token_back(t_token **lst, t_token *new);
 void	ft_delete_front_token(t_token **stack);
+
+//cmds_utils.c
+t_cmd	*ft_last_cmd(t_cmd *lst);
+void	add_cmd(t_cmd **lst, t_cmd *new);
 
 // ????????
 char	*ft_strjoin_free(char *s1, char const *s2);

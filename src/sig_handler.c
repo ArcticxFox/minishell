@@ -6,11 +6,13 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:14:06 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/15 17:17:41 by ejones           ###   ########.fr       */
+/*   Updated: 2026/04/23 18:31:26 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+int	g_value_exit = 0;
 
 void handle_sigint(int sig)
 {
@@ -20,6 +22,7 @@ void handle_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	g_value_exit = 130;
 }
 // cette fonction sert a gerer Ctrl+C et Ctrl+/
 void init_signals(void)

@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/05 11:59:30 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/05/05 15:26:59 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@
 # define BUFFER_SIZE 30
 # endif
 
+typedef enum	e_filetype
+{
+	OUTFILE = 1,
+	INFILE,
+	NOT_FILE
+}	t_filetype;
+
 typedef enum	e_token_type
 {
 	TOKEN_WORD,
@@ -40,9 +47,18 @@ typedef enum	e_token_type
 	TOKEN_HEREDOC
 }	t_token_type;
 
+typedef struct	s_cmd
+{
+	char		*cmd;
+	char		**args;
+	t_filetype	filetype;
+	t_cmd		*next;
+}	t_cmd;
+
 typedef struct	s_token
 {
-	char			*str;
+	int				expand;
+	char			*value;
 	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
@@ -72,5 +88,27 @@ int		len_name(char *args);
 int	exec_cd(char **args, t_shell *shell);
 int	exec_export(char **args, t_shell *shell);
 int	exec_unset(char **args, t_shell *shell);
+
+extern int	g_value_exit;
+// sig_handler.c
+void	init_signals(void);
+
+// token_utils.c
+t_token	*ft_new_token(char *value, t_token_type type, int expand);
+t_token	*ft_last_token(t_token *lst);
+void	ft_add_token_back(t_token **lst, t_token *new);
+void	ft_delete_front_token(t_token **stack);
+
+//cmds_utils.c
+t_cmd	*ft_last_cmd(t_cmd *lst);
+void	add_cmd(t_cmd **lst, t_cmd *new);
+
+// ????????
+char	*ft_strjoin_free(char *s1, char const *s2);
+// token.c
+t_token *lexer(char *line);
+
+// token_utils.c
+void	print_token(t_token *tokens);
 
 #endif

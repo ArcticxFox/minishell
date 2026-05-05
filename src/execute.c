@@ -6,13 +6,13 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/04 15:33:01 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/05/05 15:25:17 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 // c'est juste un strjoin qui free s1, pour sauver des lignes
-static char	*ft_strjoin_free(char *s1, char const *s2)
+char	*ft_strjoin_free(char *s1, char const *s2)
 {
 	char	*s3;
 	size_t	len1;
@@ -102,7 +102,7 @@ int	main(int ac, char **av)
 	while(1)
 	{
 		str = readline("minishell> ");
-		cmd_args = ft_split(str, ' ');
+		cmd_args = ft_split(str, ',');
 		if (!str || !ft_strncmp(str, "exit", 5))
 			return 0;
 		path = get_path(cmd_args[0]);

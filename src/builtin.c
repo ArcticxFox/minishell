@@ -1,0 +1,151 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
+/*   Updated: 2026/05/05 15:09:46 by leonpouet        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../header/minishell.h"
+
+int	exec_pwd(char **args, t_shell *shell)
+{
+	char	buffer[4096];
+
+	(void)args;
+	(void)shell;
+	if (getcwd(buffer, 4096) == NULL)
+	{
+		write (1, "Error\n", 6);
+		return (0);
+	}
+	else
+		printf("Current working directory: %s\n", buffer); // ft_printf
+	return (1);
+}
+
+int	exec_echo(char **args, t_shell *shell)
+{
+	int	i;
+	int	x;
+
+	i = 1;
+	x = 0;
+	(void)shell;
+	if (args[1])
+	{
+		if (!ft_strncmp(args[1], "-n", 2))
+			i++;
+		while (args[i])
+		{
+			if (x == 1)
+				printf(" ");
+			printf("%s", args[i]);
+			x = 1;
+			i++;
+		}
+		if (!ft_strncmp(args[1], "-n", 2))
+			return (1);
+	}
+	printf("\n");
+	return (1);
+}
+
+int	exec_exit(char **args, t_shell *shell)
+{
+	(void)args;
+	(void)shell;
+	exit(EXIT_SUCCESS);
+}
+
+int	exec_env(char **args, t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	(void)args;
+	while (shell->env[i])
+	{
+		printf("%s\n", shell->env[i]);
+		i++;
+	}
+	return (1);
+}
+
+int	builtin(char **args, t_shell *shell)
+{
+	static t_builtin	builtin[8] = {
+	{"pwd", exec_pwd},
+	{"echo", exec_echo},
+	{"exit", exec_exit},
+	{"env", exec_env},
+	{"cd", exec_cd},
+	{"export", exec_export},
+	{"unset", exec_unset},
+	{NULL, NULL}
+	};
+	int					i;
+
+	i = 0;
+	while (builtin[i].name)
+	{
+		if (!ft_strncmp(args[0], builtin[i].name, 7))
+			builtin[i].f(args, shell);
+		i++;
+	}
+	return (1);
+}
+
+void	free_all(t_shell *shell, char **cmd_args, char *str, int n)
+{
+	int	i;
+
+	i = 0;
+	if (str)
+		free(str);
+	if (cmd_args)
+	{
+		while (cmd_args[i])
+			free(cmd_args[i++]);
+		free(cmd_args);
+	}
+	if (n > 1)
+	{
+		while (shell->env[i])
+			free(shell->env[i++]);
+		free(shell->env);
+	}
+}
+
+// #include <stdio.h>
+
+// int	main(int ac, char **av, char **envp)
+// {
+// 	char	**cmd_args;
+// 	char	*str;
+// 	t_shell	shell;
+
+// 	shell.env = copy_env(envp);
+// 	(void)ac;
+// 	(void)av;
+// 	while (1)
+// 	{
+// 		str = readline("minishell> ");
+// 		cmd_args = ft_split(str, ' ');
+// 		if (!str || !ft_strncmp(str, "exit", 5))
+// 		{
+// 			rl_clear_history();
+// 			rl_free_line_state();
+// 			free_all(&shell, cmd_args, str, 2);
+// 			return (0);
+// 		}
+// 		if (cmd_args)
+// 			builtin(cmd_args, &shell);
+// 		free_all(&shell, cmd_args, str, 1);
+// 	}
+// 	return (0);
+// }

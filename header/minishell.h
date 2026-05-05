@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/15 17:42:24 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/05 11:59:30 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/header/libft.h"
+
+# ifndef BUFFER_SIZE
+# define BUFFER_SIZE 30
+# endif
 
 typedef enum	e_token_type
 {
@@ -42,6 +47,30 @@ typedef struct	s_token
 	struct s_token	*next;
 }	t_token;
 
-void init_signals(void);
+typedef struct	s_shell
+{
+	char	**env;
+}	t_shell;
+
+typedef struct	s_builtin
+{
+	char	*name;
+	int		(*f)(char **args, t_shell *shell);
+}	t_builtin;
+
+void	init_signals(void);
+
+// ENV FUNCTION
+
+char	**copy_env(char **envp);
+char	*get_env_value(char **env, char *name);
+void	set_env_value(char **env, char *name, char *new_val);
+int		len_name(char *args);
+
+// BUILT-IN
+
+int	exec_cd(char **args, t_shell *shell);
+int	exec_export(char **args, t_shell *shell);
+int	exec_unset(char **args, t_shell *shell);
 
 #endif

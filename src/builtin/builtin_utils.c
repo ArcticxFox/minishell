@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/05/10 19:29:07 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/10 20:55:21 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	exec_export(char **args, t_shell *shell)
 		i = 0;
 		while (shell->env[i])
 		{
-			tmp[i] = ft_strdup(shell->env[i]);
-			free(shell->env[i]);
+			tmp[i] = shell->env[i];
+			// free(shell->env[i]);
 			i++;
 		}
 		tmp[i] = ft_strdup(args[1]);

@@ -6,11 +6,11 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/30 16:59:12 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/10 19:32:34 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "minishell.h"
 
 int	ft_is_whitespace(char c)
 {
@@ -44,7 +44,10 @@ char	*extract_single_quotes(char *str, int *i)
 	if (!token)
 		return (NULL);
 	if (ft_is_whitespace(str[(*i)]))
+	{
+		
 		return (ft_strjoin_free(token, " "));
+	}
 	if (!token)
 		return (NULL);
 	return (token);

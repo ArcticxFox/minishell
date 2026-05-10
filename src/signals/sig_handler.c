@@ -6,11 +6,11 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:14:06 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/23 18:31:26 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/10 19:29:07 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "minishell.h"
 
 int	g_value_exit = 0;
 

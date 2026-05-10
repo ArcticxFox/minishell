@@ -6,32 +6,12 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/30 15:47:32 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/10 20:43:16 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "minishell.h"
 
-
-void	print_token(t_token *tokens)
-{
-	while (tokens != NULL)
-	{
-		if (tokens->type == TOKEN_WORD)
-			printf("[WORD]      :\t%s, %d\n", tokens->value, tokens->expand);
-		else if (tokens->type == TOKEN_PIPE)
-			printf("[PIPE]      :\t%s, %d\n", tokens->value, tokens->expand);
- 		else if (tokens->type == TOKEN_REDIR_IN)
-			printf("[REDIR_IN]  :\t%s, %d\n", tokens->value, tokens->expand);
-		else if (tokens->type == TOKEN_REDIR_OUT)
-			printf("[REDIR_OUT] :\t%s, %d\n", tokens->value, tokens->expand);
-		else if (tokens->type == TOKEN_APPEND)
-			printf("[APPEND]    :\t%s, %d\n", tokens->value, tokens->expand);
-		else if (tokens->type == TOKEN_HEREDOC)
-			printf("[HERE_DOC]  :\t%s, %d\n", tokens->value, tokens->expand);
-		tokens = tokens->next;
-	}
-}
 t_token	*ft_last_token(t_token *lst)
 {
 	t_token	*tmp;
@@ -61,7 +41,7 @@ void	ft_add_token_back(t_token **lst, t_token *new)
 	}
 }
 
-t_token	*ft_new_token(char *value, t_token_type type, int expand)
+t_token	*ft_new_token(char *value, t_tk_type type, int expand)
 {
 	t_token	*new_token;
 

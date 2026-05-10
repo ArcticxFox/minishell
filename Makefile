@@ -6,52 +6,82 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/04/23 17:38:27 by ejones           ###   ########.fr        #
+#    Updated: 2026/05/10 19:31:31 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-OBJ_DIR ?= ./obj
-SRC_DIR := ./src
-INC_DIR := ./header
 
-SRC := main.c sig_handler.c token.c token_utils.c
-OBJ := $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+OBJ_DIR := obj
+SRC_DIR := src
+INC_DIR := header
 
 CC := cc
-CFLAGS += -Wall -Werror -Wextra -g
 
-UTILS = libft/libft.a
-NAME = minishell
+CFLAGS := -Wall -Wextra -Werror -g
+CPPFLAGS := -I$(INC_DIR) -Ilibft/header
+
+NAME := minishell
+
+UTILS := libft/libft.a
+
+#============================== SOURCES =======================================#
+
+SRC := \
+	main.c \
+	lexer/token.c \
+	lexer/token_utils.c \
+	parser/get_cmds.c \
+	parser/cmds_utils.c \
+	parser/print_structs.c \
+	builtin/builtin.c \
+	builtin/builtin_utils.c \
+	env/env_utils.c \
+	signals/sig_handler.c
+
+SRC := $(addprefix $(SRC_DIR)/, $(SRC))
+
+OBJ := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
+
+#============================== RULES =========================================#
 
 all: make_msg $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(UTILS) $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) $(UTILS) -lreadline -lhistory -o $(NAME)
+	@echo "\e[32m\n===================== FINISHED ======================\n\e[0m"
 
 $(UTILS):
 	@make -C libft
 
-$(NAME): $(UTILS) $(OBJ)
-	@$(CC) -o $(NAME) $(OBJ) $(UTILS) -lreadline -lhistory
-	@echo "\e[32m\n===================== FINISHED ======================\n\e[0m"
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+
+#============================== CLEAN =========================================#
 
 clean: cln_msg
-	@echo "\e[33m	- removing ./obj\n\e[0m"
-	make clean -C libft
+	@make clean -C libft
 	@rm -rf $(OBJ_DIR)
+	@echo "\e[33m\t- removing object files\n\e[0m"
+
 fclean: clean
-	@echo "\e[33m	- deleting executables\n\e[0m"
-	make fclean -C libft
+	@make fclean -C libft
 	@rm -f $(NAME)
+	@echo "\e[33m\t- deleting executable\n\e[0m"
+
 re: re_msg fclean all
 
-#================================== Messages ==================================#
-re_msg:
-	@echo "\e[31m\n================= Re-making Project ===================\e[0m"
+#============================== MESSAGES ======================================#
+
 make_msg:
 	@echo "\e[32m\n================== Making Project ===================\n\e[0m"
+
+re_msg:
+	@echo "\e[31m\n================= Re-making Project =================\n\e[0m"
+
 cln_msg:
 	@echo "\e[33m\n==================== Cleaning =======================\n\e[0m"
 
-.PHONY: all clean fclean re re_msg make_msg cln_msg
+#============================== PHONY =========================================#
+
+.PHONY: all clean fclean re make_msg re_msg cln_msg

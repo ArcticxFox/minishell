@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 19:32:34 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/19 17:40:04 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*extract_single_quotes(char *str, int *i)
 		return (NULL);
 	if (ft_is_whitespace(str[(*i)]))
 	{
-		
+
 		return (ft_strjoin_free(token, " "));
 	}
 	if (!token)
@@ -165,6 +165,6 @@ t_token *lexer(char *line)
 			ft_add_token_back(&tokens, ft_new_token(str, TOKEN_WORD, 1));
 		}
 	}
-	print_token(tokens);
+//	print_token(tokens);
 	return (tokens);
 }

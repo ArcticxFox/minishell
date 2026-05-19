@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 15:37:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 20:43:20 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/15 17:07:15 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	print_commands(t_cmd *cmd)
 			}
 			printf("\n");
 		}
+		printf("expand => %d", cmd->expand);
 		printf("\n");
 		cmd = cmd->next;
 	}

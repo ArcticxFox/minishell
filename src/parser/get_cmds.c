@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/28 17:12:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/04 15:07:58 by ejones     str      ###   ########.fr       */
+/*   Created: 2026/05/15 18:14:19 by ejones            #+#    #+#             */
+/*   Updated: 2026/05/15 18:14:43 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -35,6 +36,8 @@ char	count_cmdargs(t_token *tokens)
 	}
 	return (size);
 }
+
+
 
 char	**get_args(t_token **tokens, t_filetype filetype)
 {
@@ -75,6 +78,7 @@ t_cmd	*ft_new_cmd(char *cmd, t_token **tokens, t_filetype filetype, t_tk_type tk
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->cmd = ft_strdup(cmd);
+	new_cmd->expand = (*tokens)->expand;
 	if (!*tokens)
 		new_cmd->args = NULL;
 	else if ((*tokens)->type == TOKEN_REDIR_IN || (*tokens)->type == TOKEN_REDIR_OUT

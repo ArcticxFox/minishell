@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 20:24:13 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/15 17:20:33 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_token
 
 typedef struct s_shell
 {
+	t_cmd	*head;
 	char	**env;
 }	t_shell;
 

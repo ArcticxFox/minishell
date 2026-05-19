@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 12:22:34 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/05/10 19:29:07 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/19 18:01:34 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,30 @@ char	**copy_env(char **envp)
 	return (cpy);
 }
 
+// char	*get_env_value(char **env, char *name) // gestion erreur
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		if (!ft_strncmp(env[i], name, len_name(name) + 1))
+// 			return (env[i] + len_name(name) + 1);
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 char	*get_env_value(char **env, char *name) // gestion erreur
 {
 	int	i;
+	int	len;
 
 	i = 0;
+	len = ft_strlen(name);
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], name, len_name(name) + 1))
-			return (env[i] + len_name(name) + 1);
+		if (!ft_strncmp(env[i], name, len) && env[i][len] == '=')
+			return (&env[i][len + 1]);
 		i++;
 	}
 	return (NULL);
@@ -73,7 +88,7 @@ int	len_name(char *args)
 	int	i;
 
 	i = 0;
-	while (args[i] != '=' && args[i])
+	while (args[i] && args[i] != '=')
 		i++;
 	return (i);
 }

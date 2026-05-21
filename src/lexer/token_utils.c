@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/15 17:14:24 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/21 15:42:32 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,29 @@ void	ft_add_token_back(t_token **lst, t_token *new)
 	}
 }
 
+char	*assign_value(char *value)
+{
+	char	*new_str;
+	char	tmp;
+	int		end;
+
+	end = ft_strlen(value);
+	if (value[end - 1] == ' ')
+	{
+		tmp = value[end - 2];
+		value[end - 2] = value[end - 1];
+		value[end - 1] = tmp;
+	}
+	if (*value == '\'')
+		new_str = ft_strtrim(value, "\'");
+	else if (*value == '"')
+		new_str = ft_strtrim(value, "\"");
+	else
+		return (value);
+	free(value);
+	return (new_str);
+}
+
 t_token	*ft_new_token(char *value, t_tk_type type, int expand)
 {
 	t_token	*new_token;
@@ -56,9 +79,9 @@ t_token	*ft_new_token(char *value, t_tk_type type, int expand)
 		new_token->expand = 0;
 	new_token->type = type;
 	if (type == TOKEN_WORD)
-		new_token->value = value;
+		new_token->value = assign_value(value);
 	else
-		new_token->value = ft_strdup(value);
+		new_token->value = assign_value(value);
 	if (!new_token->value)
 	{
 		free(new_token);

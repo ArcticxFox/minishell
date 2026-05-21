@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/19 18:07:13 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/21 14:58:06 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	ft_get_env_len(char **env, char *name)
 	if (!name)
 		return (0);
 	value = get_env_value(env, name);
-	printf("%s\n", value);
 	len = ft_strlen(value);
 	return (len);
 }
@@ -80,7 +79,6 @@ int	ft_get_lenght(char **env, char *str)
 			++i;
 			name = ft_env_name(str, &i);
 			len += ft_get_env_len(env, name) - 1;
-			printf("name = %s\nlenght = %d\n", name, len);
 			free(name);
 		}
 		else
@@ -91,25 +89,76 @@ int	ft_get_lenght(char **env, char *str)
 	}
 	return (len);
 }
-// void	expand(t_shell **shell)
-// {
-// 	int		i;
-// 	int		len;
-// 	char	*str;
-// 	t_cmd	*tmp;
 
-// 	i = 0;
-// 	str = NULL;
-// 	tmp = (*shell)->head;
-// 	while (tmp->args[i])
-// 	{
-// 		if (check_for_dollar(tmp->args[i], &i))
-// 		{
+bool	check_for_dollar(char *str)
+{
+	int	i;
 
-// 		}
-// 		++i;
-// 	}
-// }
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (true);
+		++i;
+	}
+	return (false);
+}
+
+// char	*ft_copy_into_env()
+// {}
+
+void	expand_string(char **env, char *str)
+{
+	int		i;
+	int		len;
+	char	*name;
+	char	*env_v;
+
+	i = 0;
+	len = ft_get_lenght(env, str);
+	name = NULL;
+	env_v = NULL;
+	str = ft_realloc(str, (sizeof(char) * len) + 1);
+	if (!str)
+		return ;
+	while (i < len)
+	{
+		if (str[i] == '$')
+		{
+			++i;
+			name = ft_env_name(str, &i);
+			i -= ft_strlen(name) + 1;
+			env_v = get_env_value(env, name);
+			i += (int)ft_strlcpy(&str[i], env_v, ft_strlen(env_v)) - 1;
+			free(name);
+			name = NULL;
+		}
+		else
+		{
+			++i;
+		}
+	}
+	printf("\nstr = %s\n", str);
+}
+
+void	expand(t_shell *shell)
+{
+	int		i;
+	char	*str;
+	t_cmd	*tmp;
+
+	i = 0;
+	str = NULL;
+	tmp = shell->head;
+	while (tmp->args[i])
+	{
+		if (check_for_dollar(tmp->args[i]))
+		{
+			expand_string(shell->env, tmp->args[i]);
+		}
+		++i;
+	}
+}
 
 
 

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/19 17:51:49 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/21 14:46:31 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int ac, char **av, char **envp)
 		tokens = lexer(line);
 		head = get_commands(tokens);
 		shell.head = head;
-		ft_get_lenght(shell.env, shell.head->args[1]);
+		expand(&shell);
 		printf("\n");
 		free(line);
 	}

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 15:37:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/15 17:07:15 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/21 15:43:32 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_commands(t_cmd *cmd)
 	while (cmd)
 	{
 		i = 0;
-		printf("cmd->cmd => '%s'\n", cmd->cmd);
+		printf("cmd->cmd => %s\n", cmd->cmd);
 		if (cmd->args)
 		{
 			printf("cmd->args => ");

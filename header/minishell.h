@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 19:33:26 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/28 11:15:43 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include "builtin.h"
 # include "env.h"
 # include "signals.h"
+# include "execute.h"
 
 extern int	g_value_exit;
 

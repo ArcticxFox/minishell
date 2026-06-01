@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 19:36:49 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/27 11:06:54 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int ac, char **av)
 			add_history(line);
 		tokens = lexer(line);
 		head = get_commands(tokens);
+		print_commands(head);
 		printf("\n");
 		free(line);
 	}

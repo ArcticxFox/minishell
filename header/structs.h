@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 20:24:13 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/27 11:32:47 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ typedef enum e_token_type
 	TOKEN_HEREDOC
 }	t_tk_type;
 
-typedef struct s_cmd
+typedef struct s_cmd // ex : < input ls -l | grep C > output
 {
-	char			*cmd;
-	char			**args;
+	char			*cmd; // input
+	char			**args; // < input
 	int				expand;
-	t_filetype		filetype;
-	t_tk_type		tk_type;
+	t_filetype		filetype; // isfile
+	t_tk_type		tk_type; // REDIR_IN
 	struct s_cmd	*next;
 }	t_cmd;
 

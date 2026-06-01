@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 19:29:07 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/28 11:16:08 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-// c'est juste un strjoin qui free s1, pour sauver des lignes
+#include "../header/minishell.h"
+
 char	*ft_strjoin_free(char *s1, char const *s2)
 {
 	char	*s3;
@@ -33,42 +33,51 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 	ft_strlcpy(&s3[len1], s2, ft_strlen(s2) + 1);
 	return (s3);
 }
-// cmd c'est ex: ls ou cat, etc.
-// getenv done un string de la variable environement PATH, elle contient des chemins
-// on la split pour avoir chaque chemin separement
-// mypath: c'est un join du chemin + / + cmd
-// access() avec flag F_OK, donne 0 si le fichier exist, -1 si il n'existe pas
-char	*get_path(char *cmd)
-{
-	int		i = 0;
-	char	*path;
-	char	*mypath;
-	char	**split = NULL;
 
-	path = getenv("PATH");
-	split = ft_split(path, ':');
+char	*search_in_split(char **split, char *cmd)
+{
+	char	*mypath;
+	int		i;
+
+	i = 0;
 	while(split[i])
 	{
 		mypath = ft_strjoin(split[i], "/");
+		if (!mypath)
+			return (NULL);
 		mypath = ft_strjoin_free(mypath, cmd);
-		if (access(mypath, F_OK) == 0)
-		{
-			printf("%s\n", mypath); // a enlever plus tard.
+		if (!mypath)
+			return (NULL);
+		if (access(mypath, X_OK) == 0)
 			return (mypath);
-		}
 		free(mypath);
 		i++;
 	}
-	printf("%s: command not found\n", cmd);
 	return (NULL);
 }
 
-// forks(): creer un nouveau process qui est une copie.
-// pid < 0: fork() a echouer
-// pid == 0: on est dans le process enfant
-// pid > 0: on est dans le process parent
-// la creation du process enfant permet d'utiliser execve() sans l'arret du programme
-void	execute(char **args, char *path)
+char	*get_path(char *cmd, t_shell *shell)
+{
+	char	*path;
+	char	*result;
+	char	**split;
+	int		i;
+
+	i = 0;
+	path = get_env_value(shell->env, "PATH=");
+	split = ft_split(path, ':');
+	if (!split)
+		return (NULL);
+	result = search_in_split(split, cmd);
+	while (split[i])
+		free(split[i++]);
+	free(split);
+	if (!result)
+		return (NULL);
+	return (result);
+}
+
+void	execute_path(char **args, char *path, t_shell *shell)
 {
 	pid_t	pid;
 
@@ -78,36 +87,52 @@ void	execute(char **args, char *path)
 		perror("fork failed");
 		return ;
 	}
-	if (pid == 0) {
-		// Child process
-		execve(path, args, NULL);
+	if (pid == 0)
+	{
+		execve(path, args, shell->env);
 		perror(path);
+		exit (127);
 	}
-	else {
-		// Parent process
+	else
 		waitpid(pid, NULL, 0);
-		printf("Child finished\n");
+}
+execute(t_cmd *list, t_shell *shell)
+{
+	char *path;
+
+	while (list != NULL)
+	{
+		if (list->args != NULL)
+		{
+			execute_single(list, shell);
+		}
+		list = list->next;
 	}
 }
 
-// pour exit la boucle, ecrit "exit" dans le terminal.
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 	char	**cmd_args;
 	char	*path;
 	char	*str;
+	t_shell shell;
 
+	shell.env = copy_env(envp);
 	(void)ac;
 	(void)av;
 	while(1)
 	{
 		str = readline("minishell> ");
-		cmd_args = ft_split(str, ',');
+		cmd_args = ft_split(str, ' ');
 		if (!str || !ft_strncmp(str, "exit", 5))
+		{
+			free(cmd_args);
 			return 0;
-		path = get_path(cmd_args[0]);
+		}
+		path = get_path(cmd_args[0], &shell);
 		if (path && cmd_args)
-			execute(cmd_args, path);
+			execute(cmd_args, &shell);
+		free(str);
 	}
 	return (1);
 }

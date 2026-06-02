@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 16:15:41 by ejones            #+#    #+#              #
-#    Updated: 2026/05/15 16:14:32 by ejones           ###   ########.fr        #
+#    Updated: 2026/05/21 16:04:16 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,11 +65,8 @@ fclean: clean
 	@echo "The Library was Succesfully Removed!!!!"
 
 # Does fclean and then recompiles everything
-re:  fclean print_re $(NAME)
+re: fclean $(NAME)
 
-print_re:
-	@bash ./PrintRules/re
-	@ls
 
 # Declaration of PHONY intructions
 .PHONY: all clean fclean re bonus print_re

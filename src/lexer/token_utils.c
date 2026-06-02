@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/02 15:59:23 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/02 16:27:15 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_add_token_back(t_token **lst, t_token *new)
 			*lst = new;
 	}
 }
-
+// fonction pour enlever les quotes aux extremiter
 char	*assign_value(char *value)
 {
 	char	*new_str;

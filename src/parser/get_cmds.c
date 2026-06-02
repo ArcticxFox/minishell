@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 18:14:19 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/02 16:13:12 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/02 16:26:50 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ t_cmd	*ft_new_cmd(char *cmd, t_token **tokens, t_filetype filetype, t_tk_type tk
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->cmd = ft_strdup(cmd);
+	if (!*tokens)
+		new_cmd->expand = 0;
+	else
+		new_cmd->expand = (*tokens)->expand;
 	if (!*tokens)
 		new_cmd->expand = 0;
 	else

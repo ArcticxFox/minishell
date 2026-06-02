@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 09:20:21 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/15 16:36:25 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/21 16:05:51 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	i = 0;
 	dsti = (unsigned char *)dest;
 	srce = (const unsigned char *)src;
-	while (i < n && srce[i])
+	while (i < n)
 	{
 		dsti[i] = srce[i];
 		i++;

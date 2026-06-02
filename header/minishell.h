@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/28 11:15:43 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/01 17:00:54 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <stdbool.h>
 # include <errno.h>
 # include <limits.h>
 
@@ -39,5 +40,6 @@
 extern int	g_value_exit;
 
 char	*ft_strjoin_free(char *s1, char const *s2);
+void	expand(t_shell *shell);
 
 #endif

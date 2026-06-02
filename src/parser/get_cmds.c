@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/28 17:12:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/04 15:07:58 by ejones     str      ###   ########.fr       */
+/*   Created: 2026/05/15 18:14:19 by ejones            #+#    #+#             */
+/*   Updated: 2026/06/02 16:22:50 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -76,12 +77,14 @@ t_cmd	*ft_new_cmd(char *cmd, t_token **tokens, t_filetype filetype, t_tk_type tk
 		return (NULL);
 	new_cmd->cmd = ft_strdup(cmd);
 	if (!*tokens)
+		new_cmd->expand = 0;
+	else
+		new_cmd->expand = (*tokens)->expand;
+	if (!*tokens)
 		new_cmd->args = NULL;
 	else if ((*tokens)->type == TOKEN_REDIR_IN || (*tokens)->type == TOKEN_REDIR_OUT
 		|| (*tokens)->type == TOKEN_APPEND || (*tokens)->type == TOKEN_HEREDOC)
-	{
 		new_cmd->args = get_args(tokens, filetype);
-	}
 	else
 		new_cmd->args = get_args(tokens, filetype);
 	new_cmd->filetype = filetype;
@@ -131,7 +134,7 @@ t_cmd	*get_commands(t_token *tokens)
 				break;
 		add_cmd(&head, cmd);
 	}
-	print_commands(head);
+	// print_commands(head);
 	if (!tmp)
 		return (head);
 	return (NULL);

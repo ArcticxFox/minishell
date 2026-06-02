@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/05/10 19:31:31 by ejones           ###   ########.fr        #
+#    Updated: 2026/05/19 17:46:12 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ SRC := \
 	builtin/builtin.c \
 	builtin/builtin_utils.c \
 	env/env_utils.c \
-	signals/sig_handler.c
+	signals/sig_handler.c \
+	expander.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 
@@ -55,7 +56,7 @@ $(UTILS):
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 #============================== CLEAN =========================================#
 

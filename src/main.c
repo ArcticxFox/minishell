@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/27 11:06:54 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/02 16:24:48 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,17 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 
 // la fonction readline() elle return NULL quand on fait Ctrl+D,
 // line = null print exit car dans bash c'est ce qui ce passe
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 	char *line;
 	t_token	*tokens;
 	t_cmd	*head;
+	t_shell	shell;
+
 	(void)ac;
 	(void)av;
 
+	shell.env = copy_env(envp);
 	tokens = NULL;
 	head = NULL;
 	init_signals();
@@ -59,7 +62,8 @@ int	main(int ac, char **av)
 			add_history(line);
 		tokens = lexer(line);
 		head = get_commands(tokens);
-		print_commands(head);
+		execute(head, &shell);
+		// print_commands(head);
 		printf("\n");
 		free(line);
 	}

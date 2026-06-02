@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 15:37:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 20:43:20 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/21 16:22:43 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_commands(t_cmd *cmd)
 	while (cmd)
 	{
 		i = 0;
-		printf("cmd->cmd => '%s'\n", cmd->cmd);
+		printf("cmd->cmd => %s || is file %d\n", cmd->cmd, cmd->filetype);
 		if (cmd->args)
 		{
 			printf("cmd->args => ");
@@ -49,6 +49,7 @@ void	print_commands(t_cmd *cmd)
 			}
 			printf("\n");
 		}
+		printf("expand => %d", cmd->expand);
 		printf("\n");
 		cmd = cmd->next;
 	}

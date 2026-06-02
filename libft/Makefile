@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 16:15:41 by ejones            #+#    #+#              #
-#    Updated: 2026/01/06 14:59:32 by ejones           ###   ########.fr        #
+#    Updated: 2026/05/21 16:04:16 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,6 @@ CFLAGS = -Wall -Wextra -Werror -g -I$(INC_DIR) -MMD -MP
 NAME = libft.a
 
 all: $(NAME)
-	@bash ./PrintRules/make
 	@ls
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
@@ -57,22 +56,17 @@ $(NAME): $(LIBFT_OBJ) $(PRINTF_OBJ)
 # Removes all *.o files compiled from source and bonus
 clean:
 	@rm -rf $(BUILD_DIR);
-	@bash ./PrintRules/clean
 	@echo "Objects were removed Succesfully!!!!"
 
 # Does clean and removes libft.a
 fclean: clean
 	@rm -f $(NAME)
 	@rm -f a.out
-	@bash ./PrintRules/fclean
 	@echo "The Library was Succesfully Removed!!!!"
 
 # Does fclean and then recompiles everything
-re:  fclean print_re $(NAME)
+re: fclean $(NAME)
 
-print_re:
-	@bash ./PrintRules/re
-	@ls
 
 # Declaration of PHONY intructions
 .PHONY: all clean fclean re bonus print_re

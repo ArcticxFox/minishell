@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/28 11:16:08 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/02 16:21:42 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,37 +77,21 @@ char	*get_path(char *cmd, t_shell *shell)
 	return (result);
 }
 
-void	execute_path(char **args, char *path, t_shell *shell)
+int	execute(t_cmd *list, t_shell *shell)
 {
-	pid_t	pid;
+	t_cmd	*current;
+	t_cmd	*cmd_node;
 
-	pid = fork();
-	if (pid < 0)
+	current = list;
+	while (current)
 	{
-		perror("fork failed");
-		return ;
+		if (current->cmd[0] == '|')
+			execute_pipeline(list, shell);
+		current = current->next;
 	}
-	if (pid == 0)
-	{
-		execve(path, args, shell->env);
-		perror(path);
-		exit (127);
-	}
-	else
-		waitpid(pid, NULL, 0);
-}
-execute(t_cmd *list, t_shell *shell)
-{
-	char *path;
-
-	while (list != NULL)
-	{
-		if (list->args != NULL)
-		{
-			execute_single(list, shell);
-		}
-		list = list->next;
-	}
+	if (!current)
+		execute_single(list, shell);
+	return (1);
 }
 
 int	main(int ac, char **av, char **envp)

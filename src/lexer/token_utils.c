@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 20:43:16 by ejones           ###   ########.fr       */
+/*   Updated: 2026/05/21 16:16:39 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,29 @@ void	ft_add_token_back(t_token **lst, t_token *new)
 			*lst = new;
 	}
 }
+// fonction pour enlever les quotes aux extremiter
+char	*assign_value(char *value)
+{
+	char	*new_str;
+	char	tmp;
+	int		end;
+
+	end = ft_strlen(value);
+	if (value[end - 1] == ' ')
+	{
+		tmp = value[end - 2];
+		value[end - 2] = value[end - 1];
+		value[end - 1] = tmp;
+	}
+	if (*value == '\'')
+		new_str = ft_strtrim(value, "\'");
+	else if (*value == '"')
+		new_str = ft_strtrim(value, "\"");
+	else
+		return (value);
+	free(value);
+	return (new_str);
+}
 
 t_token	*ft_new_token(char *value, t_tk_type type, int expand)
 {
@@ -51,14 +74,14 @@ t_token	*ft_new_token(char *value, t_tk_type type, int expand)
 	if (!new_token)
 		return (NULL);
 	new_token->next = NULL;
-	new_token->expand = expand;
+	new_token->expand =	expand;
 	if (*value == '\'')
 		new_token->expand = 0;
 	new_token->type = type;
 	if (type == TOKEN_WORD)
-		new_token->value = value;
+		new_token->value = assign_value(value);
 	else
-		new_token->value = ft_strdup(value);
+		new_token->value = assign_value(value);
 	if (!new_token->value)
 	{
 		free(new_token);

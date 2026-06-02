@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/21 14:58:06 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/02 13:57:28 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_get_lenght(char **env, char *str)
 		{
 			++i;
 			name = ft_env_name(str, &i);
-			len += ft_get_env_len(env, name) - 1;
+			len += ft_get_env_len(env, name);
 			free(name);
 		}
 		else
@@ -104,41 +104,53 @@ bool	check_for_dollar(char *str)
 	return (false);
 }
 
-// char	*ft_copy_into_env()
-// {}
+int	ft_copy_into_env(char **env, char *str, char *new_str, int *i)
+{
+	int		n;
+	char	*env_v;
+	char	*name;
 
-void	expand_string(char **env, char *str)
+	name = ft_env_name(str, i);
+	env_v = get_env_value(env, name);
+
+	n = ft_strlcpy(new_str, env_v, ft_strlen(env_v) + 1);
+	if (n == 0)
+		new_str = NULL;
+	free(name);
+	return (n);
+}
+
+char	*expand_string(char **env, char *str)
 {
 	int		i;
+	int		n;
 	int		len;
-	char	*name;
-	char	*env_v;
+	char	*new_str;
 
 	i = 0;
+	n = 0;
 	len = ft_get_lenght(env, str);
-	name = NULL;
-	env_v = NULL;
-	str = ft_realloc(str, (sizeof(char) * len) + 1);
+	new_str = malloc(len * sizeof(char) + 1);
 	if (!str)
-		return ;
-	while (i < len)
+		return (NULL);
+	while (str[i])
 	{
 		if (str[i] == '$')
 		{
 			++i;
-			name = ft_env_name(str, &i);
-			i -= ft_strlen(name) + 1;
-			env_v = get_env_value(env, name);
-			i += (int)ft_strlcpy(&str[i], env_v, ft_strlen(env_v)) - 1;
-			free(name);
-			name = NULL;
+			n += ft_copy_into_env(env, str, &new_str[n], &i);
 		}
 		else
 		{
+			new_str[n] = str[i];
+			++n;
 			++i;
 		}
 	}
-	printf("\nstr = %s\n", str);
+	free(str);
+	new_str[len] = '\0';
+	printf("new_str: %s\n", new_str);
+	return (new_str);
 }
 
 void	expand(t_shell *shell)
@@ -154,7 +166,7 @@ void	expand(t_shell *shell)
 	{
 		if (check_for_dollar(tmp->args[i]))
 		{
-			expand_string(shell->env, tmp->args[i]);
+			tmp->args[i] = expand_string(shell->env, tmp->args[i]);
 		}
 		++i;
 	}

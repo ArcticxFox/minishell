@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 15:49:28 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 19:34:33 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/02 15:50:10 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,22 @@ void	add_cmd(t_cmd **lst, t_cmd *new_cmd)
 		else
 			*lst = new_cmd;
 	}
+}
+
+void	ft_delete_front_cmd(t_cmd **stack)
+{
+	t_cmd	*pstemp;
+
+	pstemp = NULL;
+	if (!stack && !*stack)
+		return ;
+	pstemp = *stack;
+	if (pstemp->next == NULL)
+		*stack = NULL;
+	else
+		*stack = pstemp->next;
+	if (pstemp->args)
+		free_memory(pstemp->args);
+	free(pstemp->cmd);
+	free(pstemp);
 }

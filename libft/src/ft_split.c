@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:06:37 by ejones            #+#    #+#             */
-/*   Updated: 2026/04/30 16:25:55 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/02 15:26:33 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	*free_memory(char **tab)
 		free(tab[i]);
 		i++;
 	}
-	free(tab);
+	if (tab)
+		free(tab);
 	return (NULL);
 }
 

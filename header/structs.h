@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/06 17:14:29 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/16 16:49:31 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,20 @@ typedef enum e_token_type
 	TOKEN_HEREDOC
 }	t_tk_type;
 
+typedef struct s_redir t_redir;
+
 typedef struct s_redir
 {
 	char		*file;
 	t_tk_type	type;
+	t_redir		*next;
 }	t_redir;
 
 typedef struct s_cmd
 {
 	char			*cmd;
 	char			**args;
-	int				expand;
-	t_redir			redir;
+	t_redir			*redir;
 	struct s_cmd	*next;
 }	t_cmd;
 

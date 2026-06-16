@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/06 17:28:10 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/16 19:04:24 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,16 @@ int	main(int ac, char **av, char **envp)
 			add_history(line);
 		tokens = lexer(line);
 		print_token(tokens);
-		// head = get_commands(tokens);
-		// shell.head = head;
-		// expand(&shell);
-		// print_commands(shell.head);
+		head = tmp_get_commands(tokens);
+		print_commands(head);
 		while (tokens)
 		{
 			ft_delete_front_token(&tokens);
 		}
-		// while (shell.head)
-		// {
-		// 	ft_delete_front_cmd(&shell.head);
-		// }
+		while(head)
+		{
+			ft_delete_front_cmd(&head);
+		}
 		printf("\n");
 		free(line);
 	}

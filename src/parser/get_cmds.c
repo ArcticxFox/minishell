@@ -1,144 +1,161 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_cmds.c                                         :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/15 18:14:19 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/06 15:57:42 by ejones           ###   ########.fr       */
+/*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
+/*   Updated: 2026/06/16 19:07:48 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
+
 
 int	ft_isspecial(t_token *token)
 {
 	if (!token)
 		return (0);
-	if (token->type == TOKEN_PIPE || token->type == TOKEN_REDIR_IN
-		|| token->type == TOKEN_REDIR_OUT || token->type == TOKEN_APPEND
-		|| token->type == TOKEN_HEREDOC)
+	if (token->type == TOKEN_PIPE)
 		return (1);
+	if (token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT
+		|| token->type == TOKEN_APPEND || token->type == TOKEN_HEREDOC)
+		return (2);
 	return (0);
 }
 
-char	count_cmdargs(t_token *tokens)
+t_redir	*new_redir(t_token *tokens)
 {
-	int	size;
+	t_redir	*new_redir;
 
-	size = 0;
-	if (tokens != NULL && !ft_isspecial(tokens))
-	{
-		size = 1;
-		size += count_cmdargs(tokens->next);
-	}
-	return (size);
+	new_redir = malloc(sizeof(t_redir) * 1);
+	if (!new_redir)
+		return (NULL);
+	if (tokens->next->value)
+		new_redir->file = ft_strdup(tokens->next->value);
+	else
+		new_redir->file =  NULL;
+	new_redir->type = tokens->type;
+	new_redir->next = NULL;
+	return (new_redir);
 }
 
-char	**get_args(t_token **tokens, t_filetype filetype)
+t_redir	*find_redir(t_token *tokens)
 {
+	t_token	*tmp;
+	t_redir	*redir;
+
+	tmp = tokens;
+	redir = NULL;
+	while(tmp && tmp->type != TOKEN_PIPE)
+	{
+		if (ft_isspecial(tmp) == 2)
+		{
+			ft_add_back_redir(&redir, new_redir(tmp));
+			tmp = tmp->next;
+		}
+		tmp = tmp->next;
+	}
+	return (redir);
+}
+//needs expand func to work
+char	*get_cmd_value(t_token **tokens)
+{
+	char	*value;
+
+	value = NULL;
+	while(*tokens && ft_isspecial(*tokens) == 2)
+	{
+		if (ft_isspecial(*tokens) == 2 && (*tokens)->next)
+			*tokens = (*tokens)->next->next;
+		else
+			(*tokens) = (*tokens)->next;
+	}
+	if (ft_isspecial(*tokens) == 1)
+		return (NULL);
+	// if ((*tokens)->value && (*tokens)->expand == 0)
+	// 	value = ft_strdup((*tokens)->value);
+	// else if((*tokens)->value && (*tokens)->expand == 1)
+	// 	value = expand();
+	if ((*tokens)->value)
+		value = ft_strdup((*tokens)->value);
+	else
+		value = NULL;
+	(*tokens) = (*tokens)->next;
+	return (value);
+}
+
+// works
+int	count_args(t_token *tokens)
+{
+	int	n;
+
+	n = 0;
+	while (tokens && tokens->type != TOKEN_PIPE)
+	{
+		if (ft_isspecial(tokens) == 2 && tokens->next)
+			tokens = tokens->next->next;
+		else
+		{
+			++n;
+			tokens = tokens->next;
+		}
+	}
+	return (n);
+}
+char	**get_args(t_token **tokens)
+{
+	int		n;
 	int		i;
-	int		nbr_tk;
 	char	**args;
 
+	n = count_args(*tokens) + 1;
 	i = 0;
-	if (filetype == NOT_FILE)
-		nbr_tk = count_cmdargs(*tokens);
-	else
-		nbr_tk = 2;
-	args = (char **)ft_calloc(nbr_tk + 1, sizeof(char *));
+	args = malloc(sizeof(char *) * n);
 	if (!args)
 		return (NULL);
-	while (i < nbr_tk)
+	while(i < n - 1)
 	{
-		args[i] = ft_strdup((*tokens)->value);
-		if (!args[i])
+		args[i] = get_cmd_value(tokens);
+		if (!args)
 		{
 			free_memory(args);
 			return (NULL);
 		}
 		++i;
-		*tokens = (*tokens)->next;
 	}
+	args[i] = NULL;
 	return (args);
 }
-
-t_cmd	*ft_new_cmd(char *cmd, t_token **tokens, t_filetype filetype, t_tk_type tk_type)
+t_cmd	*ft_new_commands(t_token **tokens)
 {
 	t_cmd	*new_cmd;
 
-	new_cmd = NULL;
-	if (!cmd || !tokens)
-		return (NULL);
-	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);
-	new_cmd->cmd = ft_strdup(cmd);
-	if (!*tokens)
-		new_cmd->expand = 0;
-	else
-		new_cmd->expand = (*tokens)->expand;
-	if (!*tokens)
-		new_cmd->expand = 0;
-	else
-		new_cmd->expand = (*tokens)->expand;
-	if (!*tokens)
-		new_cmd->args = NULL;
-	else if ((*tokens)->type == TOKEN_REDIR_IN || (*tokens)->type == TOKEN_REDIR_OUT
-		|| (*tokens)->type == TOKEN_APPEND || (*tokens)->type == TOKEN_HEREDOC)
-		new_cmd->args = get_args(tokens, filetype);
-	else
-		new_cmd->args = get_args(tokens, filetype);
-	new_cmd->filetype = filetype;
-	new_cmd->tk_type = tk_type;
+	new_cmd->redir = find_redir(*tokens);
+	new_cmd->args = get_args(tokens);
+	new_cmd->cmd = new_cmd->args[0];
 	new_cmd->next = NULL;
 	return (new_cmd);
 }
 
-t_cmd	*get_special_cmd(t_token **token)
-{
-	t_cmd	*cmd;
-	t_token	*tmp;
-
-	cmd = NULL;
-	tmp = NULL;
-	if ((*token)->type == TOKEN_REDIR_IN || (*token)->type == TOKEN_REDIR_OUT
-		|| (*token)->type == TOKEN_APPEND || (*token)->type == TOKEN_HEREDOC)
-	{
-		tmp = *token;
-		*token = (*token)->next;
-	}
-	cmd = ft_new_cmd((*token)->value, &tmp, IS_FILE, (*token)->type);
-	if (!cmd)
-		return (NULL);
-	return (cmd);
-}
-
-t_cmd	*get_commands(t_token *tokens)
+t_cmd	*tmp_get_commands(t_token *tokens)
 {
 	t_token	*tmp;
-	t_cmd	*cmd;
 	t_cmd	*head;
 
 	tmp = tokens;
-	cmd = NULL;
 	head = NULL;
-	while(tmp)
+	while (tmp)
 	{
+		add_cmd(&head, ft_new_commands(&tmp));
 		if (ft_isspecial(tmp))
-		{
-			cmd = get_special_cmd(&tmp);
-			tmp = tmp->next;
-		}
-		else
-			cmd = ft_new_cmd(tmp->value, &tmp, NOT_FILE, tmp->type);
-		if (!cmd)
-				break;
-		add_cmd(&head, cmd);
+			while(tmp && tmp->type != TOKEN_PIPE)
+				tmp = tmp->next;
 	}
-	if (!tmp)
-		return (head);
-	return (NULL);
+	return (head);
 }
+

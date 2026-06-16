@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/02 12:18:37 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/16 08:21:07 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,31 @@ typedef enum e_filetype
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,
-	TOKEN_PIPE,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_APPEND,
 	TOKEN_HEREDOC
 }	t_tk_type;
 
-
-typedef struct s_cmd // ex : < input ls -l | grep C > output
+typedef struct s_pipe_state
 {
-	char			*cmd; // input
-	char			**args; // < input
-	int				expand;
-	t_filetype		filetype; // isfile
-	t_tk_type		tk_type; // REDIR_IN
+	int	**pipes;
+	int	n_cmds;
+	int	index;
+}	t_pipe_state;
+
+typedef struct s_redir
+{
+	char			*file;
+	t_tk_type		type;
+	struct s_redir	*next;
+}	t_redir;
+
+typedef struct s_cmd
+{
+	char			*cmd;
+	char			**args;
+	t_redir			*redirs;
 	struct s_cmd	*next;
 }	t_cmd;
 

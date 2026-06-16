@@ -6,117 +6,83 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/02 16:21:42 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/16 08:26:01 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-char	*ft_strjoin_free(char *s1, char const *s2)
+void	execute_pipeline(t_cmd *list, t_shell *shell)
 {
-	char	*s3;
-	size_t	len1;
-	size_t	lenx;
+	t_pipe_state	state;
+	pid_t			*pids;
+	t_cmd			*cur;
+	int				i;
 
-	if (!s2)
-		return (NULL);
-	len1 = ft_strlen(s1);
-	lenx = (len1 + ft_strlen(s2));
-	s3 = (char *)ft_calloc((lenx + 1), sizeof(char));
-	if (!s3)
-		return (NULL);
-	if (s1)
-	{
-		ft_strlcpy(s3, s1, (len1 + 1));
-		free(s1);
-	}
-	ft_strlcpy(&s3[len1], s2, ft_strlen(s2) + 1);
-	return (s3);
-}
-
-char	*search_in_split(char **split, char *cmd)
-{
-	char	*mypath;
-	int		i;
-
+	state.n_cmds = count_cmds(list);
+	state.pipes = create_pipes(state.n_cmds - 1);
+	pids = malloc(sizeof(pid_t) * state.n_cmds);
+	if (!state.pipes || !pids)
+		return ;
+	cur = list;
 	i = 0;
-	while(split[i])
+	while (cur)
 	{
-		mypath = ft_strjoin(split[i], "/");
-		if (!mypath)
-			return (NULL);
-		mypath = ft_strjoin_free(mypath, cmd);
-		if (!mypath)
-			return (NULL);
-		if (access(mypath, X_OK) == 0)
-			return (mypath);
-		free(mypath);
+		state.index = i;
+		pids[i] = fork();
+		if (pids[i] == 0)
+			child_pipe_setup(cur, &state, shell);
+		cur = cur->next;
 		i++;
 	}
-	return (NULL);
-}
-
-char	*get_path(char *cmd, t_shell *shell)
-{
-	char	*path;
-	char	*result;
-	char	**split;
-	int		i;
-
+	close_all_pipes(state.pipes, state.n_cmds - 1);
 	i = 0;
-	path = get_env_value(shell->env, "PATH=");
-	split = ft_split(path, ':');
-	if (!split)
-		return (NULL);
-	result = search_in_split(split, cmd);
-	while (split[i])
-		free(split[i++]);
-	free(split);
-	if (!result)
-		return (NULL);
-	return (result);
+	while (i < state.n_cmds)
+		waitpid(pids[i++], NULL, 0);
+	free_pipes(state.pipes, state.n_cmds - 1);
+	free(pids);
 }
 
-int	execute(t_cmd *list, t_shell *shell)
+void	execute(t_cmd *list, t_shell *shell)
 {
+	bool	has_pipe;
 	t_cmd	*current;
-	t_cmd	*cmd_node;
 
+	has_pipe = false;
 	current = list;
 	while (current)
 	{
-		if (current->cmd[0] == '|')
-			execute_pipeline(list, shell);
-		current = current->next;
+
 	}
-	if (!current)
+	if (has_pipe)
+		execute_pipeline(list, shell);
+	else
 		execute_single(list, shell);
-	return (1);
 }
 
-int	main(int ac, char **av, char **envp)
-{
-	char	**cmd_args;
-	char	*path;
-	char	*str;
-	t_shell shell;
+// int	main(int ac, char **av, char **envp)
+// {
+// 	char	**cmd_args;
+// 	char	*path;
+// 	char	*str;
+// 	t_shell shell;
 
-	shell.env = copy_env(envp);
-	(void)ac;
-	(void)av;
-	while(1)
-	{
-		str = readline("minishell> ");
-		cmd_args = ft_split(str, ' ');
-		if (!str || !ft_strncmp(str, "exit", 5))
-		{
-			free(cmd_args);
-			return 0;
-		}
-		path = get_path(cmd_args[0], &shell);
-		if (path && cmd_args)
-			execute(cmd_args, &shell);
-		free(str);
-	}
-	return (1);
-}
+// 	shell.env = copy_env(envp);
+// 	(void)ac;
+// 	(void)av;
+// 	while(1)
+// 	{
+// 		str = readline("minishell> ");
+// 		cmd_args = ft_split(str, ' ');
+// 		if (!str || !ft_strncmp(str, "exit", 5))
+// 		{
+// 			free(cmd_args);
+// 			return 0;
+// 		}
+// 		path = get_path(cmd_args[0], &shell);
+// 		if (path && cmd_args)
+// 			execute(cmd_args, &shell);
+// 		free(str);
+// 	}
+// 	return (1);
+// }

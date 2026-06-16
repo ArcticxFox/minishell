@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
+#    By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/05/19 17:46:12 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/02 16:39:07 by leonpouet        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,8 @@ SRC := \
 	builtin/builtin_utils.c \
 	env/env_utils.c \
 	signals/sig_handler.c \
+	execute.c\
+	execute_utils.c\
 	expander.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))

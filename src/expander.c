@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/21 14:58:06 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/02 16:37:34 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	*ft_realloc(void *ptr, size_t size)
 
 char	*ft_env_name(char *str, int *i)
 {
-	int		len;
+	// int		len;
 	int		start;
 	char	*name;
 
-	len = 0;
+	// len = 0;
 	start = *i;
 	name = NULL;
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
@@ -66,12 +66,12 @@ int	ft_get_lenght(char **env, char *str)
 	int		i;
 	int		len;
 	char	*name;
-	char	*env_v;
+	// char	*env_v;
 
 	i = 0;
 	len = 0;
 	name = NULL;
-	env_v = NULL;
+	// env_v = NULL;
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -144,11 +144,11 @@ void	expand_string(char **env, char *str)
 void	expand(t_shell *shell)
 {
 	int		i;
-	char	*str;
+	// char	*str;
 	t_cmd	*tmp;
 
 	i = 0;
-	str = NULL;
+	// str = NULL;
 	tmp = shell->head;
 	while (tmp->args[i])
 	{

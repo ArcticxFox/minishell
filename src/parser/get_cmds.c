@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 18:14:19 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/21 17:24:08 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/02 16:22:50 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ t_cmd	*get_commands(t_token *tokens)
 				break;
 		add_cmd(&head, cmd);
 	}
-	print_commands(head);
+	// print_commands(head);
 	if (!tmp)
 		return (head);
 	return (NULL);

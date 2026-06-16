@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 12:22:34 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/05/19 18:01:34 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/01 17:00:01 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../header/minishell.h"
 
 char	**copy_env(char **envp)
 {

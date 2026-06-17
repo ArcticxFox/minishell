@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/06/16 16:53:37 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/17 18:50:09 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRC := \
 	env/env_utils.c \
 	signals/sig_handler.c \
 	parser/print_structs.c \
- 	parser/test.c \
+ 	parser/get_cmds.c \
 	parser/parseur_utils.c \
 	#expander.c \
 	#parser/get_cmds.c \

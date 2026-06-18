@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/10 19:15:14 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/24 09:58:30 by leonpouet        ###   ########.fr       */
+/*   Created: 2026/05/28 11:12:33 by leonpouet         #+#    #+#             */
+/*   Updated: 2026/06/03 11:23:58 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#ifndef EXECUTE_H
+# define EXECUTE_H
 
 # include "structs.h"
 
-int		builtin(char **args, t_shell *shell);
-int		is_builtin(char *cmd);
-
-int		exec_cd(char **args, t_shell *shell);
-int		exec_export(char **args, t_shell *shell);
-int		exec_unset(char **args, t_shell *shell);
-
-void	free_all(t_shell *shell, char **cmd_args,
-			char *str, int n);
+void	execute(t_cmd *list, t_shell *shell);
+void	execute_single(t_cmd *list, t_shell *shell);
+void	execute_pipeline(t_cmd *list, t_shell *shell);
+void	execute_redir(t_cmd *list);
+char	*get_path(char *cmd, t_shell *shell);
 
 #endif

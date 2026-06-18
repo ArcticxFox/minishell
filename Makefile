@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/06/18 16:06:58 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/18 16:12:37 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,15 +34,12 @@ SRC := \
 	builtin/builtin_utils.c \
 	env/env_utils.c \
 	signals/sig_handler.c \
-	execute.c\
-	execute_utils.c\
-	expander.c
 	parser/print_structs.c \
  	parser/get_cmds.c \
 	parser/parseur_utils.c \
 	expander.c \
-	#parser/get_cmds.c \
-	parser/cmds_utils.c \
+# 	execute_utils.c\
+# 	execute.c\
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 

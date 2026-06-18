@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/06/17 18:50:09 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/18 10:07:55 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRC := \
 	parser/print_structs.c \
  	parser/get_cmds.c \
 	parser/parseur_utils.c \
-	#expander.c \
+	expander.c \
 	#parser/get_cmds.c \
 	parser/cmds_utils.c \
 

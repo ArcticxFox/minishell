@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/02 13:57:28 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/18 11:44:03 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,26 +120,21 @@ int	ft_copy_into_env(char **env, char *str, char *new_str, int *i)
 	return (n);
 }
 
-char	*expand_string(char **env, char *str)
+char	*expand_string(char **env, char *str, int len)
 {
 	int		i;
 	int		n;
-	int		len;
 	char	*new_str;
 
 	i = 0;
 	n = 0;
-	len = ft_get_lenght(env, str);
 	new_str = malloc(len * sizeof(char) + 1);
 	if (!str)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '$')
-		{
-			++i;
+		if (str[i++] == '$')
 			n += ft_copy_into_env(env, str, &new_str[n], &i);
-		}
 		else
 		{
 			new_str[n] = str[i];
@@ -147,29 +142,26 @@ char	*expand_string(char **env, char *str)
 			++i;
 		}
 	}
-	free(str);
 	new_str[len] = '\0';
-	printf("new_str: %s\n", new_str);
 	return (new_str);
 }
 
-void	expand(t_shell *shell)
+char	*expand(char **env, char *arg)
 {
 	int		i;
+	int		len;
 	char	*str;
-	t_cmd	*tmp;
 
 	i = 0;
+	len = ft_get_lenght(env, arg);
 	str = NULL;
-	tmp = shell->head;
-	while (tmp->args[i])
+	if (check_for_dollar(arg))
 	{
-		if (check_for_dollar(tmp->args[i]))
-		{
-			tmp->args[i] = expand_string(shell->env, tmp->args[i]);
-		}
-		++i;
+		str = expand_string(env, arg, len);
 	}
+	else
+		str = ft_strdup(arg);
+	return (str);
 }
 
 

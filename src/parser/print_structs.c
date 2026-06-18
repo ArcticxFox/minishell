@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 15:37:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/16 19:06:03 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/18 14:24:23 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	print_commands(t_cmd *cmd)
 	int		i;
 	t_redir	*redir;
 
-	redir = cmd->redir;
 	while (cmd)
 	{
+		redir = cmd->redir;
 		i = 0;
 		printf("cmd : %s\n", cmd->cmd);
 		printf("args : ");
@@ -54,6 +54,7 @@ void	print_commands(t_cmd *cmd)
 			printf("file : %s\n", redir->file);
 			redir = redir->next;
 		}
+		ft_printf("\n");
 		cmd = cmd->next;
 	}
 }

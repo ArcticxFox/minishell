@@ -6,12 +6,11 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 15:49:28 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/16 19:07:10 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/18 11:34:32 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
 
 t_cmd	*ft_last_cmd(t_cmd *lst)
 {
@@ -99,7 +98,7 @@ void	ft_delete_front_cmd(t_cmd **stack)
 		*stack = NULL;
 	else
 		*stack = pstemp->next;
-		
+
 	free_memory(pstemp->args);
 	while(pstemp->redir)
 		ft_delete_front_redir(&pstemp->redir);

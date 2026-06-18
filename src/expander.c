@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/18 11:44:03 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/18 15:50:01 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,21 @@ void	*ft_realloc(void *ptr, size_t size)
 
 char	*ft_env_name(char *str, int *i)
 {
-	int		len;
+	int		j;
 	int		start;
 	char	*name;
 
-	len = 0;
+	j = 0;
 	start = *i;
 	name = NULL;
+	if(ft_isdigit(str[*i]))
+	{
+		(*i)++;
+		name = ft_substr(str, start, (*i) - start);
+		if(!name)
+			return (NULL);
+		return (name);
+	}
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		(*i)++;
 	name = ft_substr(str, start, (*i) - start);
@@ -110,12 +118,10 @@ int	ft_copy_into_env(char **env, char *str, char *new_str, int *i)
 	char	*env_v;
 	char	*name;
 
+	n = 0;
 	name = ft_env_name(str, i);
 	env_v = get_env_value(env, name);
-
 	n = ft_strlcpy(new_str, env_v, ft_strlen(env_v) + 1);
-	if (n == 0)
-		new_str = NULL;
 	free(name);
 	return (n);
 }
@@ -133,8 +139,11 @@ char	*expand_string(char **env, char *str, int len)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i++] == '$')
+		if (str[i] == '$')
+		{
+			++i;
 			n += ft_copy_into_env(env, str, &new_str[n], &i);
+		}
 		else
 		{
 			new_str[n] = str[i];
@@ -153,10 +162,10 @@ char	*expand(char **env, char *arg)
 	char	*str;
 
 	i = 0;
-	len = ft_get_lenght(env, arg);
 	str = NULL;
 	if (check_for_dollar(arg))
 	{
+		len = ft_get_lenght(env, arg);
 		str = expand_string(env, arg, len);
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/16 08:21:07 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/18 16:05:01 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ typedef enum e_filetype
 
 typedef enum e_token_type
 {
+	TOKEN_WORD,
+	TOKEN_PIPE,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_APPEND,
@@ -45,7 +47,7 @@ typedef struct s_cmd
 {
 	char			*cmd;
 	char			**args;
-	t_redir			*redirs;
+	t_redir			*redir;
 	struct s_cmd	*next;
 }	t_cmd;
 

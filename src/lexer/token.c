@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/21 16:14:29 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/02 16:27:56 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,26 +102,26 @@ char	*extract_word(char *str, int *i)
 int	check_special_char(t_token **token, char *s, int *i)
 {
 	if (s[*i] == '|')
-		*token = ft_new_token("|", TOKEN_PIPE, 0);
+		*token = ft_new_token(ft_strdup("|"), TOKEN_PIPE, 0);
 	else if (s[*i] == '>')
 	{
 		if (s[*i + 1] == '>')
 		{
 			++(*i);
-			*token = ft_new_token(">>", TOKEN_APPEND, 0);
+			*token = ft_new_token(ft_strdup(">>"), TOKEN_APPEND, 0);
 		}
 		else
-			*token = ft_new_token(">", TOKEN_REDIR_OUT, 0);
+			*token = ft_new_token(ft_strdup(">"), TOKEN_REDIR_OUT, 0);
 	}
 	else if (s[*i] == '<')
 	{
 		if (s[*i + 1] == '<')
 		{
 			++(*i);
-			*token = ft_new_token("<<", TOKEN_HEREDOC, 0);
+			*token = ft_new_token(ft_strdup("<<"), TOKEN_HEREDOC, 0);
 		}
 		else
-			*token = ft_new_token("<", TOKEN_REDIR_IN, 0);
+			*token = ft_new_token(ft_strdup("<"), TOKEN_REDIR_IN, 0);
 	}
 	else
 		return (0);
@@ -164,6 +164,5 @@ t_token *lexer(char *line)
 			ft_add_token_back(&tokens, ft_new_token(str, TOKEN_WORD, 1));
 		}
 	}
-//	print_token(tokens);
 	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 14:42:00 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/21 15:02:24 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/02 13:56:53 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 
 	i = 0;
 	src_size = ft_strlen(src);
-	if (size == 0)
+	if (size == 0 || !src)
 		return (src_size);
-	while (src[i] != '\0' && i < size)
+	while (src[i] != '\0' && i < size - 1)
 	{
 		dst[i] = src[i];
 		i++;

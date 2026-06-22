@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:43:20 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/18 16:18:23 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/22 12:55:09 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*get_path(char *cmd, t_shell *shell)
 	int		i;
 
 	i = 0;
-	path = get_env_value(shell->env, "PATH=");
+	path = get_env_value(shell->env, "PATH");
 	split = ft_split(path, ':');
 	if (!split)
 		return (NULL);
@@ -92,7 +92,7 @@ char	*get_path(char *cmd, t_shell *shell)
 	return (result);
 }
 
-static int	apply_redirs(t_redir *redir)
+int	apply_redirs(t_redir *redir)
 {
 	int fd;
 

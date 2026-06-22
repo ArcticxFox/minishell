@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
+#    By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/06/18 16:12:37 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/22 13:34:31 by leonpouet        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,9 @@ SRC := \
  	parser/get_cmds.c \
 	parser/parseur_utils.c \
 	expander.c \
-# 	execute_utils.c\
-# 	execute.c\
+	execute_utils.c\
+	execute.c\
+	pipe.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 

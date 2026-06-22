@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 14:59:55 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/16 08:24:14 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/22 13:36:31 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_pipes(int **pipes, int i)
 	free(pipes);
 }
 
-static void	close_all_pipes(int **pipes, int n)
+void	close_all_pipes(int **pipes, int n)
 {
 	int	i;
 
@@ -63,7 +63,7 @@ int	**create_pipes(int n)
 	return(pipes);
 }
 
-static void	child_pipe_setup(t_cmd *cmd, t_pipe_state *state, t_shell *shell)
+void	child_pipe_setup(t_cmd *cmd, t_pipe_state *state, t_shell *shell)
 {
 	int	fd_in;
 	int	fd_out;

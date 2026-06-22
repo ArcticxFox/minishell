@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/18 16:02:25 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/22 13:32:43 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void	*ft_realloc(void *ptr, size_t size)
 
 char	*ft_env_name(char *str, int *i)
 {
-	int		j;
+	// int		j;
 	int		start;
 	char	*name;
 
-	j = 0;
+	// j = 0;
 	start = *i;
 	name = NULL;
 	if(ft_isdigit(str[*i]))
@@ -74,12 +74,12 @@ int	ft_get_lenght(char **env, char *str)
 	int		i;
 	int		len;
 	char	*name;
-	char	*env_v;
+	// char	*env_v;
 
 	i = 0;
 	len = 0;
 	name = NULL;
-	env_v = NULL;
+	// env_v = NULL;
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -157,11 +157,11 @@ char	*expand_string(char **env, char *str, int len)
 
 char	*expand(char **env, char *arg)
 {
-	int		i;
+	// int		i;
 	int		len;
 	char	*str;
 
-	i = 0;
+	// i = 0;
 	str = NULL;
 	if (check_for_dollar(arg))
 	{

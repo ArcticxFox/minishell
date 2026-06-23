@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:14:06 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/10 19:29:07 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/23 14:11:46 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,24 @@
 
 int	g_value_exit = 0;
 
-void handle_sigint(int sig)
+void	handle_sigint(int sig)
 {
 	(void)sig;
-
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_value_exit = 130;
 }
+
 // cette fonction sert a gerer Ctrl+C et Ctrl+/
-void init_signals(void)
+void	init_signals(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = handle_sigint;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-
 	sigaction(SIGINT, &sa, NULL);
-
 	signal(SIGQUIT, SIG_IGN);
 }

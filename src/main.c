@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/22 13:41:44 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/23 13:28:18 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ int	main(int ac, char **av, char **envp)
 		if (line[0] != '\0')
 			add_history(line);
 		tokens = lexer(line);
-		// print_token(tokens);
 		head = tmp_get_commands(tokens, shell.env);
 		shell.head = head;
-		// print_commands(head);
 		while (tokens)
 		{
 			ft_delete_front_token(&tokens);

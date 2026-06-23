@@ -6,75 +6,11 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/02 16:27:56 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/23 13:27:12 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_is_whitespace(char c)
-{
-	if ((c >= 9 && c <= 13) || c == ' ')
-		return (1);
-	return (0);
-
-}
-
-void	skip_whitespaces(char *line, int *i)
-{
-	while(line[*i] && ft_is_whitespace(line[*i]))
-		++(*i);
-}
-
-char	*extract_single_quotes(char *str, int *i)
-{
-	int		start;
-	char	*token;
-
-	start = *i;
-	if (str[*i] == '\'')
-		++(*i);
-	while (str[*i] && str[*i] != '\'')
-		++(*i);
-	if (str[*i] == '\'')
-		++(*i);
-	if ((*i - start) <= 1)
-		return (NULL);
-	token = ft_substr(str, start, *i - start);
-	if (!token)
-		return (NULL);
-	if (ft_is_whitespace(str[(*i)]))
-	{
-		return (ft_strjoin_free(token, " "));
-	}
-	if (!token)
-		return (NULL);
-	return (token);
-}
-
-char	*extract_double_quotes(char *str, int *i)
-{
-	int		start;
-	char	*token;
-
-	start = *i;
-	if (str[*i] == '"')
-		++(*i);
-	while (str[*i] && str[*i] != '"')
-		++(*i);
-	if (str[*i] == '"')
-		++(*i);
-	if ((*i - start) <= 1)
-		return (NULL);
-	token = ft_substr(str, start, *i - start);
-	if (!token || (*i - start) <= 1)
-		return (NULL);
-	if (ft_is_whitespace(str[(*i)]))
-		return (ft_strjoin_free(token, " "));
-	if (!token)
-		return (NULL);
-	return (token);
-}
 
 char	*extract_word(char *str, int *i)
 {
@@ -89,13 +25,14 @@ char	*extract_word(char *str, int *i)
 		word = extract_double_quotes(str, i);
 	else
 	{
-		while(str[*i] && !ft_is_whitespace(str[*i])
-			&& str[*i] != '|' && str[*i] != '<' && str[*i] != '>' && str[*i] != '"' && str[*i] != '\'')
+		while (str[*i] && !ft_is_whitespace(str[*i])
+			&& str[*i] != '|' && str[*i] != '<' && str[*i] != '>'
+			&& str[*i] != '"' && str[*i] != '\'')
 			++(*i);
 		word = ft_substr(str, start, *i - start);
 	}
 	if (!word)
-		return(NULL);
+		return (NULL);
 	return (word);
 }
 
@@ -128,41 +65,51 @@ int	check_special_char(t_token **token, char *s, int *i)
 	return (1);
 }
 
-t_token *lexer(char *line)
+int	add_token(t_token **tokens, char *line, int *i)
 {
-	int		i = 0;
+	t_token	*token;
 	char	*str;
-	t_token	*token = NULL;
-	t_token	*tokens = NULL;
+
+	token = NULL;
+	str = NULL;
+	if (check_special_char(&token, line, i))
+	{
+		if (!token)
+			exit(0);
+		ft_add_token_back(tokens, token);
+		++(*i);
+	}
+	else
+	{
+		str = extract_word(line, i);
+		if (!str)
+		{
+			ft_printf("syntax error");
+			while (tokens)
+				ft_delete_front_token(tokens);
+			return (EXIT_FAILURE);
+		}
+		ft_add_token_back(tokens, ft_new_token(str, TOKEN_WORD, 1));
+	}
+	return (EXIT_SUCCESS);
+}
+
+t_token	*lexer(char *line)
+{
+	int		i;
+	char	*str;
+	t_token	*tokens;
 
 	i = 0;
 	str = NULL;
-	token = NULL;
 	tokens = NULL;
 	while (line[i])
 	{
 		skip_whitespaces(line, &i);
 		if (!line[i])
-			break;
-		if (check_special_char(&token, line, &i))
-		{
-			if (!token)
-				exit(0);
-			ft_add_token_back(&tokens, token);
-			++i;
-		}
-		else
-		{
-			str = extract_word(line, &i);
-			if (!str)
-			{
-				ft_printf("syntax error");
-				while (tokens)
-					ft_delete_front_token(&tokens);
-				return (NULL);
-			}
-			ft_add_token_back(&tokens, ft_new_token(str, TOKEN_WORD, 1));
-		}
+			break ;
+		if (add_token(&tokens, line, &i))
+			return (NULL);
 	}
 	return (tokens);
 }

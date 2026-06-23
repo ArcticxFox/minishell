@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:14:32 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/15 17:13:03 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/23 13:41:59 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define TOKEN_H
 
 # include "structs.h"
+
+//token_util2.c
+int		ft_is_whitespace(char c);
+void	skip_whitespaces(char *line, int *i);
+char	*extract_single_quotes(char *str, int *i);
+char	*extract_double_quotes(char *str, int *i);
 
 t_token	*lexer(char *line);
 

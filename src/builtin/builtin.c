@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/05/19 17:56:53 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/23 14:23:20 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	exec_pwd(char **args, t_shell *shell)
 		return (0);
 	}
 	else
-		printf("Current working directory: %s\n", buffer); // ft_printf
+		ft_printf("Current working directory: %s\n", buffer);
 	return (1);
 }
 
@@ -43,15 +43,15 @@ int	exec_echo(char **args, t_shell *shell)
 		while (args[i])
 		{
 			if (x == 1)
-				printf(" ");
-			printf("%s", args[i]);
+				ft_printf(" ");
+			ft_printf("%s", args[i]);
 			x = 1;
 			i++;
 		}
 		if (!ft_strncmp(args[1], "-n", 2))
 			return (1);
 	}
-	printf("\n");
+	ft_printf("\n");
 	return (1);
 }
 
@@ -70,7 +70,7 @@ int	exec_env(char **args, t_shell *shell)
 	(void)args;
 	while (shell->env[i])
 	{
-		printf("%s\n", shell->env[i]);
+		ft_printf("%s\n", shell->env[i]);
 		i++;
 	}
 	return (1);

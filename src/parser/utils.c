@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 13:33:56 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 14:02:49 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/23 17:23:32 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ t_redir	*new_redir(t_token *tokens, char **env)
 	else
 		new_redir->file = NULL;
 	new_redir->type = tokens->type;
+	if (tokens->type == TOKEN_HEREDOC)
+		new_redir->delimiter = ft_strdup(new_redir->file);
+	else
+		new_redir->delimiter = NULL;
+	new_redir->heredoc_fd = 0;
 	new_redir->next = NULL;
 	return (new_redir);
 }
@@ -75,6 +80,7 @@ void	ft_delete_front_redir(t_redir **stack)
 	else
 		*stack = pstemp->next;
 	free(pstemp->file);
+	free(pstemp->delimiter);
 	free(pstemp);
 }
 

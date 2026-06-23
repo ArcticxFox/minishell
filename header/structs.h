@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/18 16:05:01 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/23 16:46:06 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ typedef struct s_pipe_state
 
 typedef struct s_redir
 {
-	char			*file;
 	t_tk_type		type;
+	int				heredoc_fd;
+	char			*delimiter;
+	char			*file;
 	struct s_redir	*next;
 }	t_redir;
 

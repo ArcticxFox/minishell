@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 15:37:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 14:26:21 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/23 16:53:41 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	print_commands(t_cmd *cmd)
 		ft_printf("\n");
 		while (redir)
 		{
-			ft_printf("file : %s\n", redir->file);
+			ft_printf("file:%s\ndelimiter:%s\n", redir->file, redir->delimiter);
 			redir = redir->next;
 		}
 		ft_printf("\n");

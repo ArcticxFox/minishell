@@ -59,21 +59,25 @@ int	exec_export(char **args, t_shell *shell)
 int	exec_unset(char **args, t_shell *shell)
 {
 	int	i;
-	int	f;
+	int	len;
 
 	i = 0;
-	f = 0;
-	while (shell->env[i + 1])
+	len = len_name(args[1]);
+	while (shell->env[i])
 	{
-		if (!ft_strncmp(shell->env[i], args[1], len_name(args[1])))
+		if (!ft_strncmp(shell->env[i], args[1], len)
+			&& shell->env[i][len] == '=')
 		{
 			free(shell->env[i]);
-			f = 1;
+			while (shell->env[i + 1])
+			{
+				shell->env[i] = shell->env[i + 1];
+				i++;
+			}
+			shell->env[i] = NULL;
+			return (1);
 		}
-		if (f)
-			shell->env[i] = shell->env[i + 1];
 		i++;
 	}
-	shell->env[i] = shell->env[i + 1];
 	return (1);
 }

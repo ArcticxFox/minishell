@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/22 13:41:44 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/23 14:14:26 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 
 	shell.env = copy_env(envp);
+	shell.should_exit = 0;
 	tokens = NULL;
 	head = NULL;
 	init_signals();
@@ -34,6 +35,7 @@ int	main(int ac, char **av, char **envp)
 		if (!line) // Ctrl+D
 		{
 			free_memory(shell.env);
+			rl_clear_history();
 			printf("exit\n");
 			exit(0);
 		}
@@ -53,6 +55,13 @@ int	main(int ac, char **av, char **envp)
 		while(head)
 		{
 			ft_delete_front_cmd(&head);
+		}
+		if (shell.should_exit)           // ← nouveau
+		{
+			free_memory(shell.env);
+			rl_clear_history();
+			printf("exit\n");
+			exit(EXIT_SUCCESS);
 		}
 		free(line);
 	}

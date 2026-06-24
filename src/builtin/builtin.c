@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/05/19 17:56:53 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/23 14:15:11 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	exec_exit(char **args, t_shell *shell)
 {
 	(void)args;
 	(void)shell;
-	exit(EXIT_SUCCESS);
+	shell->should_exit = 1;
+	return (0);
 }
 
 int	exec_env(char **args, t_shell *shell)
@@ -120,32 +121,3 @@ void	free_all(t_shell *shell, char **cmd_args, char *str, int n)
 		free(shell->env);
 	}
 }
-
-// #include <stdio.h>
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char	**cmd_args;
-// 	char	*str;
-// 	t_shell	shell;
-
-// 	shell.env = copy_env(envp);
-// 	(void)ac;
-// 	(void)av;
-// 	while (1)
-// 	{
-// 		str = readline("minishell> ");
-// 		cmd_args = ft_split(str, ' ');
-// 		if (!str || !ft_strncmp(str, "exit", 5))
-// 		{
-// 			rl_clear_history();
-// 			rl_free_line_state();
-// 			free_all(&shell, cmd_args, str, 2);
-// 			return (0);
-// 		}
-// 		if (cmd_args)
-// 			builtin(cmd_args, &shell);
-// 		free_all(&shell, cmd_args, str, 1);
-// 	}
-// 	return (0);
-// }

@@ -6,16 +6,22 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 14:13:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 14:14:05 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/24 16:44:35 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 
 # define LIBFT_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 25
+# endif
+
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <fcntl.h>
 
 typedef struct s_list
 {
@@ -97,5 +103,8 @@ int		ft_putnbrbase_uppercase(va_list args);
 int		ft_putchar(va_list args);
 int		ft_putstr(va_list args);
 size_t	ft_strlen(const char *s);
+
+//GET_NEXT_LINE.C
+char	*get_next_line(int fd);
 
 #endif // LIBFT_H

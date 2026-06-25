@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:56:30 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 13:07:50 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/25 18:51:49 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ char	*extract_single_quotes(char *str, int *i)
 		++(*i);
 	while (str[*i] && str[*i] != '\'')
 		++(*i);
+	if (str[*i] != '\'')
+		return (NULL);
 	if (str[*i] == '\'')
 		++(*i);
 	if ((*i - start) <= 1)
 		return (NULL);
 	token = ft_substr(str, start, *i - start);
-	if (!token)
+	if (!token || (*i - start) <= 1)
 		return (NULL);
 	if (ft_is_whitespace(str[(*i)]))
 	{
@@ -61,6 +63,8 @@ char	*extract_double_quotes(char *str, int *i)
 		++(*i);
 	while (str[*i] && str[*i] != '"')
 		++(*i);
+	if (str[*i] != '"')
+		return (NULL);
 	if (str[*i] == '"')
 		++(*i);
 	if ((*i - start) <= 1)
@@ -69,7 +73,9 @@ char	*extract_double_quotes(char *str, int *i)
 	if (!token || (*i - start) <= 1)
 		return (NULL);
 	if (ft_is_whitespace(str[(*i)]))
+	{
 		return (ft_strjoin_free(token, " "));
+	}
 	if (!token)
 		return (NULL);
 	return (token);

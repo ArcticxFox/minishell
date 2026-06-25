@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/06/23 14:01:52 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/24 18:02:14 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ SRC := \
 	expander.c \
 	execute_utils.c\
 	execute.c\
-	pipe.c
+	pipe.c \
+	command_history/cmd_hist.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/23 14:23:20 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/25 19:04:50 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	exec_echo(char **args, t_shell *shell)
 			i++;
 		while (args[i])
 		{
-			if (x == 1)
-				ft_printf(" ");
 			ft_printf("%s", args[i]);
 			x = 1;
 			i++;

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 17:48:55 by enones            #+#    #+#             */
-/*   Updated: 2026/01/02 13:57:47 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/24 18:46:06 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	start = 0;
 	end = ft_strlen(s1);
-	while (check_chr(s1[end - 1], (char *)set_tmp) && end)
-		end--;
 	while (check_chr(s1[start], (char *)set_tmp) && s1[start])
 		start++;
+	if (start == end)
+		return (NULL);
+	while (check_chr(s1[end - 1], (char *)set_tmp) && end)
+		end--;
 	trim = ft_substr(s1, start, end - start);
 	if (!trim)
 		return (NULL);

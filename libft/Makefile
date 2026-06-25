@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/14 16:15:41 by ejones            #+#    #+#              #
-#    Updated: 2026/05/21 16:04:16 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/25 17:20:58 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,13 @@ LIBFT = ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 	ft_putendl_fd.c ft_putnbr_fd.c \
 	ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c \
 	ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
-	ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
+	ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c \
+	get_next_line.c
 
 PRINTF = ft_printf.c \
 	ft_printf_putadress_fd.c ft_printf_putchar_fd.c ft_printf_putnbr_fd.c \
 	ft_printf_putnbrbase_fd.c ft_printf_putstr_fd.c ft_printf_uiputnbr_fd.c
+
 
 LIBFT_OBJ = $(addprefix $(BUILD_DIR)/, $(LIBFT:.c=.o))
 PRINTF_OBJ = $(addprefix $(BUILD_DIR)/, $(PRINTF:.c=.o))
@@ -42,7 +44,6 @@ CFLAGS = -Wall -Wextra -Werror -g -I$(INC_DIR) -MMD -MP
 NAME = libft.a
 
 all: $(NAME)
-	@ls
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(BUILD_DIR)

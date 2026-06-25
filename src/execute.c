@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/22 12:39:20 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/25 18:24:35 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ void	execute_single(t_cmd *cmd, t_shell *shell)
 
 void	execute(t_cmd *list, t_shell *shell)
 {
+	if (!list)
+		return ;
 	if (list->next != NULL)
 		execute_pipeline(list, shell);
 	else

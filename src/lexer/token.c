@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 13:27:12 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/25 18:45:28 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*extract_word(char *str, int *i)
 			&& str[*i] != '"' && str[*i] != '\'')
 			++(*i);
 		word = ft_substr(str, start, *i - start);
+		if (ft_is_whitespace(str[(*i)]))
+			word = ft_strjoin_free(word, " ");
 	}
 	if (!word)
 		return (NULL);
@@ -84,8 +86,8 @@ int	add_token(t_token **tokens, char *line, int *i)
 		str = extract_word(line, i);
 		if (!str)
 		{
-			ft_printf("syntax error");
-			while (tokens)
+			ft_printf("syntax error\n");
+			while (*tokens)
 				ft_delete_front_token(tokens);
 			return (EXIT_FAILURE);
 		}

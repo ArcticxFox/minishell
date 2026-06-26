@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/24 16:56:41 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 18:46:10 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,39 @@ int	exec_export(char **args, t_shell *shell)
 int	exec_unset(char **args, t_shell *shell)
 {
 	int	i;
-	int	f;
+	int	len;
 
 	i = 0;
-	f = 0;
-	while (shell->env[i + 1])
+	len = len_name(args[1]);
+	while (shell->env[i])
 	{
-		if (!ft_strncmp(shell->env[i], args[1], len_name(args[1])))
+		if (!ft_strncmp(shell->env[i], args[1], len)
+			&& shell->env[i][len] == '=')
 		{
 			free(shell->env[i]);
-			f = 1;
+			while (shell->env[i + 1])
+			{
+				shell->env[i] = shell->env[i + 1];
+				i++;
+			}
+			shell->env[i] = NULL;
+			return (1);
 		}
-		if (f)
-			shell->env[i] = shell->env[i + 1];
 		i++;
 	}
-	shell->env[i] = shell->env[i + 1];
+	return (1);
+}
+
+int	exec_env(char **args, t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	(void)args;
+	while (shell->env[i])
+	{
+		ft_printf("%s\n", shell->env[i]);
+		i++;
+	}
 	return (1);
 }

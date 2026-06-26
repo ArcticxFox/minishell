@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/06/24 18:02:14 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/26 18:42:05 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,10 +40,10 @@ SRC := \
 	parser/print_structs.c \
 	parser/utils.c \
 	expander.c \
-	execute_utils.c\
-	execute.c\
-	pipe.c \
-	command_history/cmd_hist.c
+	execute/execute_utils.c \
+	execute/execute_redir.c \
+	execute/execute.c \
+	pipe/pipe.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 

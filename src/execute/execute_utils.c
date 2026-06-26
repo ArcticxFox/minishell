@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:43:20 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 18:40:42 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 18:43:28 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*search_in_split(char **split, char *cmd)
 	int		i;
 
 	i = 0;
-	while(split[i])
+	while (split[i])
 	{
 		mypath = ft_strjoin(split[i], "/");
 		if (!mypath)
@@ -64,6 +64,8 @@ char	*search_in_split(char **split, char *cmd)
 		ft_printf("- %s\n\n", mypath);
 		if (!mypath)
 			return (NULL);
+		if (access(cmd, X_OK) == 0)
+			return (cmd);
 		if (access(cmd, X_OK) == 0)
 			return (cmd);
 		if (access(mypath, X_OK) == 0)
@@ -81,6 +83,14 @@ char	*get_path(char *cmd, t_shell *shell)
 	char	**split;
 	int		i;
 
+	if (!cmd || !*cmd)
+		return (NULL);
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
+		return (NULL);
+	}
 	i = 0;
 	path = get_env_value(shell->env, "PATH");
 	split = ft_split(path, ':');
@@ -93,30 +103,6 @@ char	*get_path(char *cmd, t_shell *shell)
 	if (!result)
 		return (NULL);
 	return (result);
-}
-
-int	apply_redirs(t_redir *redir)
-{
-	int fd;
-
-	while (redir)
-	{
-		if (redir->type == TOKEN_REDIR_IN)
-			fd = open(redir->file, O_RDONLY);
-		else if (redir->type == TOKEN_REDIR_OUT)
-			fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (redir->type == TOKEN_APPEND)
-			fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd < 0)
-			return (-1); // gérer erreur + perror
-		if (redir->type == TOKEN_REDIR_IN)
-			dup2(fd, STDIN_FILENO);
-		else
-			dup2(fd, STDOUT_FILENO);
-		close(fd);
-		redir = redir->next;
-	}
-	return (0);
 }
 
 int	is_builtin(char *cmd)

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/25 18:41:36 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 18:46:37 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_shell
 {
 	t_cmd	*head;
 	char	**env;
+	int		should_exit;
 }	t_shell;
 
 typedef struct s_builtin

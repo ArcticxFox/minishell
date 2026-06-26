@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/25 19:04:50 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 18:44:54 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,8 @@ int	exec_exit(char **args, t_shell *shell)
 {
 	(void)args;
 	(void)shell;
-	exit(EXIT_SUCCESS);
-}
-
-int	exec_env(char **args, t_shell *shell)
-{
-	int	i;
-
-	i = 0;
-	(void)args;
-	while (shell->env[i])
-	{
-		ft_printf("%s\n", shell->env[i]);
-		i++;
-	}
-	return (1);
+	shell->should_exit = 1;
+	return (0);
 }
 
 int	builtin(char **args, t_shell *shell)
@@ -80,7 +67,7 @@ int	builtin(char **args, t_shell *shell)
 	{"pwd", exec_pwd},
 	{"echo", exec_echo},
 	{"exit", exec_exit},
-	{"env", exec_env},
+	// {"env", exec_env},
 	{"cd", exec_cd},
 	{"export", exec_export},
 	{"unset", exec_unset},
@@ -118,32 +105,3 @@ void	free_all(t_shell *shell, char **cmd_args, char *str, int n)
 		free(shell->env);
 	}
 }
-
-// #include <stdio.h>
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char	**cmd_args;
-// 	char	*str;
-// 	t_shell	shell;
-
-// 	shell.env = copy_env(envp);
-// 	(void)ac;
-// 	(void)av;
-// 	while (1)
-// 	{
-// 		str = readline("minishell> ");
-// 		cmd_args = ft_split(str, ' ');
-// 		if (!str || !ft_strncmp(str, "exit", 5))
-// 		{
-// 			rl_clear_history();
-// 			rl_free_line_state();
-// 			free_all(&shell, cmd_args, str, 2);
-// 			return (0);
-// 		}
-// 		if (cmd_args)
-// 			builtin(cmd_args, &shell);
-// 		free_all(&shell, cmd_args, str, 1);
-// 	}
-// 	return (0);
-// }

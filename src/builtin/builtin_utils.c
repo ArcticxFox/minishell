@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 13:15:34 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 18:06:55 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,12 @@ int	exec_env(char **args, t_shell *shell)
 		i++;
 	}
 	return (1);
+}
+
+void	child_exit(t_shell *shell, int status)
+{
+	while (shell->head)
+		ft_delete_front_cmd(&shell->head);
+	free_memory(shell->env);
+	exit(status);
 }

@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 13:15:20 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 18:38:23 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	exec_echo(char **args, t_shell *shell)
 	(void)shell;
 	if (args[1])
 	{
-		if (!ft_strncmp(args[1], "-n", 2))
+		if (!ft_strncmp(args[1], "-n", 3))
 			i++;
 		while (args[i])
 		{
@@ -48,7 +48,7 @@ int	exec_echo(char **args, t_shell *shell)
 			x = 1;
 			i++;
 		}
-		if (!ft_strncmp(args[1], "-n", 2))
+		if (!ft_strncmp(args[1], "-n", 3))
 			return (1);
 	}
 	ft_printf("\n");
@@ -85,25 +85,4 @@ int	builtin(char **args, t_shell *shell)
 		i++;
 	}
 	return (1);
-}
-
-void	free_all(t_shell *shell, char **cmd_args, char *str, int n)
-{
-	int	i;
-
-	i = 0;
-	if (str)
-		free(str);
-	if (cmd_args)
-	{
-		while (cmd_args[i])
-			free(cmd_args[i++]);
-		free(cmd_args);
-	}
-	if (n > 1)
-	{
-		while (shell->env[i])
-			free(shell->env[i++]);
-		free(shell->env);
-	}
 }

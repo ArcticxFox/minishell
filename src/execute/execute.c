@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 13:13:17 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 18:06:41 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static void	do_execve(t_cmd *cmd, t_shell *shell)
 	if (!path)
 	{
 		ft_putstr_fd("minishell: command not found\n", 2);
-		exit(127);
+		child_exit(shell, 127);
 	}
 	execve(path, cmd->args, shell->env);
 	perror(path);
 	free(path);
-	exit(127);
+	child_exit(shell, 127);
 }
 
 void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
@@ -41,11 +41,11 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 		close(fd_out);
 	}
 	if (apply_redirs(cmd->redir) < 0)
-		exit(1);
+		child_exit(shell, 1);
 	if (is_builtin(cmd->cmd))
 	{
 		builtin(cmd->args, shell);
-		exit(0);
+		child_exit(shell, 0);
 	}
 	do_execve(cmd, shell);
 }

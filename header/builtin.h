@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:14 by ejones            #+#    #+#             */
-/*   Updated: 2026/05/24 09:58:30 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 13:16:09 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int		is_builtin(char *cmd);
 int		exec_cd(char **args, t_shell *shell);
 int		exec_export(char **args, t_shell *shell);
 int		exec_unset(char **args, t_shell *shell);
+int		exec_env(char **args, t_shell *shell);
 
-void	free_all(t_shell *shell, char **cmd_args,
-			char *str, int n);
 
 #endif

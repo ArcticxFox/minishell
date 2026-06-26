@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:43:20 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 18:43:28 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 19:06:26 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*search_in_split(char **split, char *cmd)
 		if (!mypath)
 			return (NULL);
 		mypath = ft_strjoin_free(mypath, cmd);
-		ft_printf("- %s\n\n", mypath);
 		if (!mypath)
 			return (NULL);
 		if (access(cmd, X_OK) == 0)

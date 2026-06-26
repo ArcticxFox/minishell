@@ -36,6 +36,7 @@
 # include "env.h"
 # include "signals.h"
 # include "execute.h"
+# include "pipe.h"
 
 extern int	g_value_exit;
 

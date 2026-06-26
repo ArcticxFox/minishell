@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 15:37:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/18 14:24:23 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/23 16:53:41 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ void	print_token(t_token *tokens)
 	while (tokens != NULL)
 	{
 		if (tokens->type == TOKEN_WORD)
-			printf("[WORD]      :\t%s, %d\n", tokens->value, tokens->expand);
+			ft_printf("[WORD]      :\t%s, %d\n", tokens->value, tokens->expand);
 		else if (tokens->type == TOKEN_PIPE)
-			printf("[PIPE]      :\t%s, %d\n", tokens->value, tokens->expand);
- 		else if (tokens->type == TOKEN_REDIR_IN)
-			printf("[REDIR_IN]  :\t%s, %d\n", tokens->value, tokens->expand);
+			ft_printf("[PIPE]      :\t%s, %d\n", tokens->value, tokens->expand);
+		else if (tokens->type == TOKEN_REDIR_IN)
+			ft_printf("[REDIR_IN]  :\t%s, %d\n", tokens->value, tokens->expand);
 		else if (tokens->type == TOKEN_REDIR_OUT)
-			printf("[REDIR_OUT] :\t%s, %d\n", tokens->value, tokens->expand);
+			ft_printf("[REDIR_OUT] :\t%s, %d\n", tokens->value, tokens->expand);
 		else if (tokens->type == TOKEN_APPEND)
-			printf("[APPEND]    :\t%s, %d\n", tokens->value, tokens->expand);
+			ft_printf("[APPEND]    :\t%s, %d\n", tokens->value, tokens->expand);
 		else if (tokens->type == TOKEN_HEREDOC)
-			printf("[HERE_DOC]  :\t%s, %d\n", tokens->value, tokens->expand);
+			ft_printf("[HERE_DOC]  :\t%s, %d\n", tokens->value, tokens->expand);
 		tokens = tokens->next;
 	}
 }
@@ -41,17 +41,17 @@ void	print_commands(t_cmd *cmd)
 	{
 		redir = cmd->redir;
 		i = 0;
-		printf("cmd : %s\n", cmd->cmd);
-		printf("args : ");
-		while(cmd->args[i])
+		ft_printf("cmd : %s\n", cmd->cmd);
+		ft_printf("args : ");
+		while (cmd->args[i])
 		{
-			printf("%s, ", cmd->args[i]);
+			ft_printf("%s, ", cmd->args[i]);
 			i++;
 		}
-		printf("\n");
-		while(redir)
+		ft_printf("\n");
+		while (redir)
 		{
-			printf("file : %s\n", redir->file);
+			ft_printf("file:%s\ndelimiter:%s\n", redir->file, redir->delimiter);
 			redir = redir->next;
 		}
 		ft_printf("\n");

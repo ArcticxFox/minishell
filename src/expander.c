@@ -3,48 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/22 13:32:43 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/23 14:16:58 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-
-void	*ft_realloc(void *ptr, size_t size)
-{
-	void	*tmp;
-
-	if (size == 0)
-	{
-		if (ptr)
-			free(ptr);
-		return (NULL);
-	}
-	tmp = ft_calloc(1, size);
-	if(!tmp)
-		return (NULL);
-	tmp = ft_memcpy(tmp, ptr, size - 1);
-	free(ptr);
-	return (tmp);
-}
-
 char	*ft_env_name(char *str, int *i)
 {
-	// int		j;
 	int		start;
 	char	*name;
 
-	// j = 0;
 	start = *i;
 	name = NULL;
-	if(ft_isdigit(str[*i]))
+	if (ft_isdigit(str[*i]))
 	{
 		(*i)++;
 		name = ft_substr(str, start, (*i) - start);
-		if(!name)
+		if (!name)
 			return (NULL);
 		return (name);
 	}
@@ -74,12 +53,10 @@ int	ft_get_lenght(char **env, char *str)
 	int		i;
 	int		len;
 	char	*name;
-	// char	*env_v;
 
 	i = 0;
 	len = 0;
 	name = NULL;
-	// env_v = NULL;
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -157,11 +134,9 @@ char	*expand_string(char **env, char *str, int len)
 
 char	*expand(char **env, char *arg)
 {
-	// int		i;
 	int		len;
 	char	*str;
 
-	// i = 0;
 	str = NULL;
 	if (check_for_dollar(arg))
 	{

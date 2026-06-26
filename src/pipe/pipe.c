@@ -6,12 +6,11 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 14:59:55 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/22 13:36:31 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 13:02:22 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
 
 void	free_pipes(int **pipes, int i)
 {

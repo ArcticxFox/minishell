@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/25 16:53:49 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 17:17:23 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int ac, char **av, char **envp)
 	tokens = NULL;
 	head = NULL;
 	init_signals();
-	read_old_history(&shell);
 	while (1)
 	{
 		line = readline("minishell> ");
@@ -39,8 +38,7 @@ int	main(int ac, char **av, char **envp)
 			exit(0);
 		}
 		if (line[0] != '\0')
-			append_hist(line);
-		// 	add_history(line);
+			add_history(line);
 		tokens = lexer(line);
 		print_token(tokens);
 		head = get_commands(tokens, shell.env);

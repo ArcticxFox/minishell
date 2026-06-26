@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/25 19:03:15 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 15:48:22 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,12 @@ static void	trim_args(char **args)
 
 	if (!args || !args[0])
 		return ;
-	if (ft_strncmp(args[0], "echo ", 6) == 0)
-	{
-		tmp = ft_strtrim(args[0], " ");
-		if (!tmp)
-			return ;
-		free(args[0]);
-		args[0] = tmp;
+	if (ft_strncmp(args[0], "echo", 6) == 0)
 		return ;
-	}
 	i = 0;
 	while (args[i])
 	{
 		tmp = ft_strtrim(args[i], " ");
-		if(ft_strncmp(args[i], tmp, ft_strlen(args[i])) == 0)
 		if (!tmp)
 		{
 			i++;
@@ -80,6 +72,7 @@ t_cmd	*ft_new_commands(t_token **tokens, char **env)
 	new_cmd->args = get_args(tokens, env);
 	trim_args(new_cmd->args);
 	new_cmd->cmd = new_cmd->args[0];
+	new_cmd->add_space = 0;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }

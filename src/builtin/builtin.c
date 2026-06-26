@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 13:15:20 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 18:14:29 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	builtin(char **args, t_shell *shell)
 	{"pwd", exec_pwd},
 	{"echo", exec_echo},
 	{"exit", exec_exit},
-	{"env", exec_env},
+	// {"env", exec_env},
 	{"cd", exec_cd},
 	{"export", exec_export},
 	{"unset", exec_unset},

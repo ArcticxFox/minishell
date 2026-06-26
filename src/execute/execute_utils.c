@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:43:20 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 13:12:50 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 18:17:55 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ char	*search_in_split(char **split, char *cmd)
 		mypath = ft_strjoin_free(mypath, cmd);
 		if (!mypath)
 			return (NULL);
+		if (access(cmd, X_OK) == 0)
+			return (cmd);
 		if (access(mypath, X_OK) == 0)
 			return (mypath);
 		free(mypath);

@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/24 12:42:24 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 13:15:20 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,6 @@ int	exec_exit(char **args, t_shell *shell)
 	(void)shell;
 	shell->should_exit = 1;
 	return (0);
-}
-
-int	exec_env(char **args, t_shell *shell)
-{
-	int	i;
-
-	i = 0;
-	(void)args;
-	while (shell->env[i])
-	{
-		ft_printf("%s\n", shell->env[i]);
-		i++;
-	}
-	return (1);
 }
 
 int	builtin(char **args, t_shell *shell)

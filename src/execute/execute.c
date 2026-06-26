@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/25 03:52:38 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 13:13:17 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,3 @@ void	execute(t_cmd *cmd, t_shell *shell)
 		waitpid(pid, NULL, 0);
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:43:20 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 12:46:56 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 13:12:50 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*search_in_split(char **split, char *cmd)
 	int		i;
 
 	i = 0;
-	while(split[i])
+	while (split[i])
 	{
 		mypath = ft_strjoin(split[i], "/");
 		if (!mypath)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/23 14:22:26 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 13:15:34 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,20 @@ int	exec_unset(char **args, t_shell *shell)
 			shell->env[i] = NULL;
 			return (1);
 		}
+		i++;
+	}
+	return (1);
+}
+
+int	exec_env(char **args, t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	(void)args;
+	while (shell->env[i])
+	{
+		ft_printf("%s\n", shell->env[i]);
 		i++;
 	}
 	return (1);

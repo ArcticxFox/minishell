@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 14:59:55 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 13:02:22 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/26 13:14:00 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	close_all_pipes(int **pipes, int n)
 int	**create_pipes(int n)
 {
 	int	i;
-	int **pipes;
+	int	**pipes;
 
 	i = 0;
 	pipes = malloc(sizeof(int *) * n);
@@ -59,7 +59,7 @@ int	**create_pipes(int n)
 		}
 		i++;
 	}
-	return(pipes);
+	return (pipes);
 }
 
 void	child_pipe_setup(t_cmd *cmd, t_pipe_state *state, t_shell *shell)

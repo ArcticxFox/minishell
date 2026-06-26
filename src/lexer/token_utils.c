@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/25 18:55:05 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 20:52:30 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,17 @@ void	ft_add_token_back(t_token **lst, t_token *new)
 static char	*assign_value(char *value)
 {
 	char	*new_str;
-	// char	tmp;
-	// int		end;
+	char	tmp;
+	int		end;
 
-	// end = ft_strlen(value);
-	// if (value[end - 1] == ' ')
-	// {
-	// 	tmp = value[end - 2];
-	// 	value[end - 2] = value[end - 1];
-	// 	value[end - 1] = tmp;
-	// }
+	end = ft_strlen(value);
+	if ((value[end - 2] == '"' || value[end - 2] == '\'')
+		&& value[end - 1] == ' ')
+	{
+		tmp = value[end - 2];
+		value[end - 2] = value[end - 1];
+		value[end - 1] = tmp;
+	}
 	if (*value == '\'')
 		new_str = ft_strtrim(value, "\'");
 	else if (*value == '"')

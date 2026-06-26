@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 15:48:22 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 20:54:47 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void	trim_args(char **args)
 		}
 		free(args[i]);
 		args[i] = tmp;
+		if ( i == 0 && ft_strncmp(args[0], "echo", 6) == 0)
+			return ;
 		i++;
 	}
 	return ;

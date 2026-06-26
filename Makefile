@@ -40,9 +40,10 @@ SRC := \
 	parser/print_structs.c \
 	parser/utils.c \
 	expander.c \
-	execute_utils.c\
-	execute.c\
-	pipe.c
+	execute/execute_utils.c \
+	execute/execute_redir.c \
+	execute/execute.c \
+	pipe/pipe.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 

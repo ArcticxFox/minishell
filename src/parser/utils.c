@@ -44,7 +44,7 @@ t_redir	*new_redir(t_token *tokens, char **env)
 		new_redir->delimiter = ft_strdup(new_redir->file);
 	else
 		new_redir->delimiter = NULL;
-	new_redir->heredoc_fd = 0;
+	new_redir->heredoc_fd = -1;
 	new_redir->next = NULL;
 	return (new_redir);
 }
@@ -79,6 +79,8 @@ void	ft_delete_front_redir(t_redir **stack)
 		*stack = NULL;
 	else
 		*stack = pstemp->next;
+	if (pstemp->heredoc_fd >= 0)
+		close(pstemp->heredoc_fd);
 	free(pstemp->file);
 	free(pstemp->delimiter);
 	free(pstemp);

@@ -97,11 +97,11 @@ int	add_token(t_token **tokens, char *line, int *i)
 t_token	*lexer(char *line)
 {
 	int		i;
-	char	*str;
+	// char	*str;
 	t_token	*tokens;
 
 	i = 0;
-	str = NULL;
+	// str = NULL;
 	tokens = NULL;
 	while (line[i])
 	{

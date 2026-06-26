@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 16:46:06 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/24 12:42:11 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_shell
 {
 	t_cmd	*head;
 	char	**env;
+	int		should_exit;
 }	t_shell;
 
 typedef struct s_builtin

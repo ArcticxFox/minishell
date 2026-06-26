@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 15:28:47 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/25 16:38:29 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 
 	shell.env = copy_env(envp);
+	shell.should_exit = 0;
 	tokens = NULL;
 	head = NULL;
 	init_signals();
@@ -34,6 +35,7 @@ int	main(int ac, char **av, char **envp)
 		if (!line) // Ctrl+D
 		{
 			free_memory(shell.env);
+			rl_clear_history();
 			printf("exit\n");
 			exit(0);
 		}
@@ -42,16 +44,24 @@ int	main(int ac, char **av, char **envp)
 		tokens = lexer(line);
 		head = tmp_get_commands(tokens, shell.env);
 		shell.head = head;
-		print_commands(head);
+		// print_commands(head);
 		while (tokens)
 		{
 			ft_delete_front_token(&tokens);
 		}
+		setup_heredocs(head);
 		execute(head, &shell);
 		printf("\n");
 		while(head)
 		{
 			ft_delete_front_cmd(&head);
+		}
+		if (shell.should_exit)
+		{
+			free_memory(shell.env);
+			rl_clear_history();
+			printf("exit\n");
+			exit(EXIT_SUCCESS);
 		}
 		free(line);
 	}

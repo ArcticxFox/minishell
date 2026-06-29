@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 20:54:47 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/29 11:41:25 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ static void	trim_args(char **args)
 t_cmd	*ft_new_commands(t_token **tokens, char **env)
 {
 	t_cmd	*new_cmd;
-	char	*tmp;
-	int		i;
+	// char	*tmp;
+	// int		i;
 
-	i = 0;
-	tmp = NULL;
+	// i = 0;
+	// tmp = NULL;
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);

@@ -37,7 +37,7 @@ int	main(int ac, char **av, char **envp)
 			free_memory(shell.env);
 			rl_clear_history();
 			printf("exit\n");
-			exit(0);
+			exit(g_value_exit);
 		}
 		if (line[0] != '\0')
 			add_history(line);
@@ -61,8 +61,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			free_memory(shell.env);
 			rl_clear_history();
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
+			exit(g_value_exit);
 		}
 		free(line);
 	}

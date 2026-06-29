@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
+#    By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/06/26 18:42:05 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/29 13:05:17 by leonpouet        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC := \
 	lexer/token_utils2.c \
 	builtin/builtin.c \
 	builtin/builtin_utils.c \
+	builtin/builtin_next.c \
 	env/env_utils.c \
 	signals/sig_handler.c \
  	parser/get_cmds.c \

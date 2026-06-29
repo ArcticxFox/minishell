@@ -5,95 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/29 11:22:13 by leonpouet        ###   ########.fr       */
+/*   Created: 2026/06/29 13:03:25 by leonpouet         #+#    #+#             */
+/*   Updated: 2026/06/29 13:06:46 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	exec_cd(char **args, t_shell *shell)
-{
-	char	buffer[4096];
-
-	if (!args[1])
-		return (0);
-	set_env_value(shell->env, "OLDPWD=", getcwd(buffer, 4096));
-	if (chdir(args[1]) == -1)
-	{
-		write (2, "Error directory havn't change\n", 30);
-		return (0);
-	}
-	set_env_value(shell->env, "PWD=", getcwd(buffer, 4096));
-	return (1);
-}
-
-int	exec_export(char **args, t_shell *shell)
-{
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	if (get_env_value(shell->env, args[1]))
-		set_env_value(shell->env, args[1], NULL);
-	else
-	{
-		while (shell->env[i])
-			i++;
-		tmp = malloc(sizeof(char *) * (i + 2));
-		i = 0;
-		while (shell->env[i])
-		{
-			tmp[i] = shell->env[i];
-			i++;
-		}
-		tmp[i] = ft_strdup(args[1]);
-		tmp[i + 1] = NULL;
-		free(shell->env);
-		shell->env = tmp;
-	}
-	return (1);
-}
-
-int	exec_unset(char **args, t_shell *shell)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = len_name(args[1]);
-	while (shell->env[i])
-	{
-		if (!ft_strncmp(shell->env[i], args[1], len)
-			&& shell->env[i][len] == '=')
-		{
-			free(shell->env[i]);
-			while (shell->env[i + 1])
-			{
-				shell->env[i] = shell->env[i + 1];
-				i++;
-			}
-			shell->env[i] = NULL;
-			return (1);
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	exec_env(char **args, t_shell *shell)
-{
-	int	i;
-
-	i = 0;
-	(void)args;
-	while (shell->env[i])
-	{
-		ft_printf("%s\n", shell->env[i]);
-		i++;
-	}
-	return (1);
-}
 
 void	child_exit(t_shell *shell, int status)
 {
@@ -101,4 +18,67 @@ void	child_exit(t_shell *shell, int status)
 		ft_delete_front_cmd(&shell->head);
 	free_memory(shell->env);
 	exit(status);
+}
+
+int	is_numeric(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	if (!str[i])
+		return (0);
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	is_overflowed(char *str)
+{
+	static const char	*max = "9223372036854775807";
+	static const char	*min_abs = "9223372036854775808";
+	const char			*limit;
+	int					i;
+	int					len;
+
+	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		limit = (str[i++] == '-') ? min_abs : max;
+	}
+	else
+		limit = max;
+	while (str[i] == '0')
+		i++;
+	len = ft_strlen(str + i);
+	if (len > 19)
+		return (1);
+	if (len < 19)
+		return (0);
+	return (ft_strncmp(str + i, limit, 19) > 0);
+}
+
+long long	ft_atoll(char *str)
+{
+	long long	result;
+	int			sign;
+	int			i;
+
+	result = 0;
+	sign = 1;
+	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] && ft_isdigit(str[i]))
+		result = result * 10 + (str[i++] - '0');
+	return (result * sign);
 }

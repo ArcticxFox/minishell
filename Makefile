@@ -6,7 +6,11 @@
 #    By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2026/06/29 13:05:17 by leonpouet        ###   ########.fr        #
+=======
+#    Updated: 2026/06/29 20:39:16 by ejones           ###   ########.fr        #
+>>>>>>> 1e3a783 (j'ai fais la fonction de gestion d'erreur de syntax, modifier le nom de certain fichier dans le dossier parseur)
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,15 +35,17 @@ SRC := \
 	lexer/token.c \
 	lexer/token_utils.c \
 	lexer/token_utils2.c \
+	lexer/syntax_errors.c \
 	builtin/builtin.c \
 	builtin/builtin_utils.c \
 	builtin/builtin_next.c \
 	env/env_utils.c \
 	signals/sig_handler.c \
  	parser/get_cmds.c \
-	parser/parseur_utils.c \
 	parser/print_structs.c \
-	parser/utils.c \
+	parser/cmd_linked_lst.c \
+	parser/redir_parser.c \
+	parser/parser_utils.c \
 	expander.c \
 	execute/execute_utils.c \
 	execute/execute_redir.c \

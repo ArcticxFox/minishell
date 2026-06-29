@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:56:30 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 19:34:53 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/29 19:02:14 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,16 @@ char	*extract_single_quotes(char *str, int *i)
 	int		start;
 	char	*token;
 
-	start = *i;
-	if (str[*i] == '\'')
-		++(*i);
+	start = (*i)++;
 	while (str[*i] && str[*i] != '\'')
 		++(*i);
 	if (str[*i] != '\'')
+	{
+		ft_printf("unexpected EOF  while looking for matching `\''\n");
+		ft_printf("minishell: syntax error\n");
 		return (NULL);
-	if (str[*i] == '\'')
-		++(*i);
+	}
+	++(*i);
 	if ((*i - start) <= 1)
 		return (NULL);
 	token = ft_substr(str, start, *i - start);
@@ -58,15 +59,16 @@ char	*extract_double_quotes(char *str, int *i)
 	int		start;
 	char	*token;
 
-	start = *i;
-	if (str[*i] == '"')
-		++(*i);
+	start = (*i)++;
 	while (str[*i] && str[*i] != '"')
 		++(*i);
 	if (str[*i] != '"')
+	{
+		ft_printf("unexpected EOF  while looking for matching `\"'\n");
+		ft_printf("minishell: syntax error\n");
 		return (NULL);
-	if (str[*i] == '"')
-		++(*i);
+	}
+	++(*i);
 	if ((*i - start) <= 1)
 		return (NULL);
 	token = ft_substr(str, start, *i - start);

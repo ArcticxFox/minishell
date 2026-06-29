@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 18:46:37 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/29 16:55:40 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**args;
 	t_redir			*redir;
-	bool			add_space;
 	struct s_cmd	*next;
 }	t_cmd;
 

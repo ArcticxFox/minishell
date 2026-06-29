@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 16:16:15 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/29 20:15:04 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ t_token	*ft_new_token(char *value, t_tk_type type, int expand)
 		new_token->value = assign_value(value);
 	else
 		new_token->value = value;
-	// new_token->value = assign_value(value);
 	if (!new_token->value)
 	{
 		free(new_token);

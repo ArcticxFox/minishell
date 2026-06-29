@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 20:54:47 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/29 16:24:26 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,25 @@ t_redir	*find_redir(t_token *tokens, char **env)
 	}
 	return (redir);
 }
+void	trim_files(t_redir **redir)
+{
+	t_redir	*tmp_redir;
+	char	*tmp_file;
+
+	tmp_redir = *redir;
+	while (tmp_redir)
+	{
+		tmp_file = ft_strtrim(tmp_redir->file, " ");
+		if (!tmp_file)
+		{
+			tmp_redir = tmp_redir->next;
+			continue ;
+		}
+		free(tmp_redir->file);
+		tmp_redir->file = tmp_file;
+		tmp_redir = tmp_redir->next;
+	}
+}
 
 static void	trim_args(char **args)
 {
@@ -52,7 +71,7 @@ static void	trim_args(char **args)
 		}
 		free(args[i]);
 		args[i] = tmp;
-		if ( i == 0 && ft_strncmp(args[0], "echo", 6) == 0)
+		if (i == 0 && ft_strncmp(args[0], "echo", 6) == 0)
 			return ;
 		i++;
 	}
@@ -71,6 +90,7 @@ t_cmd	*ft_new_commands(t_token **tokens, char **env)
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->redir = find_redir(*tokens, env);
+	trim_files(&new_cmd->redir);
 	new_cmd->args = get_args(tokens, env);
 	trim_args(new_cmd->args);
 	new_cmd->cmd = new_cmd->args[0];
@@ -94,10 +114,8 @@ char	*get_cmd_value(t_token **tokens, char **env)
 	}
 	if (!(*tokens) || ft_isspecial(*tokens) == 1)
 		return (NULL);
-	if ((*tokens)->value && (*tokens)->expand == 0)
-		value = ft_strdup((*tokens)->value);
-	else if ((*tokens)->value && (*tokens)->expand == 1)
-		value = expand(env, (*tokens)->value);
+	if ((*tokens)->value)
+		value = expand(env, (*tokens)->value, (*tokens)->expand);
 	else
 		value = NULL;
 	(*tokens) = (*tokens)->next;

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 14:16:58 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/29 16:28:20 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_get_lenght(char **env, char *str)
 	name = NULL;
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1] != '?')
 		{
 			++i;
 			name = ft_env_name(str, &i);
@@ -116,7 +116,7 @@ char	*expand_string(char **env, char *str, int len)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1] != '?')
 		{
 			++i;
 			n += ft_copy_into_env(env, str, &new_str[n], &i);
@@ -132,19 +132,21 @@ char	*expand_string(char **env, char *str, int len)
 	return (new_str);
 }
 
-char	*expand(char **env, char *arg)
+char	*expand(char **env, char *arg, int expand)
 {
 	int		len;
 	char	*str;
 
 	str = NULL;
-	if (check_for_dollar(arg))
+	if (expand == 1 && check_for_dollar(arg))
 	{
 		len = ft_get_lenght(env, arg);
 		str = expand_string(env, arg, len);
 	}
 	else
+	{
 		str = ft_strdup(arg);
+	}
 	return (str);
 }
 

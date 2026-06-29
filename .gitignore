@@ -5,9 +5,13 @@ a.out
 #Object files
 *.o
 obj/
+libft/build
 *.a
 
 # Editor files
 *~
 *.swp
 *.swo
+
+#text files
+cmd_hist.txt

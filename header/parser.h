@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:14:55 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 14:04:22 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/25 16:53:49 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "structs.h"
 
 //get_cmds.c
-t_cmd	*tmp_get_commands(t_token *tokens, char **env);
+t_cmd	*get_commands(t_token *tokens, char **env);
 char	**get_args(t_token **tokens, char **env);
 
 //parseur_utils.c

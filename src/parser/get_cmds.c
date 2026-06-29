@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 14:02:57 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 20:54:47 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,49 @@ t_redir	*find_redir(t_token *tokens, char **env)
 	return (redir);
 }
 
+static void	trim_args(char **args)
+{
+	int		i;
+	char	*tmp;
+
+	if (!args || !args[0])
+		return ;
+	if (ft_strncmp(args[0], "echo", 6) == 0)
+		return ;
+	i = 0;
+	while (args[i])
+	{
+		tmp = ft_strtrim(args[i], " ");
+		if (!tmp)
+		{
+			i++;
+			continue ;
+		}
+		free(args[i]);
+		args[i] = tmp;
+		if ( i == 0 && ft_strncmp(args[0], "echo", 6) == 0)
+			return ;
+		i++;
+	}
+	return ;
+}
+
 t_cmd	*ft_new_commands(t_token **tokens, char **env)
 {
 	t_cmd	*new_cmd;
+	char	*tmp;
+	int		i;
 
+	i = 0;
+	tmp = NULL;
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->redir = find_redir(*tokens, env);
 	new_cmd->args = get_args(tokens, env);
+	trim_args(new_cmd->args);
 	new_cmd->cmd = new_cmd->args[0];
+	new_cmd->add_space = 0;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }
@@ -85,7 +118,7 @@ char	**get_args(t_token **tokens, char **env)
 	while (i < n - 1)
 	{
 		args[i] = get_cmd_value(tokens, env);
-		if (!args)
+		if (!args[i])
 		{
 			free_memory(args);
 			return (NULL);
@@ -96,7 +129,7 @@ char	**get_args(t_token **tokens, char **env)
 	return (args);
 }
 
-t_cmd	*tmp_get_commands(t_token *tokens, char **env)
+t_cmd	*get_commands(t_token *tokens, char **env)
 {
 	t_token	*tmp;
 	t_cmd	*head;

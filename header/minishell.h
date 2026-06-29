@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/18 16:03:00 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/24 18:03:48 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,8 @@ extern int	g_value_exit;
 
 char	*ft_strjoin_free(char *s1, char const *s2);
 char	*expand(char **env, char *arg);
+
+void	read_old_history(t_shell *shell);
+void	append_hist(char *line);
 
 #endif

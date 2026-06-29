@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 18:38:23 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/06/29 11:24:29 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	exec_echo(char **args, t_shell *shell)
 			i++;
 		while (args[i])
 		{
-			if (x == 1)
-				ft_printf(" ");
 			ft_printf("%s", args[i]);
 			x = 1;
 			i++;
@@ -69,7 +67,7 @@ int	builtin(char **args, t_shell *shell)
 	{"pwd", exec_pwd},
 	{"echo", exec_echo},
 	{"exit", exec_exit},
-	{"env", exec_env},
+	// {"env", exec_env},
 	{"cd", exec_cd},
 	{"export", exec_export},
 	{"unset", exec_unset},

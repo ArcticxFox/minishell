@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 19:27:09 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/29 16:24:50 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int ac, char **av, char **envp)
 			continue;
 		}
 		head = get_commands(tokens, shell.env);
+		print_commands(head);
 		shell.head = head;
 		while (tokens)
 		{

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 13:33:56 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 17:23:32 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/26 21:26:22 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ t_redir	*new_redir(t_token *tokens, char **env)
 	new_redir = malloc(sizeof(t_redir) * 1);
 	if (!new_redir)
 		return (NULL);
-	if (tokens->next->value && tokens->next->expand == 1)
-		new_redir->file = expand(env, tokens->next->value);
-	else if (tokens->next->value && tokens->next->expand == 0)
-		new_redir->file = ft_strdup(tokens->next->value);
+	if (tokens->next->value)
+		new_redir->file = expand(env, tokens->next->value,
+			tokens->next->expand);
 	else
 		new_redir->file = NULL;
 	new_redir->type = tokens->type;

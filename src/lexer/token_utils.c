@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 20:52:30 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/29 16:16:15 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static char	*assign_value(char *value)
 	int		end;
 
 	end = ft_strlen(value);
-	if ((value[end - 2] == '"' || value[end - 2] == '\'')
+	if (end >= 2
+		&& (value[end - 2] == '"' || value[end - 2] == '\'')
 		&& value[end - 1] == ' ')
 	{
 		tmp = value[end - 2];
@@ -80,7 +81,11 @@ t_token	*ft_new_token(char *value, t_tk_type type, int expand)
 	if (*value == '\'')
 		new_token->expand = 0;
 	new_token->type = type;
-	new_token->value = assign_value(value);
+	if (type == TOKEN_WORD)
+		new_token->value = assign_value(value);
+	else
+		new_token->value = value;
+	// new_token->value = assign_value(value);
 	if (!new_token->value)
 	{
 		free(new_token);

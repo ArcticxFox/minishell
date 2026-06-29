@@ -43,7 +43,10 @@ int	main(int ac, char **av, char **envp)
 			add_history(line);
 		tokens = lexer(line);
 		if (!tokens)
-			return 0;
+		{
+			free(line);
+			continue;
+		}
 		head = get_commands(tokens, shell.env);
 		shell.head = head;
 		while (tokens)

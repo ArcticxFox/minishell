@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+         #
+#    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2026/06/29 13:05:17 by leonpouet        ###   ########.fr        #
-=======
-#    Updated: 2026/06/29 20:39:16 by ejones           ###   ########.fr        #
->>>>>>> 1e3a783 (j'ai fais la fonction de gestion d'erreur de syntax, modifier le nom de certain fichier dans le dossier parseur)
+#    Updated: 2026/06/29 21:23:58 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

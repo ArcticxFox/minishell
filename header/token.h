@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:14:32 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 19:20:00 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 15:20:54 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "structs.h"
 
 //token.c
-t_token	*lexer(char **env, char *line);
+t_token	*lexer(char *line);
 int		check_special_char(t_token **token, char *s, int *i);
 char	*extract_word(char *str, int *i);
 

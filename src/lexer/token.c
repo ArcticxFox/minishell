@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 21:30:53 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 15:23:10 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,26 +96,29 @@ int	add_token(t_token **tokens, char *line, int *i)
 	return (EXIT_SUCCESS);
 }
 
-t_token	*lexer(char **env, char *line)
+t_token	*lexer(char *line)
 {
 	int		i;
+	int		error;
 	t_token	*tokens;
 
 	i = 0;
+	error = 0;
 	tokens = NULL;
-	(void)env;
 	while (line[i])
 	{
 		skip_whitespaces(line, &i);
 		if (!line[i])
 			break ;
 		if (add_token(&tokens, line, &i))
-			return (NULL);
+		{
+			error = -2;
+			break;
+		}
 	}
-	if (g_value_exit == 2 || check_for_syntax_error(tokens))
+	if (error == -2 || check_for_syntax_error(tokens))
 	{
 		g_value_exit = 2;
-		ft_printf("\n");
 		while (tokens)
 			ft_delete_front_token(&tokens);
 		return (NULL);

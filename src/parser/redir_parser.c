@@ -82,7 +82,7 @@ void	ft_delete_front_redir(t_redir **stack)
 	t_redir	*pstemp;
 
 	pstemp = NULL;
-	if (!stack && !*stack)
+	if (!stack || !*stack)
 		return ;
 	pstemp = *stack;
 	if (pstemp->next == NULL)

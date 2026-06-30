@@ -46,6 +46,13 @@ t_cmd	*ft_new_commands(t_token **tokens, char **env)
 	new_cmd->redir = find_redir(*tokens, env);
 	trim_files(&new_cmd->redir);
 	new_cmd->args = get_args(tokens, env);
+	if (!new_cmd->args)
+	{
+		while (new_cmd->redir)
+			ft_delete_front_redir(&new_cmd->redir);
+		free(new_cmd);
+		return (NULL);
+	}
 	trim_args(new_cmd->args);
 	new_cmd->cmd = new_cmd->args[0];
 	new_cmd->next = NULL;

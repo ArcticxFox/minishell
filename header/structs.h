@@ -31,9 +31,10 @@ typedef enum e_token_type
 
 typedef struct s_pipe_state
 {
-	int	**pipes;
-	int	n_cmds;
-	int	index;
+	int		**pipes;
+	int		n_cmds;
+	int		index;
+	pid_t	*pids;
 }	t_pipe_state;
 
 typedef struct s_redir

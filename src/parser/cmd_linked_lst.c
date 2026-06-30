@@ -46,7 +46,7 @@ void	ft_delete_front_cmd(t_cmd **stack)
 	t_cmd	*pstemp;
 
 	pstemp = NULL;
-	if (!stack && !*stack)
+	if (!stack || !*stack)
 		return ;
 	pstemp = *stack;
 	if (pstemp->next == NULL)

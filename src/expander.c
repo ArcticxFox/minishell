@@ -44,6 +44,8 @@ int	ft_get_env_len(char **env, char *name)
 	if (!name)
 		return (0);
 	value = get_env_value(env, name);
+	if (!value)
+		return (0);
 	len = ft_strlen(value);
 	return (len);
 }
@@ -98,8 +100,10 @@ int	ft_copy_into_env(char **env, char *str, char *new_str, int *i)
 	n = 0;
 	name = ft_env_name(str, i);
 	env_v = get_env_value(env, name);
-	n = ft_strlcpy(new_str, env_v, ft_strlen(env_v) + 1);
 	free(name);
+	if (!env_v)
+		return (0);
+	n = ft_strlcpy(new_str, env_v, ft_strlen(env_v) + 1);
 	return (n);
 }
 

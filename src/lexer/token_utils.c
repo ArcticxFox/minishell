@@ -98,7 +98,7 @@ void	ft_delete_front_token(t_token **stack)
 	t_token	*pstemp;
 
 	pstemp = NULL;
-	if (!stack && !*stack)
+	if (!stack || !*stack)
 		return ;
 	pstemp = *stack;
 	if (pstemp->next == NULL)

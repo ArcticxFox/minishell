@@ -103,6 +103,7 @@ t_token	*lexer(char **env, char *line)
 
 	i = 0;
 	tokens = NULL;
+	(void)env;
 	while (line[i])
 	{
 		skip_whitespaces(line, &i);
@@ -117,7 +118,6 @@ t_token	*lexer(char **env, char *line)
 		ft_printf("\n");
 		while (tokens)
 			ft_delete_front_token(&tokens);
-		free_memory(env);
 		return (NULL);
 	}
 	return (tokens);

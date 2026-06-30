@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/06/29 21:23:58 by ejones           ###   ########.fr        #
+#    Updated: 2026/06/30 16:25:07 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC := \
 	expander.c \
 	execute/execute_utils.c \
 	execute/execute_redir.c \
+	execute/heredoc_util.c \
 	execute/execute.c \
 	pipe/pipe.c
 

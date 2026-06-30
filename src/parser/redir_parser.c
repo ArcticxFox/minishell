@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_redir.c                                     :+:      :+:    :+:   */
+/*   redir_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 13:33:56 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 20:28:22 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 18:17:43 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,18 @@ t_redir	*new_redir(t_token *tokens, char **env)
 	new_redir = malloc(sizeof(t_redir) * 1);
 	if (!new_redir)
 		return (NULL);
+	new_redir->expand = false;
 	if (tokens->next->value)
 		new_redir->file = expand(env, tokens->next->value,
-				tokens->next->expand);
+				tokens->type, tokens->next->expand);
 	else
 		new_redir->file = NULL;
 	new_redir->type = tokens->type;
 	if (tokens->type == TOKEN_HEREDOC)
+	{
 		new_redir->delimiter = ft_strdup(new_redir->file);
+		new_redir->expand = tokens->next->expand;
+	}
 	else
 		new_redir->delimiter = NULL;
 	new_redir->heredoc_fd = -1;

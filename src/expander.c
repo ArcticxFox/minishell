@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/30 13:58:44 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 18:08:56 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,13 @@ char	*expand_string(char **env, char *str, int len)
 	return (new_str);
 }
 
-char	*expand(char **env, char *arg, int expand)
+char	*expand(char **env, char *arg, t_tk_type type, int expand)
 {
 	int		len;
 	char	*str;
 
 	str = NULL;
-	if (expand == 1 && check_for_dollar(arg))
+	if (expand == 1 && check_for_dollar(arg) && type != TOKEN_HEREDOC)
 	{
 		len = ft_get_lenght(env, arg);
 		str = expand_string(env, arg, len);

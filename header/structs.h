@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 16:55:40 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 18:10:55 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_redir
 {
 	t_tk_type		type;
 	int				heredoc_fd;
+	int				expand;
 	char			*delimiter;
 	char			*file;
 	struct s_redir	*next;

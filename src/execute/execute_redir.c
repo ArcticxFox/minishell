@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/29 20:12:53 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 16:29:46 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	apply_redirs(t_redir *redir)
 	return (0);
 }
 
-int	handle_heredoc(t_redir *redir)
+int	handle_heredoc(t_redir *redir, char **env)
 {
 	int		pipefd[2];
 	char	*line;
@@ -71,6 +71,8 @@ int	handle_heredoc(t_redir *redir)
 			free(line);
 			break ;
 		}
+		if (redir->expand == true)
+			line = expand_heredoc(env, line);
 		ft_putstr_fd(line, pipefd[1]);
 		ft_putchar_fd('\n', pipefd[1]);
 		free(line);
@@ -80,7 +82,7 @@ int	handle_heredoc(t_redir *redir)
 	return (0);
 }
 
-void	setup_heredocs(t_cmd *head)
+void	setup_heredocs(t_cmd *head, char **env)
 {
 	t_redir	*redir;
 
@@ -90,7 +92,7 @@ void	setup_heredocs(t_cmd *head)
 		while (redir)
 		{
 			if (redir->type == TOKEN_HEREDOC)
-				handle_heredoc(redir);
+				handle_heredoc(redir, env);
 			redir = redir->next;
 		}
 		head = head->next;

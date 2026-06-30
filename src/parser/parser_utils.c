@@ -6,11 +6,11 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 20:20:33 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 20:53:01 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 18:09:51 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 static int	count_args(t_token *tokens)
 {
@@ -45,7 +45,8 @@ char	*get_cmd_value(t_token **tokens, char **env)
 	if (!(*tokens) || ft_isspecial(*tokens) == 1)
 		return (NULL);
 	if ((*tokens)->value)
-		value = expand(env, (*tokens)->value, (*tokens)->expand);
+		value = expand(env, (*tokens)->value,
+			(*tokens)->type, (*tokens)->expand);
 	else
 		value = NULL;
 	(*tokens) = (*tokens)->next;

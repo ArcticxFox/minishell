@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 20:20:33 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/03 14:50:17 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/03 16:20:40 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ void	trim_args(char **args)
 
 	if (!args || !args[0])
 		return ;
-	if (ft_strncmp(args[0], "echo", 6) == 0)
-		return ;
 	i = 0;
 	while (args[i])
 	{
@@ -130,8 +128,10 @@ void	trim_args(char **args)
 		free(args[i]);
 		args[i] = tmp;
 		if (i == 0 && ft_strncmp(args[0], "echo", 6) == 0)
-			return ;
-		i++;
+			while (args[i + 1])
+				i++;
+		else
+			i++;
 	}
 	return ;
 }

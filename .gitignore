@@ -15,4 +15,4 @@ libft/build/*.d
 *.swo
 
 #text files
-cmd_log.txt
+*.txt

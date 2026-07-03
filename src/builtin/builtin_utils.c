@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 13:03:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/29 13:06:46 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/03 18:49:24 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	child_exit(t_shell *shell, int status)
 	while (shell->head)
 		ft_delete_front_cmd(&shell->head);
 	free_memory(shell->env);
-	exit(status);
+	g_value_exit = status;
+	exit(g_value_exit);
 }
 
 int	is_numeric(char *str)

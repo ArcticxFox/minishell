@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 11:25:17 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/03 19:01:56 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,26 @@
 static void	do_execve(t_cmd *cmd, t_shell *shell)
 {
 	char	*path;
+	int		err;
 
 	path = get_path(cmd->cmd, shell);
 	if (!path)
 	{
-		ft_putstr_fd("minishell: command not found\n", 2);
+		write(2, cmd->cmd, ft_strlen(cmd->cmd));
+		ft_putstr_fd(": command not found\n", 2);
 		child_exit(shell, 127);
 	}
 	execve(path, cmd->args, shell->env);
-	perror(path);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd->cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(strerror(errno), 2);
 	free(path);
-	child_exit(shell, 127);
+	err = errno;
+	if (err == ENOENT)
+		child_exit(shell, 127);
+	else
+		child_exit(shell, 126);
 }
 
 void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
@@ -98,7 +107,9 @@ void	execute_pipeline(t_cmd *list, t_shell *shell)
 void	execute(t_cmd *cmd, t_shell *shell)
 {
 	pid_t	pid;
+	int		status;
 
+	status = 0;
 	if (cmd->next != NULL)
 		execute_pipeline(cmd, shell);
 	else
@@ -113,6 +124,11 @@ void	execute(t_cmd *cmd, t_shell *shell)
 		pid = fork();
 		if (pid == 0)
 			execute_child(cmd, STDIN_FILENO, STDOUT_FILENO, shell);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			g_value_exit = WEXITSTATUS(status);
+		else
+			g_value_exit = 128 + WTERMSIG(status);
+		ft_printf("exit = %d\n", g_value_exit);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:43:20 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/26 19:17:55 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/03 18:52:53 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,6 @@ char	*search_in_split(char **split, char *cmd)
 			return (NULL);
 		if (access(mypath, X_OK) == 0)
 			return (mypath);
-		if (access(cmd, X_OK) == 0)
-		{
-			free(mypath);
-			return (ft_strdup(cmd));
-		}
 		free(mypath);
 		i++;
 	}
@@ -86,11 +81,7 @@ char	*get_path(char *cmd, t_shell *shell)
 	if (!cmd || !*cmd)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
-	{
-		if (access(cmd, X_OK) == 0)
-			return (ft_strdup(cmd));
-		return (NULL);
-	}
+		return (ft_strdup(cmd));
 	i = 0;
 	path = get_env_value(shell->env, "PATH");
 	split = ft_split(path, ':');

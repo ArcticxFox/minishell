@@ -6,11 +6,25 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 17:03:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/30 15:14:02 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/03 13:37:44 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	print_syntax_error(t_tk_type type)
+{
+	if (type == TOKEN_REDIR_IN)
+		ft_putendl_fd("minishell: syntax error near unexpected token '<'", 2);
+	else if (type == TOKEN_REDIR_OUT)
+		ft_putendl_fd("minishell: syntax error near unexpected token '>'", 2);
+	else if (type == TOKEN_APPEND)
+		ft_putendl_fd("minishell: syntax error near unexpected token '>>'", 2);
+	else if (type == TOKEN_HEREDOC)
+		ft_putendl_fd("minishell: syntax error near unexpected token '<<'", 2);
+	else if (type == TOKEN_PIPE)
+		ft_putendl_fd("minishell: syntax error near unexpected token '|'", 2);
+}
 
 bool	check_error_near_newline(t_token *tokens)
 {
@@ -48,18 +62,10 @@ bool	check_error_for_redir_or_pipe(t_token *tokens)
 		if (tmp->next && tmp->type >= TOKEN_PIPE && tmp->type <= TOKEN_HEREDOC)
 		{
 			tmp = tmp->next;
-			if (tmp->type == TOKEN_REDIR_IN)
-				ft_putendl_fd("minishell: syntax error near unexpected token '<'", 2);
-			else if (tmp->type == TOKEN_REDIR_OUT)
-				ft_putendl_fd("minishell: syntax error near unexpected token '>'", 2);
-			else if (tmp->type == TOKEN_APPEND)
-				ft_putendl_fd("minishell: syntax error near unexpected token '>>'", 2);
-			else if (tmp->type == TOKEN_HEREDOC)
-				ft_putendl_fd("minishell: syntax error near unexpected token '<<'", 2);
-			else if (tmp->type == TOKEN_PIPE)
-				ft_putendl_fd("minishell: syntax error near unexpected token '|'", 2);
+			if (tmp->type >= TOKEN_PIPE && tmp->type <= TOKEN_HEREDOC)
+				print_syntax_error(tmp->type);
 			else
-				continue;
+				continue ;
 			return (true);
 		}
 		tmp = tmp->next;

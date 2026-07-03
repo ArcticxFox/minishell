@@ -2,7 +2,7 @@
 minishell
 a.out
 
-#Object files
+#From Compilation
 *.o
 *.d
 *.a
@@ -15,4 +15,4 @@ libft/build/*.d
 *.swo
 
 #text files
-cmd_hist.txt
+cmd_log.txt

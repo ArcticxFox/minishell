@@ -6,20 +6,37 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 15:04:39 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/24 18:51:40 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/03 15:10:08 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	add_cmd_log_env(t_shell *shell)
+{
+	char	*path;
+	char	*log_path[2];
+
+	log_path[0] = "export";
+	log_path[1] = get_env_value(shell->env, "PWD");
+	path = ft_strjoin("CMD_LOG=", log_path[1]);
+	path = ft_strjoin_free(path , "/cmd_log.txt");
+	log_path[1] = path;
+	exec_export(log_path, shell);
+	free(path);
+}
 
 void	read_old_history(t_shell *shell)
 {
 	int		fd;
 	char	*tmp;
 	char	*line;
+	char	*path;
 
-	(void)shell;
-	fd = open("cmd_hist.txt", O_RDONLY);
+	if (!get_env_value(shell->env, "CMD_LOG"))
+		add_cmd_log_env(shell);
+	path = get_env_value(shell->env, "CMD_LOG");
+	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return ;
 	while ((line = get_next_line(fd)) != NULL)
@@ -32,11 +49,13 @@ void	read_old_history(t_shell *shell)
 	close(fd);
 }
 
-void	append_hist(char *line)
+void	append_hist(char **env, char *line)
 {
 	int		fd;
+	char	*log_path;
 
-	fd = open("cmd_hist.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
+	log_path = get_env_value(env, "CMD_LOG");
+	fd = open(log_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd != -1)
 	{
 		add_history(line);

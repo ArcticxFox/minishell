@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/06/30 16:25:07 by ejones           ###   ########.fr        #
+#    Updated: 2026/07/03 14:52:51 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ SRC := \
 	execute/execute_redir.c \
 	execute/heredoc_util.c \
 	execute/execute.c \
-	pipe/pipe.c
+	pipe/pipe.c \
+	command_history/cmd_hist.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 

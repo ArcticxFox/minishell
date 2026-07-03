@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 20:52:55 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/03 13:46:35 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ t_redir	*find_redir(t_token *tokens, char **env)
 t_cmd	*ft_new_commands(t_token **tokens, char **env)
 {
 	t_cmd	*new_cmd;
-	// char	*tmp;
-	// int		i;
 
-	// i = 0;
-	// tmp = NULL;
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);

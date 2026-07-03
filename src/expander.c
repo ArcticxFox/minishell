@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/30 18:08:56 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/03 13:41:37 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,16 @@ char	*expand_string(char **env, char *str, int len)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != '?')
+		if (str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '$')
 		{
 			++i;
 			n += ft_copy_into_env(env, str, &new_str[n], &i);
 		}
 		else
 		{
-			new_str[n] = str[i];
-			++n;
-			++i;
+			if (str[i] == '$' && str[i + 1] == '$')
+				++i;
+			new_str[n++] = str[i++];
 		}
 	}
 	new_str[len] = '\0';
@@ -153,6 +153,3 @@ char	*expand(char **env, char *arg, t_tk_type type, int expand)
 	}
 	return (str);
 }
-
-
-

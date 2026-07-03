@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/30 15:23:10 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/03 13:33:15 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,13 @@ t_token	*lexer(char *line)
 	i = 0;
 	error = 0;
 	tokens = NULL;
-	while (line[i])
+	while (line[i] && error == 0)
 	{
 		skip_whitespaces(line, &i);
 		if (!line[i])
 			break ;
 		if (add_token(&tokens, line, &i))
-		{
 			error = -2;
-			break;
-		}
 	}
 	if (error == -2 || check_for_syntax_error(tokens))
 	{

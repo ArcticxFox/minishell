@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 09:49:05 by jfox              #+#    #+#             */
-/*   Updated: 2026/06/24 16:44:03 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/03 14:01:54 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static char	*build_line(int fd, char *stash, int *goodread)
 			return (NULL);
 		}
 		temp[*goodread] = '\0';
-		unchecked_line = ft_strjoin(unchecked_line, temp);
+		unchecked_line = ft_strjoin_gnl(unchecked_line, temp);
 	}
 	free(temp);
 	return (unchecked_line);

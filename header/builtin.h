@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:14 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 13:07:06 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/03 13:47:37 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ int			is_numeric(char *str);
 int			is_overflowed(char *str);
 long long	ft_atoll(char *str);
 
-int		exec_cd(char **args, t_shell *shell);
-int		exec_export(char **args, t_shell *shell);
-int		exec_unset(char **args, t_shell *shell);
-int		exec_env(char **args, t_shell *shell);
-
+int			exec_cd(char **args, t_shell *shell);
+int			exec_export(char **args, t_shell *shell);
+int			exec_unset(char **args, t_shell *shell);
+int			exec_env(char **args, t_shell *shell);
 
 #endif

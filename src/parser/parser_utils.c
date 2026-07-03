@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 20:20:33 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/30 18:09:51 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/03 14:50:17 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_cmd_value(t_token **tokens, char **env)
 		return (NULL);
 	if ((*tokens)->value)
 		value = expand(env, (*tokens)->value,
-			(*tokens)->type, (*tokens)->expand);
+				(*tokens)->type, (*tokens)->expand);
 	else
 		value = NULL;
 	(*tokens) = (*tokens)->next;
@@ -88,14 +88,23 @@ void	trim_files(t_redir **redir)
 	tmp_redir = *redir;
 	while (tmp_redir)
 	{
-		tmp_file = ft_strtrim(tmp_redir->file, " ");
-		if (!tmp_file)
+		if (!(tmp_file = ft_strtrim(tmp_redir->file, " ")))
 		{
 			tmp_redir = tmp_redir->next;
 			continue ;
 		}
 		free(tmp_redir->file);
 		tmp_redir->file = tmp_file;
+		if (tmp_redir->type == TOKEN_HEREDOC)
+		{
+			if (!(tmp_file = ft_strtrim(tmp_redir->file, " ")))
+			{
+				tmp_redir = tmp_redir->next;
+				continue ;
+			}
+			free(tmp_redir->delimiter);
+			tmp_redir->delimiter = tmp_file;
+		}
 		tmp_redir = tmp_redir->next;
 	}
 }

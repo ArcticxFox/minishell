@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/04 16:31:41 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/04 19:53:33 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,4 @@ void	execute(t_cmd *cmd, t_shell *shell)
 		else
 			g_value_exit = 128 + WTERMSIG(status);
 	}
-	ft_printf("exit = %d\n", g_value_exit);
 }

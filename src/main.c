@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/04 17:25:01 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/04 19:31:50 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int ac, char **av, char **envp)
 	tokens = NULL;
 	head = NULL;
 	init_signals();
-	read_old_history(&shell);
+	// read_old_history(&shell);
 	while (1)
 	{
 		line = readline("minishell> ");
@@ -41,8 +41,8 @@ int	main(int ac, char **av, char **envp)
 			exit(g_value_exit);
 		}
 		if (line[0] != '\0')
-			append_hist(shell.env, line);
-			// add_history(line);
+			add_history(line);
+			// append_hist(shell.env, line);
 		tokens = lexer(line);
 		if (!tokens)
 		{
@@ -51,12 +51,10 @@ int	main(int ac, char **av, char **envp)
 		}
 		head = get_commands(tokens, shell.env);
 		shell.head = head;
-		// print_commands(head);
 		while (tokens)
 			ft_delete_front_token(&tokens);
 		setup_heredocs(head, shell.env);
 		execute(head, &shell);
-		// printf("\n");
 		while(head)
 			ft_delete_front_cmd(&head);
 		if (shell.should_exit)

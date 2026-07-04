@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 17:03:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/03 13:37:44 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/04 19:16:25 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ bool	check_error_for_redir_or_pipe(t_token *tokens)
 	t_token	*tmp;
 
 	tmp = tokens;
+	if (tmp->type == TOKEN_PIPE)
+		return (true);
 	while (tmp)
 	{
 		if (tmp->next && tmp->type >= TOKEN_PIPE && tmp->type <= TOKEN_HEREDOC)

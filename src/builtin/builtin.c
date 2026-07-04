@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/04 16:42:25 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/04 19:07:30 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,24 @@ int	exec_echo(char **args, t_shell *shell)
 	i = 1;
 	no_newline = 0;
 	(void)shell;
-	while (args[i] && is_n(args[i]))
-	{
-		no_newline = 1;
-		i++;
-	}
+	if (!args[i])
+		return (0);
 	while (args[i])
 	{
-		ft_printf("%s", args[i]);
-		i++;
+		if (is_n(args[i]))
+		{
+			no_newline = 1;
+			i++;
+		}
+		else
+		{
+			write(1, args[i], ft_strlen(args[i]));
+			i++;
+		}
 	}
 	if (!no_newline)
 		ft_printf("\n");
-	return (1);
+	return (0);
 }
 
 static void	exit_numeric_err(char *arg, t_shell *shell)

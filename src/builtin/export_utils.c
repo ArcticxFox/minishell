@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/04 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/04 17:53:20 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/04 19:49:14 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ int	is_valid_identifier(char *name, int len)
 
 	if (!len)
 		return (0);
-	if (!ft_isalpha(name[0]) && name[0] != '_')
+	if (!ft_isalpha(name[0]) && name[0] != '_'
+		&& name[0] != '\'' && name[0] != '"')
 		return (0);
 	i = 1;
 	while (i < len)
 	{
-		if (!ft_isalnum(name[i]) && name[i] != '_')
+		if (!ft_isalnum(name[i]) && name[i] != '_'
+			&& name[0] != '\'' && name[0] != '"')
 			return (0);
 		i++;
 	}

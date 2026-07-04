@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 15:04:39 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/03 16:20:11 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/04 17:11:38 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	add_cmd_log_env(t_shell *shell)
 {
 	char	*path;
-	char	*log_path[2];
+	char	*log_path[3] = {0};
 
 	log_path[0] = "export";
 	log_path[1] = get_env_value(shell->env, "PWD");

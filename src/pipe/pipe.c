@@ -80,5 +80,7 @@ void	child_pipe_setup(t_cmd *cmd, t_pipe_state *state, t_shell *shell)
 	if (fd_out != STDOUT_FILENO)
 		dup2(fd_out, STDOUT_FILENO);
 	close_all_pipes(state->pipes, state->n_cmds - 1);
+	free_pipes(state->pipes, state->n_cmds - 1);
+	free(state->pids);
 	execute_child(cmd, STDIN_FILENO, STDOUT_FILENO, shell);
 }

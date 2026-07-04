@@ -4,9 +4,10 @@ a.out
 
 #Object files
 *.o
-obj/
-libft/build
+*.d
 *.a
+obj/
+libft/build/*.d
 
 # Editor files
 *~

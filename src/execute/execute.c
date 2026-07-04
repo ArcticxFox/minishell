@@ -79,7 +79,13 @@ void	execute_pipeline(t_cmd *list, t_shell *shell)
 	state.pipes = create_pipes(state.n_cmds - 1);
 	pids = malloc(sizeof(pid_t) * state.n_cmds);
 	if (!state.pipes || !pids)
+	{
+		if (state.pipes)
+			free_pipes(state.pipes, state.n_cmds - 1);
+		free(pids);
 		return ;
+	}
+	state.pids = pids;
 	pipeline_fork_loop(list, &state, pids, shell);
 	close_all_pipes(state.pipes, state.n_cmds - 1);
 	i = 0;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   redir_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 13:33:56 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 17:23:32 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 18:17:43 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@ int	ft_isspecial(t_token *token)
 	return (0);
 }
 
+t_redir	*ft_last_redir(t_redir *lst)
+{
+	t_redir	*tmp;
+
+	tmp = lst;
+	if (!lst)
+		return (NULL);
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	return (tmp);
+}
+
 t_redir	*new_redir(t_token *tokens, char **env)
 {
 	t_redir	*new_redir;
@@ -33,15 +45,18 @@ t_redir	*new_redir(t_token *tokens, char **env)
 	new_redir = malloc(sizeof(t_redir) * 1);
 	if (!new_redir)
 		return (NULL);
-	if (tokens->next->value && tokens->next->expand == 1)
-		new_redir->file = expand(env, tokens->next->value);
-	else if (tokens->next->value && tokens->next->expand == 0)
-		new_redir->file = ft_strdup(tokens->next->value);
+	new_redir->expand = false;
+	if (tokens->next->value)
+		new_redir->file = expand(env, tokens->next->value,
+				tokens->type, tokens->next->expand);
 	else
 		new_redir->file = NULL;
 	new_redir->type = tokens->type;
 	if (tokens->type == TOKEN_HEREDOC)
+	{
 		new_redir->delimiter = ft_strdup(new_redir->file);
+		new_redir->expand = tokens->next->expand;
+	}
 	else
 		new_redir->delimiter = NULL;
 	new_redir->heredoc_fd = -1;
@@ -49,22 +64,21 @@ t_redir	*new_redir(t_token *tokens, char **env)
 	return (new_redir);
 }
 
-int	count_args(t_token *tokens)
+void	ft_add_back_redir(t_redir **lst, t_redir *new_cmd)
 {
-	int	n;
+	t_redir	*end_node;
 
-	n = 0;
-	while (tokens && tokens->type != TOKEN_PIPE)
+	if (lst != NULL && new_cmd != NULL)
 	{
-		if (ft_isspecial(tokens) == 2 && tokens->next)
-			tokens = tokens->next->next;
-		else
+		if (*lst != NULL)
 		{
-			++n;
-			tokens = tokens->next;
+			end_node = *lst;
+			end_node = ft_last_redir(end_node);
+			end_node->next = new_cmd;
 		}
+		else
+			*lst = new_cmd;
 	}
-	return (n);
 }
 
 void	ft_delete_front_redir(t_redir **stack)
@@ -72,7 +86,7 @@ void	ft_delete_front_redir(t_redir **stack)
 	t_redir	*pstemp;
 
 	pstemp = NULL;
-	if (!stack && !*stack)
+	if (!stack || !*stack)
 		return ;
 	pstemp = *stack;
 	if (pstemp->next == NULL)
@@ -83,23 +97,5 @@ void	ft_delete_front_redir(t_redir **stack)
 		close(pstemp->heredoc_fd);
 	free(pstemp->file);
 	free(pstemp->delimiter);
-	free(pstemp);
-}
-
-void	ft_delete_front_cmd(t_cmd **stack)
-{
-	t_cmd	*pstemp;
-
-	pstemp = NULL;
-	if (!stack && !*stack)
-		return ;
-	pstemp = *stack;
-	if (pstemp->next == NULL)
-		*stack = NULL;
-	else
-		*stack = pstemp->next;
-	free_memory(pstemp->args);
-	while (pstemp->redir)
-		ft_delete_front_redir(&pstemp->redir);
 	free(pstemp);
 }

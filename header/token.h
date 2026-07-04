@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:14:32 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/25 16:09:43 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 15:20:54 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 
 # include "structs.h"
 
+//token.c
+t_token	*lexer(char *line);
+int		check_special_char(t_token **token, char *s, int *i);
+char	*extract_word(char *str, int *i);
+
+
 //token_util2.c
 int		ft_is_whitespace(char c);
 void	skip_whitespaces(char *line, int *i);
 char	*extract_single_quotes(char *str, int *i);
 char	*extract_double_quotes(char *str, int *i);
-// char	*extract_double_quotes(char *str, char *tmp, int *i)
 
 
-t_token	*lexer(char *line);
-int		check_special_char(t_token **token, char *s, int *i);
-char	*extract_word(char *str, int *i);
 
 t_token	*ft_new_token(char *value, t_tk_type type, int expand);
 t_token	*ft_last_token(t_token *lst);
@@ -34,7 +36,7 @@ void	ft_delete_front_token(t_token **stack);
 
 
 
-//maybe delete
-bool	if_is_word_char(char c);
+//syntax_errors.c
+bool	check_for_syntax_error(t_token *tokens);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 19:27:09 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 16:03:13 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,14 @@ int	main(int ac, char **av, char **envp)
 		}
 		head = get_commands(tokens, shell.env);
 		shell.head = head;
+		print_commands(head);
 		while (tokens)
-		{
 			ft_delete_front_token(&tokens);
-		}
-		setup_heredocs(head);
+		setup_heredocs(head, shell.env);
 		execute(head, &shell);
 		printf("\n");
 		while(head)
-		{
 			ft_delete_front_cmd(&head);
-		}
 		if (shell.should_exit)
 		{
 			free_memory(shell.env);

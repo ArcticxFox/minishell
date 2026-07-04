@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/23 14:16:58 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 18:08:56 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	ft_get_env_len(char **env, char *name)
 	if (!name)
 		return (0);
 	value = get_env_value(env, name);
+	if (!value)
+		return (0);
 	len = ft_strlen(value);
 	return (len);
 }
@@ -59,7 +61,7 @@ int	ft_get_lenght(char **env, char *str)
 	name = NULL;
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1] != '?')
 		{
 			++i;
 			name = ft_env_name(str, &i);
@@ -98,8 +100,10 @@ int	ft_copy_into_env(char **env, char *str, char *new_str, int *i)
 	n = 0;
 	name = ft_env_name(str, i);
 	env_v = get_env_value(env, name);
-	n = ft_strlcpy(new_str, env_v, ft_strlen(env_v) + 1);
 	free(name);
+	if (!env_v)
+		return (0);
+	n = ft_strlcpy(new_str, env_v, ft_strlen(env_v) + 1);
 	return (n);
 }
 
@@ -112,11 +116,11 @@ char	*expand_string(char **env, char *str, int len)
 	i = 0;
 	n = 0;
 	new_str = malloc(len * sizeof(char) + 1);
-	if (!str)
+	if (!new_str)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1] != '?')
 		{
 			++i;
 			n += ft_copy_into_env(env, str, &new_str[n], &i);
@@ -132,19 +136,21 @@ char	*expand_string(char **env, char *str, int len)
 	return (new_str);
 }
 
-char	*expand(char **env, char *arg)
+char	*expand(char **env, char *arg, t_tk_type type, int expand)
 {
 	int		len;
 	char	*str;
 
 	str = NULL;
-	if (check_for_dollar(arg))
+	if (expand == 1 && check_for_dollar(arg) && type != TOKEN_HEREDOC)
 	{
 		len = ft_get_lenght(env, arg);
 		str = expand_string(env, arg, len);
 	}
 	else
+	{
 		str = ft_strdup(arg);
+	}
 	return (str);
 }
 

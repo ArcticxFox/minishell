@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/25 18:45:28 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 15:23:10 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	add_token(t_token **tokens, char *line, int *i)
 		str = extract_word(line, i);
 		if (!str)
 		{
-			ft_printf("syntax error\n");
+			g_value_exit = 2;
 			while (*tokens)
 				ft_delete_front_token(tokens);
 			return (EXIT_FAILURE);
@@ -99,11 +99,11 @@ int	add_token(t_token **tokens, char *line, int *i)
 t_token	*lexer(char *line)
 {
 	int		i;
-	// char	*str;
+	int		error;
 	t_token	*tokens;
 
 	i = 0;
-	// str = NULL;
+	error = 0;
 	tokens = NULL;
 	while (line[i])
 	{
@@ -111,7 +111,17 @@ t_token	*lexer(char *line)
 		if (!line[i])
 			break ;
 		if (add_token(&tokens, line, &i))
-			return (NULL);
+		{
+			error = -2;
+			break;
+		}
+	}
+	if (error == -2 || check_for_syntax_error(tokens))
+	{
+		g_value_exit = 2;
+		while (tokens)
+			ft_delete_front_token(&tokens);
+		return (NULL);
 	}
 	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/26 18:46:37 by ejones           ###   ########.fr       */
+/*   Updated: 2026/06/30 18:10:55 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,17 @@ typedef enum e_token_type
 
 typedef struct s_pipe_state
 {
-	int	**pipes;
-	int	n_cmds;
-	int	index;
+	int		**pipes;
+	int		n_cmds;
+	int		index;
+	pid_t	*pids;
 }	t_pipe_state;
 
 typedef struct s_redir
 {
 	t_tk_type		type;
 	int				heredoc_fd;
+	int				expand;
 	char			*delimiter;
 	char			*file;
 	struct s_redir	*next;
@@ -50,7 +52,6 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**args;
 	t_redir			*redir;
-	bool			add_space;
 	struct s_cmd	*next;
 }	t_cmd;
 

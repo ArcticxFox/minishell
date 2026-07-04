@@ -63,10 +63,13 @@ char	*search_in_split(char **split, char *cmd)
 		mypath = ft_strjoin_free(mypath, cmd);
 		if (!mypath)
 			return (NULL);
-		if (access(cmd, X_OK) == 0)
-			return (cmd);
 		if (access(mypath, X_OK) == 0)
 			return (mypath);
+		if (access(cmd, X_OK) == 0)
+		{
+			free(mypath);
+			return (ft_strdup(cmd));
+		}
 		free(mypath);
 		i++;
 	}

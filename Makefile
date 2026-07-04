@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/07/03 14:52:51 by ejones           ###   ########.fr        #
+#    Updated: 2026/07/04 16:01:52 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,10 @@ SRC := \
 	parser/redir_parser.c \
 	parser/parser_utils.c \
 	expander.c \
-	execute/execute_utils.c \
-	execute/execute_redir.c \
-	execute/heredoc_util.c \
 	execute/execute.c \
+	execute/execute_utils_1.c \
+	execute/execute_util_2.c \
+	execute/execute_redir.c \
 	pipe/pipe.c \
 	command_history/cmd_hist.c
 

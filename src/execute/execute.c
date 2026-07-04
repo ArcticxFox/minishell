@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/03 19:01:56 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/04 16:31:41 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 		builtin(cmd->args, shell);
 		child_exit(shell, 0);
 	}
-	do_execve(cmd, shell);
+	if (cmd->cmd)
+		do_execve(cmd, shell);
+	else
+		child_exit(shell, 0);
 }
 
 static void	pipeline_fork_loop(t_cmd *list, t_pipe_state *state,
@@ -81,27 +84,22 @@ static void	pipeline_fork_loop(t_cmd *list, t_pipe_state *state,
 void	execute_pipeline(t_cmd *list, t_shell *shell)
 {
 	t_pipe_state	state;
-	pid_t			*pids;
-	int				i;
 
 	state.n_cmds = count_cmds(list);
 	state.pipes = create_pipes(state.n_cmds - 1);
-	pids = malloc(sizeof(pid_t) * state.n_cmds);
-	if (!state.pipes || !pids)
+	state.pids = malloc(sizeof(pid_t) * state.n_cmds);
+	if (!state.pipes || !state.pids)
 	{
 		if (state.pipes)
 			free_pipes(state.pipes, state.n_cmds - 1);
-		free(pids);
+		free(state.pids);
 		return ;
 	}
-	state.pids = pids;
-	pipeline_fork_loop(list, &state, pids, shell);
+	pipeline_fork_loop(list, &state, state.pids, shell);
 	close_all_pipes(state.pipes, state.n_cmds - 1);
-	i = 0;
-	while (i < state.n_cmds)
-		waitpid(pids[i++], NULL, 0);
+	exit_status(&state);
 	free_pipes(state.pipes, state.n_cmds - 1);
-	free(pids);
+	free(state.pids);
 }
 
 void	execute(t_cmd *cmd, t_shell *shell)
@@ -129,6 +127,6 @@ void	execute(t_cmd *cmd, t_shell *shell)
 			g_value_exit = WEXITSTATUS(status);
 		else
 			g_value_exit = 128 + WTERMSIG(status);
-		ft_printf("exit = %d\n", g_value_exit);
 	}
+	ft_printf("exit = %d\n", g_value_exit);
 }

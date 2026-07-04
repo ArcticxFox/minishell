@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_utils.c                                    :+:      :+:    :+:   */
+/*   execute_utils_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:43:20 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/03 18:52:53 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/04 16:15:15 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	count_cmds(t_cmd *cmds)
 	return (i);
 }
 
-char	*search_in_split(char **split, char *cmd)
+static char	*search_in_split(char **split, char *cmd)
 {
 	char	*mypath;
 	int		i;
@@ -111,6 +111,8 @@ int	is_builtin(char *cmd)
 	int					i;
 
 	i = 0;
+	if (!cmd)
+		return (0);
 	while (builtin[i].name)
 	{
 		if (!ft_strncmp(cmd, builtin[i].name, ft_strlen(builtin[i].name) + 1))

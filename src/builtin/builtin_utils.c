@@ -50,7 +50,11 @@ int	is_overflowed(char *str)
 	i = 0;
 	if (str[i] == '+' || str[i] == '-')
 	{
-		limit = (str[i++] == '-') ? min_abs : max;
+		if (str[i] == '-')
+			limit = min_abs;
+		else
+			limit = max;
+		i++;
 	}
 	else
 		limit = max;

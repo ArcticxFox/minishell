@@ -52,7 +52,7 @@ void	print_export_line(char *line)
 	res = ft_strchr(line, '=');
 	if (res)
 	{
-		write(1, line, ft_strlen(res) - ft_strlen(line));
+		write(1, line, res - line);
 		ft_printf("='%s'\n", res + 1);
 	}
 	else

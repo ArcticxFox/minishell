@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:14 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 13:07:06 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/04 16:43:22 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int		exec_env(char **args, t_shell *shell);
 
 int		is_valid_identifier(char *name, int len);
 int		is_in_env(char **env, char *name, int len);
-void	print_export_line(char *entry);
+int		is_n(char *arg);
 int		export_add(char *arg, t_shell *shell);
+void	print_export_line(char *entry);
 
 
 #endif

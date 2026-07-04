@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 13:03:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/29 13:06:46 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/04 16:42:39 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,24 @@ long long	ft_atoll(char *str)
 	while (str[i] && ft_isdigit(str[i]))
 		result = result * 10 + (str[i++] - '0');
 	return (result * sign);
+}
+
+int	is_n(char *arg)
+{
+	int	i;
+	int	len;
+
+	if (!arg || arg[0] != '-')
+		return (0);
+	len = ft_strlen(arg);
+	if (arg[len - 1] == ' ')
+		len--;
+	i = 1;
+	while (i < len)
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -26,5 +26,10 @@ int		exec_export(char **args, t_shell *shell);
 int		exec_unset(char **args, t_shell *shell);
 int		exec_env(char **args, t_shell *shell);
 
+int		is_valid_identifier(char *name, int len);
+int		is_in_env(char **env, char *name, int len);
+void	print_export_line(char *entry);
+int		export_add(char *arg, t_shell *shell);
+
 
 #endif

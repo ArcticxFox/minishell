@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/06/29 14:33:23 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/03 14:42:52 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	exec_echo(char **args, t_shell *shell)
 	(void)shell;
 	if (args[1])
 	{
-		if (!ft_strncmp(args[1], "-n", 3))
+		if (!ft_strncmp(args[1], "-n", 2))
 			i++;
 		while (args[i])
 		{

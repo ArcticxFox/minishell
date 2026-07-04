@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/03 14:42:52 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/04 16:42:25 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,23 @@ int	exec_pwd(char **args, t_shell *shell)
 int	exec_echo(char **args, t_shell *shell)
 {
 	int	i;
+	int	no_newline;
 
 	i = 1;
+	no_newline = 0;
 	(void)shell;
-	if (args[1])
+	while (args[i] && is_n(args[i]))
 	{
-		if (!ft_strncmp(args[1], "-n", 2))
-			i++;
-		while (args[i])
-		{
-			ft_printf("%s", args[i]);
-			i++;
-		}
-		if (!ft_strncmp(args[1], "-n", 3))
-			return (1);
+		no_newline = 1;
+		i++;
 	}
-	ft_printf("\n");
+	while (args[i])
+	{
+		ft_printf("%s", args[i]);
+		i++;
+	}
+	if (!no_newline)
+		ft_printf("\n");
 	return (1);
 }
 

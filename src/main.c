@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/03 17:12:53 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/04 17:25:01 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int ac, char **av, char **envp)
 			ft_delete_front_token(&tokens);
 		setup_heredocs(head, shell.env);
 		execute(head, &shell);
-		printf("\n");
+		// printf("\n");
 		while(head)
 			ft_delete_front_cmd(&head);
 		if (shell.should_exit)

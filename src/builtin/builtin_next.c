@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/01 08:52:58 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/04 16:44:17 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,26 @@
 int	exec_cd(char **args, t_shell *shell)
 {
 	char	buffer[4096];
+	char	*path;
 
 	if (!args[1])
-		return (0);
-	set_env_value(shell->env, "OLDPWD=", getcwd(buffer, 4096));
-	if (chdir(args[1]) == -1)
 	{
-		write (2, "Error directory havn't change\n", 30);
-		return (0);
+		path = get_env_value(shell->env, "HOME");
+		if (!path)
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			return (1);
+		}
+	}
+	else
+		path = args[1];
+	set_env_value(shell->env, "OLDPWD=", getcwd(buffer, 4096));
+	if (chdir(path) == -1)
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (1);
 	}
 	set_env_value(shell->env, "PWD=", getcwd(buffer, 4096));
 	return (1);

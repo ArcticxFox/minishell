@@ -6,11 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 13:03:25 by leonpouet         #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2026/07/04 17:24:06 by leonpouet        ###   ########.fr       */
-=======
-/*   Updated: 2026/07/04 17:53:26 by leonpouet        ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2026/07/04 17:59:54 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 15:01:39 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 18:26:55 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,8 @@ int	add_token_word(t_token **tokens, char *line, int *i)
 int	add_token(t_token **tokens, char *line, int *i)
 {
 	t_token	*token;
-	char	*str;
 
 	token = NULL;
-	str = NULL;
 	if (check_special_char(&token, line, i))
 	{
 		if (!token)

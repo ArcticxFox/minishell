@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 18:50:47 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 19:19:51 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,25 @@ int	exec_pwd(char **args, t_shell *shell)
 
 int	exec_echo(char **args, t_shell *shell)
 {
-	int	i;
-	int	no_newline;
+	t_args	*tmp;
+	int		no_newline;
 
-	(void)shell;
-	i = 1;
+	(void)args;
+	tmp = shell->head->args->next;
 	no_newline = 0;
-	if (!args[i])
+	if (!tmp)
 		return (1);
-	while (args[i])
+	while (tmp)
 	{
-		if (is_n(args[i]))
-		{
+		if (is_n(tmp->value))
 			no_newline = 1;
-			i++;
-		}
+		else if (!ft_strncmp(tmp->value, "$?", 3))
+			ft_putnbr_fd(g_value_exit, 1);
 		else
-		{
-			write(1, args[i], ft_strlen(args[i]));
-			i++;
-		}
+			write(1, tmp->value, ft_strlen(tmp->value));
+		if (tmp->espace == true)
+			write(1, " ", 1);
+		tmp = tmp->next;
 	}
 	if (!no_newline)
 		ft_printf("\n");

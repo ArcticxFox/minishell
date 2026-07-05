@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 13:03:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 14:39:27 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/05 19:25:10 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_exit(t_shell *shell, int status)
+void	child_exit(t_shell *shell, int status, char **real_args)
 {
 	while (shell->head)
 		ft_delete_front_cmd(&shell->head);
 	free_memory(shell->env);
+	free_memory(real_args);
 	g_value_exit = status;
 	exit(g_value_exit);
 }

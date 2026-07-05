@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:12:33 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 18:56:04 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 19:23:36 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execute(t_cmd *list, t_shell *shell);
 int		setup_heredocs(t_cmd *head, char **env);
 void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell);
 void	execute_single_builtin(t_cmd *cmd, t_shell *shell);
-void	child_exit(t_shell *shell, int status);
+void	child_exit(t_shell *shell, int status, char **real_args);
 
 
 char	*ft_strjoin_free(char *s1, char const *s2);

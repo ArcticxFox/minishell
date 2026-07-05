@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 18:53:47 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 19:24:45 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	do_execve(t_cmd *cmd, t_shell *shell, char **real_args)
 	{
 		write(2, cmd->cmd, ft_strlen(cmd->cmd));
 		ft_putstr_fd(": command not found\n", 2);
-		child_exit(shell, 127);
+		child_exit(shell, 127, real_args);
 	}
 	execve(path, real_args, shell->env);
 	ft_putstr_fd("minishell: ", 2);
@@ -70,9 +70,9 @@ static void	do_execve(t_cmd *cmd, t_shell *shell, char **real_args)
 	free_memory(real_args);
 	err = errno;
 	if (err == ENOENT)
-		child_exit(shell, 127);
+		child_exit(shell, 127, NULL);
 	else
-		child_exit(shell, 126);
+		child_exit(shell, 126, NULL);
 }
 
 void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
@@ -91,16 +91,16 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 		close(fd_out);
 	}
 	if (apply_redirs(cmd->redir) < 0)
-		child_exit(shell, 1);
+		child_exit(shell, 1, real_args);
 	if (is_builtin(cmd->cmd))
 	{
 		g_value_exit = builtin(real_args, shell);
-		child_exit(shell, 0);
+		child_exit(shell, 0, real_args);
 	}
 	if (cmd->cmd)
 		do_execve(cmd, shell, real_args);
 	else
-		child_exit(shell, 0);
+		child_exit(shell, 0, real_args);
 }
 
 static void	pipeline_fork_loop(t_cmd *list, t_pipe_state *state,

@@ -6,33 +6,11 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 18:14:10 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 19:01:06 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
-char	*ft_strjoin_free(char *s1, char const *s2)
-{
-	char	*s3;
-	size_t	len1;
-	size_t	lenx;
-
-	if (!s2)
-		return (NULL);
-	len1 = ft_strlen(s1);
-	lenx = (len1 + ft_strlen(s2));
-	s3 = (char *)ft_calloc((lenx + 1), sizeof(char));
-	if (!s3)
-		return (NULL);
-	if (s1)
-	{
-		ft_strlcpy(s3, s1, (len1 + 1));
-		free(s1);
-	}
-	ft_strlcpy(&s3[len1], s2, ft_strlen(s2) + 1);
-	return (s3);
-}
 
 // la fonction readline() elle return NULL quand on fait Ctrl+D,
 // line = null print exit car dans bash c'est ce qui ce passe
@@ -85,17 +63,6 @@ int	main(int ac, char **av, char **envp)
 		execute(head, &shell);
 		while(head)
 			ft_delete_front_cmd(&head);
-		// shell.head = head;
-		// setup_heredocs(head, shell.env);
-		// execute(head, &shell);
-		// while(head)
-		// 	ft_delete_front_cmd(&head);
-		// if (shell.should_exit)
-		// {
-		// 	free_memory(shell.env);
-		// 	rl_clear_history();
-		// 	exit(g_value_exit);
-		// }
 		free(line);
 	}
 	return (g_value_exit);

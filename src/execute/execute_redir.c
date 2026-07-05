@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 18:13:49 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 18:56:25 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,11 @@ void	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 {
 	int	saved_in;
 	int	saved_out;
+	char	**real_args;
 
 	saved_in = dup(STDIN_FILENO);
 	saved_out = dup(STDOUT_FILENO);
+	real_args = get_args_for_execve(cmd->args);
 	if (apply_redirs(cmd->redir) < 0)
 	{
 		dup2(saved_in, STDIN_FILENO);
@@ -110,7 +112,7 @@ void	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 		close(saved_out);
 		child_exit(shell, 1);
 	}
-	g_value_exit = builtin(cmd->args, shell);
+	g_value_exit = builtin(real_args, shell);
 	dup2(saved_in, STDIN_FILENO);
 	dup2(saved_out, STDOUT_FILENO);
 	close(saved_in);

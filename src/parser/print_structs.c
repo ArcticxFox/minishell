@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_structs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 15:37:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 17:04:27 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 18:54:55 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	print_token(t_token *tokens)
 
 void	print_commands(t_cmd *cmd)
 {
-	int		i;
 	t_redir	*redir;
 	t_args	*args;
 
@@ -43,7 +42,6 @@ void	print_commands(t_cmd *cmd)
 	{
 		redir = cmd->redir;
 		args = cmd->args;
-		i = 0;
 		ft_printf("cmd : %s\n", cmd->cmd);
 		ft_printf("args : ");
 		while (args)

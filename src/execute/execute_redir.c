@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 19:29:12 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 20:33:27 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	apply_redirs(t_redir *redir)
 			dup2(redir->heredoc_fd, STDIN_FILENO);
 			close(redir->heredoc_fd);
 			redir->heredoc_fd = -1;
+			setup_heredocs(head->redir, shell.env)
 		}
 		else if (handle_file_redir(redir) < 0)
 			return (-1);
@@ -69,18 +70,22 @@ int	handle_heredoc(t_redir *redir, char **env)
 		close(pipefd[0]);
 		read_heredoc_lines(pipefd[1], redir, env);
 		close(pipefd[1]);
+		free_memory(env);
+		rl_clear_history();
+		while (redir)
+			ft_delete_front_redir(&redir);
 		exit(0);
 	}
 	return (wait_heredoc(pipefd, redir, pid));
 }
 
-int	setup_heredocs(t_cmd *head, char **env)
+int	setup_heredocs(t_redir *redir, char **env)
 {
-	t_redir	*redir;
+	// t_redir	*redir;
 
-	while (head)
-	{
-		redir = head->redir;
+	// while (head)
+	// {
+		// redir = head->redir;
 		while (redir)
 		{
 			if (redir->type == TOKEN_HEREDOC)
@@ -90,8 +95,8 @@ int	setup_heredocs(t_cmd *head, char **env)
 			}
 			redir = redir->next;
 		}
-		head = head->next;
-	}
+	// 	head = head->next;
+	// }
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/04 19:41:33 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/04 20:10:03 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int	exec_unset(char **args, t_shell *shell)
 	int	len;
 
 	i = 0;
+	if (!args[1])
+		return (1);
 	len = len_name(args[1]);
 	while (shell->env[i])
 	{

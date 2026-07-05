@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 17:03:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/04 19:16:25 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 15:31:41 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void	print_syntax_error(t_tk_type type)
 {
 	if (type == TOKEN_REDIR_IN)
-		ft_putendl_fd("minishell: syntax error near unexpected token '<'", 2);
+		ft_putendl_fd("minishell: syntax error near unexpected token `<'", 2);
 	else if (type == TOKEN_REDIR_OUT)
-		ft_putendl_fd("minishell: syntax error near unexpected token '>'", 2);
+		ft_putendl_fd("minishell: syntax error near unexpected token `>'", 2);
 	else if (type == TOKEN_APPEND)
-		ft_putendl_fd("minishell: syntax error near unexpected token '>>'", 2);
+		ft_putendl_fd("minishell: syntax error near unexpected token `>>'", 2);
 	else if (type == TOKEN_HEREDOC)
-		ft_putendl_fd("minishell: syntax error near unexpected token '<<'", 2);
+		ft_putendl_fd("minishell: syntax error near unexpected token `<<'", 2);
 	else if (type == TOKEN_PIPE)
-		ft_putendl_fd("minishell: syntax error near unexpected token '|'", 2);
+		ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
 }
 
 bool	check_error_near_newline(t_token *tokens)
@@ -38,7 +38,7 @@ bool	check_error_near_newline(t_token *tokens)
 		if (last->type >= TOKEN_PIPE && last->type <= TOKEN_HEREDOC)
 		{
 			ft_putstr_fd("minishel: syntax error near ", 2);
-			ft_putendl_fd("unexpected token 'newline'", 2);
+			ft_putendl_fd("unexpected token `newline'", 2);
 			return (true);
 		}
 		return (false);
@@ -48,7 +48,7 @@ bool	check_error_near_newline(t_token *tokens)
 	if (!(sec_last->type == TOKEN_WORD
 			&& last->type >= TOKEN_PIPE && last->type <= TOKEN_HEREDOC))
 		return (false);
-	ft_putendl_fd("minishel: syntax error near unexpected token 'newline'", 2);
+	ft_putendl_fd("minishel: syntax error near unexpected token `newline'", 2);
 	return (true);
 }
 
@@ -58,13 +58,17 @@ bool	check_error_for_redir_or_pipe(t_token *tokens)
 
 	tmp = tokens;
 	if (tmp->type == TOKEN_PIPE)
+	{
+		print_syntax_error(tmp->type);
 		return (true);
+	}
 	while (tmp)
 	{
 		if (tmp->next && tmp->type >= TOKEN_PIPE && tmp->type <= TOKEN_HEREDOC)
 		{
 			tmp = tmp->next;
-			if (tmp->type >= TOKEN_PIPE && tmp->type <= TOKEN_HEREDOC)
+			if (tmp->next && tmp->next->type == TOKEN_WORD
+				&& tmp->type >= TOKEN_PIPE && tmp->type <= TOKEN_HEREDOC)
 				print_syntax_error(tmp->type);
 			else
 				continue ;

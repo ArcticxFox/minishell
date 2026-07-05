@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 20:20:33 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/04 19:14:57 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 17:03:36 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	count_args(t_token *tokens)
 	return (n);
 }
 
-char	*get_cmd_value(t_token **tokens, char **env)
+char	*get_cmd_value(t_token **tokens, char **env, bool *space)
 {
 	char	*value;
 
@@ -49,89 +49,35 @@ char	*get_cmd_value(t_token **tokens, char **env)
 				(*tokens)->type, (*tokens)->expand);
 	else
 		value = NULL;
+	*space = (*tokens)->space;
 	(*tokens) = (*tokens)->next;
 	return (value);
 }
 
-char	**get_args(t_token **tokens, char **env)
+t_args	*get_args(t_token **tokens, char **env)
 {
 	int		n;
-	int		i;
-	char	**args;
+	t_args	*args;
+	t_args	*new_args;
 
 	n = count_args(*tokens) + 1;
-	i = 0;
+	args = NULL;
 	if (n < 1)
 		return (NULL);
-	args = malloc(sizeof(char *) * n);
-	if (!args)
-		return (NULL);
-	while (i < n - 1)
+	while (n > 1)
 	{
-		args[i] = get_cmd_value(tokens, env);
-		if (!args[i])
+		new_args = malloc(sizeof(t_args));
+		if (!new_args)
+			return (NULL);
+		new_args->next = NULL;
+		new_args->value = get_cmd_value(tokens, env, &new_args->espace);
+		if (!new_args->value)
 		{
-			free_memory(args);
+			ft_delete_front_args(&args);
 			return (NULL);
 		}
-		++i;
+		add_args(&args, new_args);
+		--n;
 	}
-	args[i] = NULL;
 	return (args);
-}
-
-void	trim_files(t_redir **redir)
-{
-	t_redir	*tmp_redir;
-	char	*tmp_file;
-
-	tmp_redir = *redir;
-	while (tmp_redir)
-	{
-		if (!(tmp_file = ft_strtrim(tmp_redir->file, " ")))
-		{
-			tmp_redir = tmp_redir->next;
-			continue ;
-		}
-		free(tmp_redir->file);
-		tmp_redir->file = tmp_file;
-		if (tmp_redir->type == TOKEN_HEREDOC)
-		{
-			if (!(tmp_file = ft_strtrim(tmp_redir->file, " ")))
-			{
-				tmp_redir = tmp_redir->next;
-				continue ;
-			}
-			free(tmp_redir->delimiter);
-			tmp_redir->delimiter = tmp_file;
-		}
-		tmp_redir = tmp_redir->next;
-	}
-}
-
-void	trim_args(char **args)
-{
-	int		i;
-	char	*tmp;
-
-	if (!args || !args[0])
-		return ;
-	i = 0;
-	while (args[i])
-	{
-		tmp = ft_strtrim(args[i], " ");
-		if (!tmp)
-		{
-			i++;
-			continue ;
-		}
-		free(args[i]);
-		args[i] = tmp;
-		if (i == 0 && ft_strncmp(args[0], "echo", 6) == 0)
-			while (args[i])
-				i++;
-		else
-			i++;
-	}
-	return ;
 }

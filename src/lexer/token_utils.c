@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 20:15:04 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 14:45:08 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,7 @@ void	ft_add_token_back(t_token **lst, t_token *new)
 static char	*assign_value(char *value)
 {
 	char	*new_str;
-	char	tmp;
-	int		end;
 
-	end = ft_strlen(value);
-	if (end >= 2
-		&& (value[end - 2] == '"' || value[end - 2] == '\'')
-		&& value[end - 1] == ' ')
-	{
-		tmp = value[end - 2];
-		value[end - 2] = value[end - 1];
-		value[end - 1] = tmp;
-	}
 	if (*value == '\'')
 		new_str = ft_strtrim(value, "\'");
 	else if (*value == '"')
@@ -67,7 +56,7 @@ static char	*assign_value(char *value)
 	return (new_str);
 }
 
-t_token	*ft_new_token(char *value, t_tk_type type, int expand)
+t_token	*ft_new_token(char *value, t_tk_type type, int expand, bool space)
 {
 	t_token	*new_token;
 
@@ -78,6 +67,7 @@ t_token	*ft_new_token(char *value, t_tk_type type, int expand)
 		return (NULL);
 	new_token->next = NULL;
 	new_token->expand = expand;
+	new_token->space = space;
 	if (*value == '\'')
 		new_token->expand = 0;
 	new_token->type = type;

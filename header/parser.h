@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:14:55 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/03 13:48:34 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 16:12:51 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ void	ft_delete_front_redir(t_redir **stack);
 t_redir	*new_redir(t_token *tokens, char **env);
 
 // parser_utils.c
-char	**get_args(t_token **tokens, char **env);
+t_args	*get_args(t_token **tokens, char **env);
 void	trim_files(t_redir **redir);
 void	trim_args(char **args);
+
+void	ft_delete_front_args(t_args **stack);
+void	add_args(t_args **lst, t_args *new_cmd);
 
 #endif

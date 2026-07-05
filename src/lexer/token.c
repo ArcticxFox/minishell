@@ -6,13 +6,13 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/03 13:33:15 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 15:01:39 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*extract_word(char *str, int *i)
+char	*extract_word(char *str, int *i, bool *space)
 {
 	int		start;
 	char	*word;
@@ -20,9 +20,9 @@ char	*extract_word(char *str, int *i)
 	start = *i;
 	word = NULL;
 	if (str[*i] == '\'')
-		word = extract_single_quotes(str, i);
+		word = extract_single_quotes(str, i, space);
 	else if (str[*i] == '"')
-		word = extract_double_quotes(str, i);
+		word = extract_double_quotes(str, i, space);
 	else
 	{
 		while (str[*i] && !ft_is_whitespace(str[*i])
@@ -31,7 +31,7 @@ char	*extract_word(char *str, int *i)
 			++(*i);
 		word = ft_substr(str, start, *i - start);
 		if (ft_is_whitespace(str[(*i)]))
-			word = ft_strjoin_free(word, " ");
+			*space = true;
 	}
 	if (!word)
 		return (NULL);
@@ -41,30 +41,49 @@ char	*extract_word(char *str, int *i)
 int	check_special_char(t_token **token, char *s, int *i)
 {
 	if (s[*i] == '|')
-		*token = ft_new_token(ft_strdup("|"), TOKEN_PIPE, 0);
+		*token = ft_new_token(ft_strdup("|"), TOKEN_PIPE, 0, false);
 	else if (s[*i] == '>')
 	{
 		if (s[*i + 1] == '>')
 		{
 			++(*i);
-			*token = ft_new_token(ft_strdup(">>"), TOKEN_APPEND, 0);
+			*token = ft_new_token(ft_strdup(">>"), TOKEN_APPEND, 0, false);
 		}
 		else
-			*token = ft_new_token(ft_strdup(">"), TOKEN_REDIR_OUT, 0);
+			*token = ft_new_token(ft_strdup(">"), TOKEN_REDIR_OUT, 0, false);
 	}
 	else if (s[*i] == '<')
 	{
 		if (s[*i + 1] == '<')
 		{
 			++(*i);
-			*token = ft_new_token(ft_strdup("<<"), TOKEN_HEREDOC, 0);
+			*token = ft_new_token(ft_strdup("<<"), TOKEN_HEREDOC, 0, false);
 		}
 		else
-			*token = ft_new_token(ft_strdup("<"), TOKEN_REDIR_IN, 0);
+			*token = ft_new_token(ft_strdup("<"), TOKEN_REDIR_IN, 0, false);
 	}
 	else
 		return (0);
 	return (1);
+}
+
+int	add_token_word(t_token **tokens, char *line, int *i)
+{
+	bool	space;
+	char	*str;
+
+	space = false;
+	str = NULL;
+	str = extract_word(line, i, &space);
+	if (!str)
+	{
+		g_value_exit = 2;
+		while (*tokens)
+			ft_delete_front_token(tokens);
+		return (EXIT_FAILURE);
+	}
+	ft_add_token_back(tokens, ft_new_token(str, TOKEN_WORD, 1, space));
+	return (EXIT_SUCCESS);
 }
 
 int	add_token(t_token **tokens, char *line, int *i)
@@ -83,15 +102,7 @@ int	add_token(t_token **tokens, char *line, int *i)
 	}
 	else
 	{
-		str = extract_word(line, i);
-		if (!str)
-		{
-			g_value_exit = 2;
-			while (*tokens)
-				ft_delete_front_token(tokens);
-			return (EXIT_FAILURE);
-		}
-		ft_add_token_back(tokens, ft_new_token(str, TOKEN_WORD, 1));
+		add_token_word(tokens, line, i);
 	}
 	return (EXIT_SUCCESS);
 }

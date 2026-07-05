@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/30 18:10:55 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 16:16:19 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,17 @@ typedef struct s_redir
 	struct s_redir	*next;
 }	t_redir;
 
+typedef struct s_args
+{
+	char			*value;
+	bool			espace;
+	struct s_args	*next;
+}	t_args;
+
 typedef struct s_cmd
 {
 	char			*cmd;
-	char			**args;
+	t_args			*args;
 	t_redir			*redir;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -59,6 +66,7 @@ typedef struct s_token
 {
 	int				expand;
 	char			*value;
+	bool			space;
 	t_tk_type		type;
 	struct s_token	*next;
 }	t_token;

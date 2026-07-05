@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:56:30 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/29 19:02:14 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 14:34:44 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	skip_whitespaces(char *line, int *i)
 		++(*i);
 }
 
-char	*extract_single_quotes(char *str, int *i)
+char	*extract_single_quotes(char *str, int *i, bool *space)
 {
 	int		start;
 	char	*token;
@@ -35,26 +35,25 @@ char	*extract_single_quotes(char *str, int *i)
 		++(*i);
 	if (str[*i] != '\'')
 	{
-		ft_printf("unexpected EOF  while looking for matching `\''\n");
+		ft_printf("unexpected EOF file while looking for matching `\''\n");
 		ft_printf("minishell: syntax error\n");
 		return (NULL);
 	}
 	++(*i);
-	if ((*i - start) <= 1)
-		return (NULL);
 	token = ft_substr(str, start, *i - start);
 	if (!token || (*i - start) <= 1)
 		return (NULL);
 	if (ft_is_whitespace(str[(*i)]))
 	{
-		return (ft_strjoin_free(token, " "));
+		*space = true;
+		return (token);
 	}
 	if (!token)
 		return (NULL);
 	return (token);
 }
 
-char	*extract_double_quotes(char *str, int *i)
+char	*extract_double_quotes(char *str, int *i, bool *space)
 {
 	int		start;
 	char	*token;
@@ -64,18 +63,17 @@ char	*extract_double_quotes(char *str, int *i)
 		++(*i);
 	if (str[*i] != '"')
 	{
-		ft_printf("unexpected EOF  while looking for matching `\"'\n");
+		ft_printf("unexpected EOF file while looking for matching `\"'\n");
 		ft_printf("minishell: syntax error\n");
 		return (NULL);
 	}
 	++(*i);
-	if ((*i - start) <= 1)
-		return (NULL);
 	token = ft_substr(str, start, *i - start);
 	if (!token || (*i - start) <= 1)
 		return (NULL);
 	if (ft_is_whitespace(str[(*i)]))
 	{
+		*space = true;
 		return (ft_strjoin_free(token, " "));
 	}
 	if (!token)

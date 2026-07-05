@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/04 19:39:49 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 15:47:07 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	handle_heredoc(t_redir *redir, char **env)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line)
+		if (!line) // Ctrl + D
 			break ;
 		if (!ft_strncmp(line, redir->delimiter,
 				ft_strlen(redir->delimiter) + 1))

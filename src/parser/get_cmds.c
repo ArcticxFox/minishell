@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/03 13:46:35 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 17:10:24 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,11 @@ t_cmd	*ft_new_commands(t_token **tokens, char **env)
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->redir = find_redir(*tokens, env);
-	trim_files(&new_cmd->redir);
 	new_cmd->args = get_args(tokens, env);
-	if (!new_cmd->args)
-	{
-		while (new_cmd->redir)
-			ft_delete_front_redir(&new_cmd->redir);
-		free(new_cmd);
-		return (NULL);
-	}
-	trim_args(new_cmd->args);
-	new_cmd->cmd = new_cmd->args[0];
+	if (new_cmd->args)
+		new_cmd->cmd = new_cmd->args->value;
+	else
+		new_cmd->cmd = NULL;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }

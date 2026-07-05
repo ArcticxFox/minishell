@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/04 19:39:49 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 15:34:59 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 		close(saved_out);
 		child_exit(shell, 1);
 	}
-	builtin(cmd->args, shell);
+	g_value_exit = builtin(cmd->args, shell);
 	dup2(saved_in, STDIN_FILENO);
 	dup2(saved_out, STDOUT_FILENO);
 	close(saved_in);

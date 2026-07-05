@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 12:54:28 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/05 15:26:51 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exec_cd(char **args, t_shell *shell)
 		return (1);
 	}
 	set_env_value(shell->env, "PWD=", getcwd(buffer, 4096));
-	return (1);
+	return (0);
 }
 
 
@@ -60,11 +60,11 @@ int	exec_unset(char **args, t_shell *shell)
 				i++;
 			}
 			shell->env[i] = NULL;
-			return (1);
+			return (0);
 		}
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 int	exec_env(char **args, t_shell *shell)
@@ -79,5 +79,5 @@ int	exec_env(char **args, t_shell *shell)
 			ft_printf("%s\n", shell->env[i]);
 		i++;
 	}
-	return (1);
+	return (0);
 }

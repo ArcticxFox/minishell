@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/04 19:53:33 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 15:19:35 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 		child_exit(shell, 1);
 	if (is_builtin(cmd->cmd))
 	{
-		builtin(cmd->args, shell);
+		g_value_exit = builtin(cmd->args, shell);
 		child_exit(shell, 0);
 	}
 	if (cmd->cmd)

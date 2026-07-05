@@ -6,7 +6,7 @@
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/07/05 16:45:00 by ejones           ###   ########.fr        #
+#    Updated: 2026/07/05 18:15:14 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,12 @@ SRC := \
 	lexer/token_utils.c \
 	lexer/token_utils2.c \
 	lexer/syntax_errors.c \
+	builtin/builtin.c \
+	builtin/builtin_utils.c \
+	builtin/builtin_next.c \
+	builtin/export_utils.c \
+	builtin/export.c \
+	env/env_utils.c \
 	signals/sig_handler.c \
  	parser/get_cmds.c \
 	parser/print_structs.c \
@@ -40,16 +46,12 @@ SRC := \
 	parser/parser_utils.c \
 	parser/delete_linked_lists.c \
 	expander.c \
-	builtin/builtin.c \
-	builtin/builtin_utils.c \
-	builtin/builtin_next.c \
-	builtin/export_utils.c \
-	env/env_utils.c \
-# 	execute/execute.c \
-# 	execute/execute_utils_1.c \
-# 	execute/execute_util_2.c \
-# 	execute/execute_redir.c \
-# 	pipe/pipe.c \
+	execute/execute.c \
+	execute/execute_utils_1.c \
+	execute/execute_util_2.c \
+	execute/execute_redir.c \
+	execute/execute_redir_utils.c \
+	pipe/pipe.c \
 	command_history/cmd_hist.c
 
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:14:06 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/03 18:28:37 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 16:12:14 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	handle_sigint(int sig)
 	g_value_exit = 130;
 }
 
-// cette fonction sert a gerer Ctrl+C et Ctrl+/
 void	init_signals(void)
 {
 	struct sigaction	sa;

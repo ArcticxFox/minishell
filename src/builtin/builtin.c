@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 14:36:44 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/05 18:14:52 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ int	exec_pwd(char **args, t_shell *shell)
 	(void)shell;
 	if (getcwd(buffer, 4096) == NULL)
 	{
-		write (1, "Error\n", 6);
-		return (0);
+		write (2, "Error\n", 6);
+		g_value_exit = 1;
 	}
 	else
+	{
 		ft_printf("Current working directory: %s\n", buffer);
-	return (1);
+		g_value_exit = 0;
+	}
+	return (g_value_exit);
 }
 
 int	exec_echo(char **args, t_shell *shell)
@@ -37,7 +40,7 @@ int	exec_echo(char **args, t_shell *shell)
 	i = 1;
 	no_newline = 0;
 	if (!args[i])
-		return (0);
+		return (1);
 	while (args[i])
 	{
 		if (is_n(args[i]))
@@ -71,7 +74,12 @@ int	exec_exit(char **args, t_shell *shell)
 	if (!args[1])
 	{
 		shell->should_exit = 1;
-		return (g_value_exit);
+		return (0);
+	}
+	if (!is_numeric(args[1]))
+	{
+		ft_putstr_fd("exit: numeric argument required\n", 2);
+		return (2);
 	}
 	if (args[2])
 	{
@@ -84,7 +92,6 @@ int	exec_exit(char **args, t_shell *shell)
 		return (2);
 	}
 	g_value_exit = (int)(unsigned char)ft_atoll(args[1]);
-	shell->should_exit = 1;
 	return (g_value_exit);
 }
 
@@ -100,13 +107,18 @@ int	builtin(char **args, t_shell *shell)
 	{"unset", exec_unset},
 	{NULL, NULL}
 	};
+	int					value;
 	int					i;
 
 	i = 0;
+	value = 0;
 	while (builtin[i].name)
 	{
 		if (!ft_strncmp(args[0], builtin[i].name, 7))
-			builtin[i].f(args, shell);
+		{
+			value = builtin[i].f(args, shell);
+			return (value);
+		}
 		i++;
 	}
 	return (1);

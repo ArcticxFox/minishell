@@ -75,7 +75,8 @@ int	len_name(char *args)
 	int	i;
 
 	i = 0;
-	while (args[i] && args[i] != '=')
+	while (args[i] && args[i] != '='
+		&& !(args[i] == '+' && args[i + 1] == '='))
 		i++;
 	return (i);
 }

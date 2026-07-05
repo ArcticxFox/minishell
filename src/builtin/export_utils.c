@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/04 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/04 19:49:14 by ejones           ###   ########.fr       */
+/*   Created: 2026/07/05 14:16:39 by leonpouet         #+#    #+#             */
+/*   Updated: 2026/07/05 14:16:41 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,11 @@ void	print_export_line(char *line)
 	ft_printf("declare -x ");
 	if (res)
 	{
-
 		write(1, line, res - line);
 		ft_printf("='%s'\n", res + 1);
 	}
 	else
-		ft_printf("%s=''\n", line);
+		ft_printf("%s\n", line);
 }
 
 int	export_add(char *arg, t_shell *shell)

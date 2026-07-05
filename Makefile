@@ -36,6 +36,7 @@ SRC := \
 	builtin/builtin_utils.c \
 	builtin/builtin_next.c \
 	builtin/export_utils.c \
+	builtin/export.c \
 	env/env_utils.c \
 	signals/sig_handler.c \
  	parser/get_cmds.c \

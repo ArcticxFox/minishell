@@ -30,6 +30,7 @@ int		is_valid_identifier(char *name, int len);
 int		is_in_env(char **env, char *name, int len);
 int		is_n(char *arg);
 int		export_add(char *arg, t_shell *shell);
+int		export_append(char *arg, t_shell *shell);
 void	print_export_line(char *entry);
 
 

@@ -49,6 +49,7 @@ SRC := \
 	execute/execute_utils_1.c \
 	execute/execute_util_2.c \
 	execute/execute_redir.c \
+	execute/execute_redir_utils.c \
 	pipe/pipe.c \
 	command_history/cmd_hist.c
 

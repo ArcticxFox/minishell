@@ -53,7 +53,13 @@ int	main(int ac, char **av, char **envp)
 		shell.head = head;
 		while (tokens)
 			ft_delete_front_token(&tokens);
-		setup_heredocs(head, shell.env);
+		if (setup_heredocs(head, shell.env) < 0)
+		{
+			while (head)
+				ft_delete_front_cmd(&head);
+			free(line);
+			continue ;
+		}
 		execute(head, &shell);
 		while(head)
 			ft_delete_front_cmd(&head);

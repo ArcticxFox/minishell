@@ -6,36 +6,27 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 15:34:59 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/05 17:01:40 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-static int	handle_file_redir(t_redir *redir)
+static int	wait_heredoc(int *pipefd, t_redir *redir, pid_t pid)
 {
-	int	fd;
+	int		status;
 
-	fd = -1;
-	if (redir->type == TOKEN_REDIR_IN)
-		fd = open(redir->file, O_RDONLY);
-	else if (redir->type == TOKEN_REDIR_OUT)
-		fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (redir->type == TOKEN_APPEND)
-		fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
+	close(pipefd[1]);
+	waitpid(pid, &status, 0);
+	init_signals();
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(redir->file, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
+		write(1, "\n", 1);
+		close(pipefd[0]);
+		g_value_exit = 130;
 		return (-1);
 	}
-	if (redir->type == TOKEN_REDIR_IN)
-		dup2(fd, STDIN_FILENO);
-	else
-		dup2(fd, STDOUT_FILENO);
-	close(fd);
+	redir->heredoc_fd = pipefd[0];
 	return (0);
 }
 
@@ -59,33 +50,31 @@ int	apply_redirs(t_redir *redir)
 int	handle_heredoc(t_redir *redir, char **env)
 {
 	int		pipefd[2];
-	char	*line;
+	pid_t	pid;
 
 	if (pipe(pipefd) < 0)
 		return (-1);
-	while (1)
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid < 0)
 	{
-		line = readline("> ");
-		if (!line)
-			break ;
-		if (!ft_strncmp(line, redir->delimiter,
-				ft_strlen(redir->delimiter) + 1))
-		{
-			free(line);
-			break ;
-		}
-		if (redir->expand == true)
-			line = expand_heredoc(env, line);
-		ft_putstr_fd(line, pipefd[1]);
-		ft_putchar_fd('\n', pipefd[1]);
-		free(line);
+		close(pipefd[0]);
+		close(pipefd[1]);
+		init_signals();
+		return (-1);
 	}
-	close(pipefd[1]);
-	redir->heredoc_fd = pipefd[0];
-	return (0);
+	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		close(pipefd[0]);
+		read_heredoc_lines(pipefd[1], redir, env);
+		close(pipefd[1]);
+		exit(0);
+	}
+	return (wait_heredoc(pipefd, redir, pid));
 }
 
-void	setup_heredocs(t_cmd *head, char **env)
+int	setup_heredocs(t_cmd *head, char **env)
 {
 	t_redir	*redir;
 
@@ -95,11 +84,15 @@ void	setup_heredocs(t_cmd *head, char **env)
 		while (redir)
 		{
 			if (redir->type == TOKEN_HEREDOC)
-				handle_heredoc(redir, env);
+			{
+				if (handle_heredoc(redir, env) < 0)
+					return (-1);
+			}
 			redir = redir->next;
 		}
 		head = head->next;
 	}
+	return (0);
 }
 
 void	execute_single_builtin(t_cmd *cmd, t_shell *shell)

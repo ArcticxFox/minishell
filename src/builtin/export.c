@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:16:28 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/06 18:14:26 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/06 20:44:57 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,38 @@ int	export_append(t_args **args, t_shell *shell)
 		return (0);
 	if (!shell->env[i])
 	{
-		i = export_add(entry, shell);
+		i = export_add_append(entry, shell);
 		free(entry);
 		return (i);
 	}
 	free(shell->env[i]);
 	shell->env[i] = entry;
 	return (1);
+}
+void	put_env_value(char **env, t_args **args, int len)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], (*args)->value, len)
+			&& (env[i][len] == '=' || env[i][len] == '\0'))
+		{
+			free(env[i]);
+			if ((*args)->value[len + 1] == '\0' && (*args)->espace == false
+				&& (*args)->next)
+			{
+				env[i] = ft_strjoin((*args)->value, (*args)->next->value);
+				(*args) = (*args)->next;
+			}
+			else
+				env[i] = ft_strdup((*args)->value);
+			(*args) = (*args)->next;
+			return ;
+		}
+		i++;
+	}
 }
 
 static int	export_process_arg(t_args **arg, t_shell *shell)
@@ -80,39 +105,33 @@ static int	export_process_arg(t_args **arg, t_shell *shell)
 	}
 	if ((*arg)->value[len] == '+')
 		return (export_append(arg, shell));
-	// if (ft_strchr(arg, '='))
-	// {
-	// 	if (is_in_env(shell->env, arg, len))
-	// 		set_env_value(shell->env, arg, NULL);
-	// 	else
-	// 		export_add(arg, shell);
-	// }
-	// else if (!is_in_env(shell->env, arg, len))
-	// 	export_add(arg, shell);
+	if (ft_strchr((*arg)->value, '='))
+	{
+		if (is_in_env(shell->env, (*arg)->value, len))
+			put_env_value(shell->env, arg, len);
+		else
+			export_add(arg, shell, len, true);
+	}
+	else if (!is_in_env(shell->env, (*arg)->value, len))
+		export_add(arg, shell, len, false);
 	return (1);
 }
 
 int	exec_export(char **args, t_shell *shell)
 {
-	int		j;
-	int		ret;
 	t_args	*list_args;
 
-	j = 0;
 	(void)args;
 	list_args = shell->head->args->next;
 	if (!list_args)
 	{
-		while (shell->env[j])
-			print_export_line(shell->env[j++]);
+		print_export_line(shell->env);
 		return (1);
 	}
-	j = 1;
-	ret = 1;
 	while (list_args)
 	{
 		if (!export_process_arg(&list_args, shell))
-			ret = 0;
+			return (0);
 	}
-	return (ret);
+	return (1);
 }

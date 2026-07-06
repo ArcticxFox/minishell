@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:16:28 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/06 20:44:57 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/06 20:49:56 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	export_append(t_args **args, t_shell *shell)
 	shell->env[i] = entry;
 	return (1);
 }
+
 void	put_env_value(char **env, t_args **args, int len)
 {
 	int	i;

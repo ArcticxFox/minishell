@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 18:14:25 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/06 23:49:59 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,31 +40,41 @@ int	exec_cd(char **args, t_shell *shell)
 	return (0);
 }
 
+void	remove_var(t_shell *shell, int *i)
+{
+	free(shell->env[*i]);
+	while (shell->env[*i + 1])
+	{
+		shell->env[*i] = shell->env[*i + 1];
+		++(*i);
+	}
+	shell->env[*i] = NULL;
+}
 
 int	exec_unset(char **args, t_shell *shell)
 {
 	int	i;
+	int	n;
 	int	len;
 
 	i = 0;
+	n = 1;
 	if (!args[1])
 		return (1);
-	len = len_name(args[1]);
-	while (shell->env[i])
+	while (args[n])
 	{
-		if (!ft_strncmp(shell->env[i], args[1], len)
-			&& (shell->env[i][len] == '=' || shell->env[i][len] == '\0'))
+		len = len_name(args[n]);
+		i = 0;
+		while (shell->env[i])
 		{
-			free(shell->env[i]);
-			while (shell->env[i + 1])
+			if (!ft_strncmp(shell->env[i], args[n], len)
+				&& (shell->env[i][len] == '=' || shell->env[i][len] == '\0'))
 			{
-				shell->env[i] = shell->env[i + 1];
-				i++;
+				remove_var(shell, &i);
 			}
-			shell->env[i] = NULL;
-			return (0);
+			++i;
 		}
-		i++;
+		++n;
 	}
 	return (0);
 }

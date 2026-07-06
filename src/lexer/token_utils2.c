@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:56:30 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 14:34:44 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/06 18:21:09 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*extract_double_quotes(char *str, int *i, bool *space)
 	if (ft_is_whitespace(str[(*i)]))
 	{
 		*space = true;
-		return (ft_strjoin_free(token, " "));
+		return (token);
 	}
 	if (!token)
 		return (NULL);

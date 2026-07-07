@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 19:19:51 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 16:38:38 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	exec_echo(char **args, t_shell *shell)
 			ft_putnbr_fd(g_value_exit, 1);
 		else
 			write(1, tmp->value, ft_strlen(tmp->value));
-		if (tmp->espace == true)
+		if (tmp->next && tmp->espace == true && !is_n(tmp->value))
 			write(1, " ", 1);
 		tmp = tmp->next;
 	}

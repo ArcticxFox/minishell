@@ -39,7 +39,6 @@ int	apply_redirs(t_redir *redir)
 			dup2(redir->heredoc_fd, STDIN_FILENO);
 			close(redir->heredoc_fd);
 			redir->heredoc_fd = -1;
-			setup_heredocs(head->redir, shell.env)
 		}
 		else if (handle_file_redir(redir) < 0)
 			return (-1);
@@ -48,7 +47,7 @@ int	apply_redirs(t_redir *redir)
 	return (0);
 }
 
-int	handle_heredoc(t_redir *redir, char **env)
+int	handle_heredoc(t_cmd *head, t_redir *redir, char **env)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -72,31 +71,24 @@ int	handle_heredoc(t_redir *redir, char **env)
 		close(pipefd[1]);
 		free_memory(env);
 		rl_clear_history();
-		while (redir)
-			ft_delete_front_redir(&redir);
+		while (head)
+			ft_delete_front_cmd(&head);
 		exit(0);
 	}
 	return (wait_heredoc(pipefd, redir, pid));
 }
 
-int	setup_heredocs(t_redir *redir, char **env)
+int	setup_heredocs(t_cmd *head, t_redir *redir, char **env)
 {
-	// t_redir	*redir;
-
-	// while (head)
-	// {
-		// redir = head->redir;
-		while (redir)
+	while (redir)
+	{
+		if (redir->type == TOKEN_HEREDOC)
 		{
-			if (redir->type == TOKEN_HEREDOC)
-			{
-				if (handle_heredoc(redir, env) < 0)
-					return (-1);
-			}
-			redir = redir->next;
+			if (handle_heredoc(head, redir, env) < 0)
+				return (-1);
 		}
-	// 	head = head->next;
-	// }
+		redir = redir->next;
+	}
 	return (0);
 }
 

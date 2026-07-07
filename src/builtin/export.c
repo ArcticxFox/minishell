@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:16:28 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 14:22:45 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/06 15:39:53 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ int	exec_export(char **args, t_shell *shell)
 		return (1);
 	}
 	j = 1;
-	ret = 1;
+	ret = 0;
 	while (args[j])
 	{
 		if (!export_process_arg(args[j], shell))
-			ret = 0;
+			ret = 1;
 		j++;
 	}
 	return (ret);

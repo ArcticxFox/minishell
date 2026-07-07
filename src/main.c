@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 19:59:18 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/06 16:07:32 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int ac, char **av, char **envp)
 	char *line;
 	t_token	*tokens;
 	t_cmd	*head;
+	t_cmd	*cmd;
 	t_shell	shell;
 
 	(void)ac;
@@ -54,7 +55,10 @@ int	main(int ac, char **av, char **envp)
 		shell.head = head;
 		while (tokens)
 			ft_delete_front_token(&tokens);
-		if (setup_heredocs(head->redir, shell.env) < 0)
+		cmd = head;
+		while (cmd && setup_heredocs(head, cmd->redir, shell.env) == 0)
+			cmd = cmd->next;
+		if (cmd)
 		{
 			while (head)
 				ft_delete_front_cmd(&head);
@@ -65,34 +69,12 @@ int	main(int ac, char **av, char **envp)
 		while(head)
 			ft_delete_front_cmd(&head);
 		free(line);
+		if (shell.should_exit == 1)
+		{
+			rl_clear_history();
+			free_memory(shell.env);
+			break;
+		}
 	}
 	return (g_value_exit);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char	**cmd_args;
-// 	char	*str;
-// 	t_shell	shell;
-
-// 	shell.env = copy_env(envp);
-// 	(void)ac;
-// 	(void)av;
-// 	init_signals();
-// 	while (1)
-// 	{
-// 		str = readline("minishell> ");
-// 		cmd_args = ft_split(str, ' ');
-// 		if (!str || !ft_strncmp(str, "exit", 5))
-// 		{
-// 			rl_clear_history();
-// 			rl_free_line_state();
-// 			free_all(&shell, cmd_args, str, 2);
-// 			return (0);
-// 		}
-// 		if (cmd_args)
-// 			builtin(cmd_args, &shell);
-// 		free_all(&shell, cmd_args, str, 1);
-// 	}
-// 	return (0);
-// }

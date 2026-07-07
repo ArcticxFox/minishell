@@ -16,7 +16,7 @@
 # include "structs.h"
 
 void	execute(t_cmd *list, t_shell *shell);
-int		setup_heredocs(t_redir *redir, char **env);
+int		setup_heredocs(t_cmd *head, t_redir *redir, char **env);
 void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell);
 void	execute_single_builtin(t_cmd *cmd, t_shell *shell);
 void	child_exit(t_shell *shell, int status, char **real_args);
@@ -26,7 +26,7 @@ char	*ft_strjoin_free(char *s1, char const *s2);
 char	*get_path(char *cmd, t_shell *shell);
 int		count_cmds(t_cmd *cmds);
 int		apply_redirs(t_redir *redir);
-int		handle_heredoc(t_redir *redir, char **env);
+int		handle_heredoc(t_cmd *head, t_redir *redir, char **env);
 int		handle_file_redir(t_redir *redir);
 void	read_heredoc_lines(int fd, t_redir *redir, char **env);
 

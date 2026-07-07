@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 19:19:51 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/06 16:00:24 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	exec_exit(char **args, t_shell *shell)
 		exit_numeric_err(args[1], shell);
 		return (2);
 	}
+	shell->should_exit = 1;
 	g_value_exit = (int)(unsigned char)ft_atoll(args[1]);
 	return (g_value_exit);
 }

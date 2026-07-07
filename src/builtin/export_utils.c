@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:16:39 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/06 20:30:06 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 16:01:49 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ char	*new_env_var(t_args **args, int len, bool equal)
 	}
 	else if (equal == true && (*args)->value[len + 1] == '\0'
 		&& (*args)->espace == false && (*args)->next)
+	{
 		tmp = ft_strjoin((*args)->value, (*args)->next->value);
+		*args = (*args)->next;
+	}
 	else
 		tmp = ft_strdup((*args)->value);
 	*args = (*args)->next;

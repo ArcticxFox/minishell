@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 12:22:34 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/06 19:58:38 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 16:04:57 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**copy_env(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	cpy = ft_calloc(sizeof(char *), i + 1);
+	cpy = ft_calloc(sizeof(char *), i + 1); //LEAK
 	if (!cpy)
 		return (0);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 12:22:34 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/06 19:58:38 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 16:34:03 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ char	**copy_env(char **envp)
 	char	**cpy;
 
 	i = 0;
+	if (!envp || !*envp)
+		return (NULL);
 	while (envp[i])
 		i++;
-	cpy = ft_calloc(sizeof(char *), i + 1);
+	cpy = ft_calloc(sizeof(char *), i + 1); //LEAK
 	if (!cpy)
 		return (0);
 	i = 0;
@@ -39,6 +41,8 @@ char	*get_env_value(char **env, char *name) // gestion erreur
 	int	i;
 	int	len;
 
+	if (!env || !*env)
+		return (NULL);
 	i = 0;
 	len = ft_strlen(name);
 	while (env[i])

@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/06 16:07:32 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/07 17:50:57 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int ac, char **av, char **envp)
 			add_history(line);
 			// append_hist(shell.env, line);
 		tokens = lexer(line);
-		print_token(tokens);
+		// print_token(tokens);
 		if (!tokens)
 		{
 			free(line);

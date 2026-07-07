@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:06:37 by ejones            #+#    #+#             */
-/*   Updated: 2026/06/16 18:49:46 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 16:26:55 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	*free_memory(char **tab)
 	int	i;
 
 	i = 0;
+	if (!tab)
+		return (NULL);
 	while (tab[i])
 	{
 		free(tab[i]);

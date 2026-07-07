@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:16:39 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 14:16:41 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/06 20:30:06 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,28 @@ int	is_in_env(char **env, char *name, int len)
 	return (0);
 }
 
-void	print_export_line(char *line)
+void	print_export_line(char **env)
 {
+	int		j;
 	char	*res;
 
-	res = ft_strchr(line, '=');
-	ft_printf("declare -x ");
-	if (res)
+	j = 0;
+	while (env[j])
 	{
-		write(1, line, res - line);
-		ft_printf("='%s'\n", res + 1);
+		res = ft_strchr(env[j], '=');
+		ft_printf("declare -x ");
+		if (res)
+		{
+			write(1, env[j], res - env[j]);
+			ft_printf("='%s'\n", res + 1);
+		}
+		else
+			ft_printf("%s\n", env[j]);
+		++j;
 	}
-	else
-		ft_printf("%s\n", line);
 }
 
-int	export_add(char *arg, t_shell *shell)
+int	export_add_append(char *arg, t_shell *shell)
 {
 	char	**tmp;
 	int		i;
@@ -80,6 +86,51 @@ int	export_add(char *arg, t_shell *shell)
 		i++;
 	}
 	tmp[i] = ft_strdup(arg);
+	if (!tmp[i])
+	{
+		free(tmp);
+		return (0);
+	}
+	tmp[i + 1] = NULL;
+	free(shell->env);
+	shell->env = tmp;
+	return (1);
+}
+
+char	*new_env_var(t_args **args, int len, bool equal)
+{
+	char	*tmp;
+
+	if (equal == false && (*args)->value[len] == '\0'
+		&& (*args)->espace == false && (*args)->next)
+	{
+		tmp = ft_strjoin((*args)->value, (*args)->next->value);
+		*args = (*args)->next;
+	}
+	else if (equal == true && (*args)->value[len + 1] == '\0'
+		&& (*args)->espace == false && (*args)->next)
+		tmp = ft_strjoin((*args)->value, (*args)->next->value);
+	else
+		tmp = ft_strdup((*args)->value);
+	*args = (*args)->next;
+	return (tmp);
+}
+
+int	export_add(t_args **args, t_shell *shell, int len, bool equal)
+{
+	char	**tmp;
+	int		i;
+
+	i = 0;
+	while (shell->env[i])
+		i++;
+	tmp = malloc(sizeof(char *) * (i + 2));
+	if (!tmp)
+		return (0);
+	i = -1;
+	while (shell->env[++i])
+		tmp[i] = shell->env[i];
+	tmp[i] = new_env_var(args, len, equal);
 	if (!tmp[i])
 	{
 		free(tmp);

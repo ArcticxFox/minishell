@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 12:18:12 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/07 15:01:16 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,42 +40,41 @@ int	exec_cd(char **args, t_shell *shell)
 	return (0);
 }
 
-int	unset_loop(char **args, t_shell *shell, int i)
+void	remove_var(t_shell *shell, int *i)
 {
-	int	j;
-	int	len;
-
-	j = 0;
-	len = len_name(args[i]);
-	while (shell->env[j])
+	free(shell->env[*i]);
+	while (shell->env[*i + 1])
 	{
-		if (!ft_strncmp(shell->env[j], args[i], len)
-			&& (shell->env[j][len] == '=' || shell->env[j][len] == '\0'))
-		{
-			free(shell->env[j]);
-			while (shell->env[j + 1])
-			{
-				shell->env[j] = shell->env[j + 1];
-				j++;
-			}
-			shell->env[j] = NULL;
-		}
-		j++;
+		shell->env[*i] = shell->env[*i + 1];
+		++(*i);
 	}
-	return (0);
+	shell->env[*i] = NULL;
 }
 
 int	exec_unset(char **args, t_shell *shell)
 {
 	int	i;
+	int	n;
+	int	len;
 
-	i = 1;
+	i = 0;
+	n = 1;
 	if (!args[1])
 		return (1);
-	while (args[i])
+	while (args[n])
 	{
-		unset_loop(args, shell, i);
-		i++;
+		len = len_name(args[n]);
+		i = 0;
+		while (shell->env[i])
+		{
+			if (!ft_strncmp(shell->env[i], args[n], len)
+				&& (shell->env[i][len] == '=' || shell->env[i][len] == '\0'))
+			{
+				remove_var(shell, &i);
+			}
+			++i;
+		}
+		++n;
 	}
 	return (0);
 }

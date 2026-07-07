@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:14 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 18:51:07 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/06 20:28:41 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@ int		exec_env(char **args, t_shell *shell);
 int		is_valid_identifier(char *name, int len);
 int		is_in_env(char **env, char *name, int len);
 int		is_n(char *arg);
-int		export_add(char *arg, t_shell *shell);
-int		export_append(char *arg, t_shell *shell);
-void	print_export_line(char *entry);
+int		export_add_append(char *arg, t_shell *shell);
+// int		export_append(char *arg, t_shell *shell);
+void	print_export_line(char **env);
+
+int	export_append(t_args **args, t_shell *shell);
+int	export_add(t_args **args, t_shell *shell, int len, bool equal);
 
 
 #endif

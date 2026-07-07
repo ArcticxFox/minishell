@@ -6,11 +6,38 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 12:22:34 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 16:34:03 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 18:16:52 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
+
+char	**hard_code_env(void)
+{
+	char	**env;
+	char	buffer[4096];
+	char	*path;
+	char	*name;
+
+	env = ft_calloc(sizeof(char *), 3);
+	if (!env)
+		return (NULL);
+	path = getcwd(buffer, 4096);
+	name = NULL;
+	if (path)
+	{
+		ft_printf("%s\n", path);
+		name = ft_strjoin("PWD=", path);
+		set_env_value(env, name, NULL);
+		free(name);
+		name = ft_strjoin("OLDPWD=", path);
+		set_env_value(env, name, NULL);
+	}
+	ft_printf("hello world\n", path);
+	env[2] = NULL;
+	free(name);
+	return (env);
+}
 
 char	**copy_env(char **envp)
 {
@@ -19,10 +46,13 @@ char	**copy_env(char **envp)
 
 	i = 0;
 	if (!envp || !*envp)
-		return (NULL);
+	{
+		cpy = hard_code_env();
+		return (cpy);
+	}
 	while (envp[i])
 		i++;
-	cpy = ft_calloc(sizeof(char *), i + 1); //LEAK
+	cpy = ft_calloc(sizeof(char *), i + 1);
 	if (!cpy)
 		return (0);
 	i = 0;
@@ -36,7 +66,7 @@ char	**copy_env(char **envp)
 	return (cpy);
 }
 
-char	*get_env_value(char **env, char *name) // gestion erreur
+char	*get_env_value(char **env, char *name)
 {
 	int	i;
 	int	len;

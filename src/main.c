@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/07 17:50:57 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/07 18:40:45 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **envp)
 			continue;
 		}
 		head = get_commands(tokens, shell.env);
-		print_commands(head);
+		// print_commands(head);
 		shell.head = head;
 		while (tokens)
 			ft_delete_front_token(&tokens);

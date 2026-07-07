@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 17:03:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 15:31:41 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 19:36:33 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ bool	check_error_for_redir_or_pipe(t_token *tokens)
 		if (tmp->next && tmp->type >= TOKEN_PIPE && tmp->type <= TOKEN_HEREDOC)
 		{
 			tmp = tmp->next;
-			if (tmp->next && tmp->next->type == TOKEN_WORD
-				&& tmp->type >= TOKEN_PIPE && tmp->type <= TOKEN_HEREDOC)
+			if (tmp->type >= TOKEN_REDIR_IN && tmp->type <= TOKEN_HEREDOC
+				&& tmp->next && !(tmp->next->type == TOKEN_WORD))
+				print_syntax_error(tmp->type);
+			else if (tmp->type == TOKEN_PIPE)
 				print_syntax_error(tmp->type);
 			else
 				continue ;

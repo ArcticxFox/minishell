@@ -74,6 +74,7 @@ typedef struct s_token
 typedef struct s_shell
 {
 	t_cmd	*head;
+	t_cmd	*current_cmd;
 	char	**env;
 	int		should_exit;
 }	t_shell;

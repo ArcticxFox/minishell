@@ -101,6 +101,7 @@ void	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 	saved_in = dup(STDIN_FILENO);
 	saved_out = dup(STDOUT_FILENO);
 	real_args = get_args_for_execve(cmd->args);
+	shell->current_cmd = cmd;
 	if (apply_redirs(cmd->redir) < 0)
 	{
 		dup2(saved_in, STDIN_FILENO);

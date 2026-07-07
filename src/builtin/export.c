@@ -123,7 +123,7 @@ int	exec_export(char **args, t_shell *shell)
 	t_args	*list_args;
 
 	(void)args;
-	list_args = shell->head->args->next;
+	list_args = shell->current_cmd->args->next;
 	if (!list_args)
 	{
 		print_export_line(shell->env);

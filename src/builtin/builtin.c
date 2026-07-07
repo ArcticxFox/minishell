@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/06 16:00:24 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/07 16:50:11 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exec_echo(char **args, t_shell *shell)
 	int		no_newline;
 
 	(void)args;
-	tmp = shell->head->args->next;
+	tmp = shell->current_cmd->args->next;
 	no_newline = 0;
 	if (!tmp)
 		return (1);

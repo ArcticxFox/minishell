@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 15:49:28 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 16:32:27 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 20:00:56 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_delete_front_cmd(t_cmd **stack)
 		*stack = pstemp->next;
 	while (pstemp->redir)
 		ft_delete_front_redir(&pstemp->redir);
-	while(pstemp->args)
+	while (pstemp->args)
 		ft_delete_front_args(&pstemp->args);
 	free(pstemp);
 }

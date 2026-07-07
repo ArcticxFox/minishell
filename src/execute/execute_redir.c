@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 20:33:27 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/07 20:00:13 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ int	setup_heredocs(t_cmd *head, t_redir *redir, char **env)
 
 void	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 {
-	int	saved_in;
-	int	saved_out;
+	int		saved_in;
+	int		saved_out;
 	char	**real_args;
 
 	saved_in = dup(STDIN_FILENO);

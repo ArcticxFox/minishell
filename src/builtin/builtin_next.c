@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_next.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 15:01:16 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/07 19:56:56 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,26 @@ int	exec_env(char **args, t_shell *shell)
 		i++;
 	}
 	return (0);
+}
+
+char	*new_env_var(t_args **args, int len, bool equal)
+{
+	char	*tmp;
+
+	if (equal == false && (*args)->value[len] == '\0'
+		&& (*args)->espace == false && (*args)->next)
+	{
+		tmp = ft_strjoin((*args)->value, (*args)->next->value);
+		*args = (*args)->next;
+	}
+	else if (equal == true && (*args)->value[len + 1] == '\0'
+		&& (*args)->espace == false && (*args)->next)
+	{
+		tmp = ft_strjoin((*args)->value, (*args)->next->value);
+		*args = (*args)->next;
+	}
+	else
+		tmp = ft_strdup((*args)->value);
+	*args = (*args)->next;
+	return (tmp);
 }

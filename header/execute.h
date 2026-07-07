@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:12:33 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 19:59:41 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/07 20:04:32 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		setup_heredocs(t_cmd *head, t_redir *redir, char **env);
 void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell);
 void	execute_single_builtin(t_cmd *cmd, t_shell *shell);
 void	child_exit(t_shell *shell, int status, char **real_args);
-
 
 char	*ft_strjoin_free(char *s1, char const *s2);
 char	*get_path(char *cmd, t_shell *shell);

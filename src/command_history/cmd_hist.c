@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 15:04:39 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/04 19:31:30 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 19:58:59 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	add_cmd_log_env(t_shell *shell)
 	log_path[1] = get_env_value(shell->env, "PWD");
 	log_path[2] = NULL;
 	path = ft_strjoin("CMD_LOG=", log_path[1]);
-	path = ft_strjoin_free(path , "/cmd_log.txt");
+	path = ft_strjoin_free(path, "/cmd_log.txt");
 	log_path[1] = path;
 	exec_export(log_path, shell);
 	free(path);
@@ -40,12 +40,14 @@ void	read_old_history(t_shell *shell)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return ;
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		tmp = ft_strtrim(line, "\n");
 		add_history(tmp);
 		free(line);
 		free(tmp);
+		line = get_next_line(fd);
 	}
 	close(fd);
 }
@@ -64,4 +66,3 @@ void	append_hist(char **env, char *line)
 		close(fd);
 	}
 }
-

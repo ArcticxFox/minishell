@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_next.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 18:14:25 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 12:18:12 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,41 @@ int	exec_cd(char **args, t_shell *shell)
 	return (0);
 }
 
+int	unset_loop(char **args, t_shell *shell, int i)
+{
+	int	j;
+	int	len;
+
+	j = 0;
+	len = len_name(args[i]);
+	while (shell->env[j])
+	{
+		if (!ft_strncmp(shell->env[j], args[i], len)
+			&& (shell->env[j][len] == '=' || shell->env[j][len] == '\0'))
+		{
+			free(shell->env[j]);
+			while (shell->env[j + 1])
+			{
+				shell->env[j] = shell->env[j + 1];
+				j++;
+			}
+			shell->env[j] = NULL;
+		}
+		j++;
+	}
+	return (0);
+}
 
 int	exec_unset(char **args, t_shell *shell)
 {
 	int	i;
-	int	len;
 
-	i = 0;
+	i = 1;
 	if (!args[1])
 		return (1);
-	len = len_name(args[1]);
-	while (shell->env[i])
+	while (args[i])
 	{
-		if (!ft_strncmp(shell->env[i], args[1], len)
-			&& (shell->env[i][len] == '=' || shell->env[i][len] == '\0'))
-		{
-			free(shell->env[i]);
-			while (shell->env[i + 1])
-			{
-				shell->env[i] = shell->env[i + 1];
-				i++;
-			}
-			shell->env[i] = NULL;
-			return (0);
-		}
+		unset_loop(args, shell, i);
 		i++;
 	}
 	return (0);

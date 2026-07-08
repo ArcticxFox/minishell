@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 15:49:28 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/08 16:15:00 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 16:41:10 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,5 @@ void	ft_delete_cmd(t_cmd **stack)
 		while (pstemp->args)
 			ft_delete_front_args(&pstemp->args);
 		free(pstemp);
-
 	}
 }

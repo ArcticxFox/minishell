@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:12:33 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/08 15:41:31 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 16:37:05 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ char	*expand_heredoc(char **env, char *line);
 void	exit_status(t_pipe_state *state);
 
 char	**get_args_for_execve(t_args *args);
+void	free_heredoc(t_cmd *head, char **env, int fd);
 
 #endif

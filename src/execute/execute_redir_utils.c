@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/08 16:16:05 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 16:23:48 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,7 @@ void	read_heredoc_lines(int fd, t_cmd *head, t_redir *redir, char **env)
 	free_memory(env);
 	rl_clear_history();
 	ft_delete_cmd(&head);
-	exit(130);
+	if (g_heredoc_interrupt)
+		exit(130);
+	exit(0);
 }

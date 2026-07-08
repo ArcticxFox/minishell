@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/08 16:15:44 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 16:29:18 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static int	wait_heredoc(int *pipefd, t_redir *redir, pid_t pid)
 	close(pipefd[1]);
 	waitpid(pid, &status, 0);
 	init_signals();
-	if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-	|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 	{
 		write(1, "\n", 1);
 		close(pipefd[0]);

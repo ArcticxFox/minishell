@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redir_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 00:00:00 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/08 15:54:03 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	handle_file_redir(t_redir *redir)
 	return (0);
 }
 
-void	read_heredoc_lines(int fd, t_redir *redir, char **env)
+void	read_heredoc_lines(int fd, t_cmd *head, t_redir *redir, char **env)
 {
 	char	*line;
 
-	while (1)
+	while (!g_heredoc_interrupt)
 	{
 		line = readline("> ");
 		if (!line)
@@ -52,7 +52,7 @@ void	read_heredoc_lines(int fd, t_redir *redir, char **env)
 				ft_strlen(redir->delimiter) + 1))
 		{
 			free(line);
-			break ;
+			return ;
 		}
 		if (redir->expand == true)
 			line = expand_heredoc(env, line);
@@ -60,4 +60,10 @@ void	read_heredoc_lines(int fd, t_redir *redir, char **env)
 		ft_putchar_fd('\n', fd);
 		free(line);
 	}
+	close(fd);
+	free_memory(env);
+	rl_clear_history();
+	while (head)
+		ft_delete_front_cmd(&head);
+	exit(130);
 }

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 20:00:13 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 16:02:12 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	wait_heredoc(int *pipefd, t_redir *redir, pid_t pid)
 	close(pipefd[1]);
 	waitpid(pid, &status, 0);
 	init_signals();
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
 	{
 		write(1, "\n", 1);
 		close(pipefd[0]);
@@ -52,6 +53,7 @@ int	handle_heredoc(t_cmd *head, t_redir *redir, char **env)
 	int		pipefd[2];
 	pid_t	pid;
 
+	g_heredoc_interrupt = 0;
 	if (pipe(pipefd) < 0)
 		return (-1);
 	signal(SIGINT, SIG_IGN);
@@ -65,9 +67,10 @@ int	handle_heredoc(t_cmd *head, t_redir *redir, char **env)
 	}
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		g_heredoc_interrupt = 0;
+		signal(SIGINT, heredoc_sigint);
 		close(pipefd[0]);
-		read_heredoc_lines(pipefd[1], redir, env);
+		read_heredoc_lines(pipefd[1], head, redir, env);
 		close(pipefd[1]);
 		free_memory(env);
 		rl_clear_history();

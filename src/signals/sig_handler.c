@@ -6,11 +6,21 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:14:06 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/07 20:03:04 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 15:37:50 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int				g_value_exit = 0;
+volatile int	g_heredoc_interrupt = 0;
+
+void	heredoc_sigint(int sig)
+{
+	(void)sig;
+	g_heredoc_interrupt = 1;
+	close(STDIN_FILENO);   // or another way to interrupt readline
+}
 
 void	handle_sigint(int sig)
 {

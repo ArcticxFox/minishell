@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:12:33 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 20:04:32 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 15:41:31 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		count_cmds(t_cmd *cmds);
 int		apply_redirs(t_redir *redir);
 int		handle_heredoc(t_cmd *head, t_redir *redir, char **env);
 int		handle_file_redir(t_redir *redir);
-void	read_heredoc_lines(int fd, t_redir *redir, char **env);
+void	read_heredoc_lines(int fd, t_cmd *head, t_redir *redir, char **env);
 
 //execute_util_2.c
 char	*expand_heredoc(char **env, char *line);

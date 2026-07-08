@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 13:03:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/05 19:25:10 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/07 20:16:26 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int	is_n(char *arg)
 	if (!arg || arg[0] != '-')
 		return (0);
 	len = ft_strlen(arg);
-	if (arg[len - 1] == ' ')
-		len--;
+	if (len == 1)
+		return (0);
 	i = 1;
 	while (i < len)
 	{

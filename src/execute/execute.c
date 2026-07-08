@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/07 17:49:51 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/08 15:11:45 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 	char	**real_args;
 
 	real_args = get_args_for_execve(cmd->args);
-	shell->current_cmd = cmd;
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -164,7 +163,9 @@ void	execute(t_cmd *cmd, t_shell *shell)
 		pid = fork();
 		if (pid == 0)
 			execute_child(cmd, STDIN_FILENO, STDOUT_FILENO, shell);
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		init_signals();
 		if (WIFEXITED(status))
 			g_value_exit = WEXITSTATUS(status);
 		else

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/07 20:04:42 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 15:25:30 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 # include "execute.h"
 # include "pipe.h"
 
-extern int	g_value_exit;
 
 char	*expand(char **env, char *arg, t_tk_type type, int expand);
 char	*ft_strjoin_free(char *s1, char const *s2);

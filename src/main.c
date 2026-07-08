@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/07 21:22:05 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 16:16:20 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int ac, char **av, char **envp)
 	tokens = NULL;
 	head = NULL;
 	init_signals();
-	// read_old_history(&shell);
 	while (1)
 	{
 		line = readline("minishell> ");
@@ -42,16 +41,13 @@ int	main(int ac, char **av, char **envp)
 		}
 		if (line[0] != '\0')
 			add_history(line);
-			// append_hist(shell.env, line);
 		tokens = lexer(line);
-		// print_token(tokens);
 		if (!tokens)
 		{
 			free(line);
 			continue;
 		}
 		head = get_commands(tokens, shell.env);
-		// print_commands(head);
 		shell.head = head;
 		while (tokens)
 			ft_delete_front_token(&tokens);
@@ -60,14 +56,12 @@ int	main(int ac, char **av, char **envp)
 			cmd = cmd->next;
 		if (cmd)
 		{
-			while (head)
-				ft_delete_front_cmd(&head);
+			ft_delete_cmd(&head);
 			free(line);
 			continue ;
 		}
 		execute(head, &shell);
-		while(head)
-			ft_delete_front_cmd(&head);
+		ft_delete_cmd(&head);
 		free(line);
 		if (shell.should_exit == 1)
 		{

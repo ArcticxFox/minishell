@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/08 15:54:03 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 16:16:05 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,16 @@ void	read_heredoc_lines(int fd, t_cmd *head, t_redir *redir, char **env)
 				ft_strlen(redir->delimiter) + 1))
 		{
 			free(line);
-			return ;
+			break ;
 		}
 		if (redir->expand == true)
 			line = expand_heredoc(env, line);
-		ft_putstr_fd(line, fd);
-		ft_putchar_fd('\n', fd);
+		ft_putendl_fd(line, fd);
 		free(line);
 	}
 	close(fd);
 	free_memory(env);
 	rl_clear_history();
-	while (head)
-		ft_delete_front_cmd(&head);
+	ft_delete_cmd(&head);
 	exit(130);
 }

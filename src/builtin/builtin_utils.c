@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 13:03:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 20:16:26 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/08 16:12:16 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	child_exit(t_shell *shell, int status, char **real_args)
 {
 	while (shell->head)
-		ft_delete_front_cmd(&shell->head);
+		ft_delete_cmd(&shell->head);
 	free_memory(shell->env);
 	free_memory(real_args);
 	g_value_exit = status;

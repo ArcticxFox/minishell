@@ -13,8 +13,8 @@
 #ifndef SIGNALS_H
 # define SIGNALS_H
 
-extern int			g_value_exit;
-extern volatile int	g_heredoc_interrupt;
+extern volatile sig_atomic_t	g_signal_received;
+extern volatile int			g_heredoc_interrupt;
 
 void	heredoc_sigint(int sig);
 void	init_signals(void);

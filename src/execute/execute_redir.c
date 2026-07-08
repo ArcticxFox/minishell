@@ -12,7 +12,7 @@
 
 #include "../header/minishell.h"
 
-static int	wait_heredoc(int *pipefd, t_redir *redir, pid_t pid)
+static int	wait_heredoc(int *pipefd, t_redir *redir, pid_t pid, t_shell *shell)
 {
 	int		status;
 
@@ -23,7 +23,7 @@ static int	wait_heredoc(int *pipefd, t_redir *redir, pid_t pid)
 	{
 		write(1, "\n", 1);
 		close(pipefd[0]);
-		g_value_exit = 130;
+		shell->exit_value = 130;
 		return (-1);
 	}
 	redir->heredoc_fd = pipefd[0];
@@ -47,7 +47,7 @@ int	apply_redirs(t_redir *redir)
 	return (0);
 }
 
-int	handle_heredoc(t_cmd *head, t_redir *redir, char **env)
+int	handle_heredoc(t_cmd *head, t_redir *redir, char **env, t_shell *shell)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -73,16 +73,16 @@ int	handle_heredoc(t_cmd *head, t_redir *redir, char **env)
 		free_heredoc(head, env, pipefd[1]);
 		exit(0);
 	}
-	return (wait_heredoc(pipefd, redir, pid));
+	return (wait_heredoc(pipefd, redir, pid, shell));
 }
 
-int	setup_heredocs(t_cmd *head, t_redir *redir, char **env)
+int	setup_heredocs(t_cmd *head, t_redir *redir, char **env, t_shell *shell)
 {
 	while (redir)
 	{
 		if (redir->type == TOKEN_HEREDOC)
 		{
-			if (handle_heredoc(head, redir, env) < 0)
+			if (handle_heredoc(head, redir, env, shell) < 0)
 				return (-1);
 		}
 		redir = redir->next;
@@ -108,7 +108,7 @@ void	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 		close(saved_out);
 		child_exit(shell, 1, real_args);
 	}
-	g_value_exit = builtin(real_args, shell);
+	shell->exit_value = builtin(real_args, shell);
 	free_memory(real_args);
 	dup2(saved_in, STDIN_FILENO);
 	dup2(saved_out, STDOUT_FILENO);

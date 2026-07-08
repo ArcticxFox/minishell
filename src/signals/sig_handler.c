@@ -12,8 +12,8 @@
 
 #include "minishell.h"
 
-int				g_value_exit = 0;
-volatile int	g_heredoc_interrupt = 0;
+volatile sig_atomic_t	g_signal_received = 0;
+volatile int			g_heredoc_interrupt = 0;
 
 // close(STDIN_FILENO)
 // another way to interrupt readline
@@ -31,7 +31,7 @@ void	handle_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_value_exit = 130;
+	g_signal_received = SIGINT;
 }
 
 void	init_signals(void)

@@ -16,7 +16,7 @@
 # include "structs.h"
 
 //token.c
-t_token	*lexer(char *line);
+t_token	*lexer(char *line, t_shell *shell);
 int		check_special_char(t_token **token, char *s, int *i);
 char	*extract_word(char *str, int *i, bool *space);
 

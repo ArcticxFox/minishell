@@ -17,18 +17,17 @@ int	exec_pwd(char **args, t_shell *shell)
 	char	buffer[4096];
 
 	(void)args;
-	(void)shell;
 	if (getcwd(buffer, 4096) == NULL)
 	{
 		write (2, "Error\n", 6);
-		g_value_exit = 1;
+		shell->exit_value = 1;
 	}
 	else
 	{
 		ft_printf("Current working directory: %s\n", buffer);
-		g_value_exit = 0;
+		shell->exit_value = 0;
 	}
-	return (g_value_exit);
+	return (shell->exit_value);
 }
 
 int	exec_echo(char **args, t_shell *shell)
@@ -46,7 +45,7 @@ int	exec_echo(char **args, t_shell *shell)
 		if (is_n(tmp->value))
 			no_newline = 1;
 		else if (!ft_strncmp(tmp->value, "$?", 3))
-			ft_putnbr_fd(g_value_exit, 1);
+			ft_putnbr_fd(shell->exit_value, 1);
 		else
 			write(1, tmp->value, ft_strlen(tmp->value));
 		if (tmp->next && tmp->espace == true && !is_n(tmp->value))
@@ -63,7 +62,7 @@ static void	exit_numeric_err(char *arg, t_shell *shell)
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
-	g_value_exit = 2;
+	shell->exit_value = 2;
 	shell->should_exit = 1;
 }
 
@@ -91,8 +90,8 @@ int	exec_exit(char **args, t_shell *shell)
 		return (2);
 	}
 	shell->should_exit = 1;
-	g_value_exit = (int)(unsigned char)ft_atoll(args[1]);
-	return (g_value_exit);
+	shell->exit_value = (int)(unsigned char)ft_atoll(args[1]);
+	return (shell->exit_value);
 }
 
 int	builtin(char **args, t_shell *shell)

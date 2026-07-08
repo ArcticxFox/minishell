@@ -26,22 +26,28 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	shell.env = copy_env(envp);
 	shell.should_exit = 0;
+	shell.exit_value = 0;
 	tokens = NULL;
 	head = NULL;
 	init_signals();
 	while (1)
 	{
 		line = readline("minishell> ");
+		if (g_signal_received)
+		{
+			shell.exit_value = 128 + g_signal_received;
+			g_signal_received = 0;
+		}
 		if (!line) // Ctrl+D
 		{
 			free_memory(shell.env);
 			rl_clear_history();
 			printf("exit\n");
-			exit(g_value_exit);
+			exit(shell.exit_value);
 		}
 		if (line[0] != '\0')
 			add_history(line);
-		tokens = lexer(line);
+		tokens = lexer(line, &shell);
 		if (!tokens)
 		{
 			free(line);
@@ -52,7 +58,7 @@ int	main(int ac, char **av, char **envp)
 		while (tokens)
 			ft_delete_front_token(&tokens);
 		cmd = head;
-		while (cmd && setup_heredocs(head, cmd->redir, shell.env) == 0)
+		while (cmd && setup_heredocs(head, cmd->redir, shell.env, &shell) == 0)
 			cmd = cmd->next;
 		if (cmd)
 		{
@@ -70,5 +76,5 @@ int	main(int ac, char **av, char **envp)
 			break;
 		}
 	}
-	return (g_value_exit);
+	return (shell.exit_value);
 }

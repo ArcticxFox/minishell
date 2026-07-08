@@ -67,7 +67,7 @@ int	check_special_char(t_token **token, char *s, int *i)
 	return (1);
 }
 
-int	add_token_word(t_token **tokens, char *line, int *i)
+int	add_token_word(t_token **tokens, char *line, int *i, t_shell *shell)
 {
 	bool	space;
 	char	*str;
@@ -77,7 +77,7 @@ int	add_token_word(t_token **tokens, char *line, int *i)
 	str = extract_word(line, i, &space);
 	if (!str)
 	{
-		g_value_exit = 2;
+		shell->exit_value = 2;
 		while (*tokens)
 			ft_delete_front_token(tokens);
 		return (EXIT_FAILURE);
@@ -86,7 +86,7 @@ int	add_token_word(t_token **tokens, char *line, int *i)
 	return (EXIT_SUCCESS);
 }
 
-int	add_token(t_token **tokens, char *line, int *i)
+int	add_token(t_token **tokens, char *line, int *i, t_shell *shell)
 {
 	t_token	*token;
 
@@ -100,12 +100,12 @@ int	add_token(t_token **tokens, char *line, int *i)
 	}
 	else
 	{
-		add_token_word(tokens, line, i);
+		add_token_word(tokens, line, i, shell);
 	}
 	return (EXIT_SUCCESS);
 }
 
-t_token	*lexer(char *line)
+t_token	*lexer(char *line, t_shell *shell)
 {
 	int		i;
 	int		error;
@@ -119,12 +119,12 @@ t_token	*lexer(char *line)
 		skip_whitespaces(line, &i);
 		if (!line[i])
 			break ;
-		if (add_token(&tokens, line, &i))
+		if (add_token(&tokens, line, &i, shell))
 			error = -2;
 	}
 	if (error == -2 || check_for_syntax_error(tokens))
 	{
-		g_value_exit = 2;
+		shell->exit_value = 2;
 		while (tokens)
 			ft_delete_front_token(&tokens);
 		return (NULL);

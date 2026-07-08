@@ -77,6 +77,7 @@ typedef struct s_shell
 	t_cmd	*current_cmd;
 	char	**env;
 	int		should_exit;
+	int		exit_value;
 }	t_shell;
 
 typedef struct s_builtin

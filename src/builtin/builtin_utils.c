@@ -18,8 +18,8 @@ void	child_exit(t_shell *shell, int status, char **real_args)
 		ft_delete_cmd(&shell->head);
 	free_memory(shell->env);
 	free_memory(real_args);
-	g_value_exit = status;
-	exit(g_value_exit);
+	shell->exit_value = status;
+	exit(shell->exit_value);
 }
 
 int	is_numeric(char *str)

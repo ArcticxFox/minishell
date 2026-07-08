@@ -94,7 +94,8 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 		child_exit(shell, 1, real_args);
 	if (is_builtin(cmd->cmd))
 	{
-		g_value_exit = builtin(real_args, shell);
+		shell->current_cmd = cmd;
+		shell->exit_value = builtin(real_args, shell);
 		child_exit(shell, 0, real_args);
 	}
 	if (cmd->cmd)
@@ -138,7 +139,7 @@ void	execute_pipeline(t_cmd *list, t_shell *shell)
 	}
 	pipeline_fork_loop(list, &state, state.pids, shell);
 	close_all_pipes(state.pipes, state.n_cmds - 1);
-	exit_status(&state);
+	exit_status(&state, shell);
 	free_pipes(state.pipes, state.n_cmds - 1);
 	free(state.pids);
 }
@@ -167,8 +168,8 @@ void	execute(t_cmd *cmd, t_shell *shell)
 		waitpid(pid, &status, 0);
 		init_signals();
 		if (WIFEXITED(status))
-			g_value_exit = WEXITSTATUS(status);
+			shell->exit_value = WEXITSTATUS(status);
 		else
-			g_value_exit = 128 + WTERMSIG(status);
+			shell->exit_value = 128 + WTERMSIG(status);
 	}
 }

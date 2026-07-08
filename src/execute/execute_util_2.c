@@ -23,7 +23,7 @@ char	*expand_heredoc(char **env, char *line)
 	return (tmp);
 }
 
-void	exit_status(t_pipe_state *state)
+void	exit_status(t_pipe_state *state, t_shell *shell)
 {
 	int	i;
 	int	status;
@@ -40,7 +40,7 @@ void	exit_status(t_pipe_state *state)
 		i++;
 	}
 	if (WIFEXITED(last_status))
-		g_value_exit = WEXITSTATUS(last_status);
+		shell->exit_value = WEXITSTATUS(last_status);
 	else if (WIFSIGNALED(last_status))
-		g_value_exit = 128 + WTERMSIG(last_status);
+		shell->exit_value = 128 + WTERMSIG(last_status);
 }

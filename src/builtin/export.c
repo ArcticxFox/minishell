@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:16:28 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 17:51:26 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/10 15:46:38 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,12 @@ int	exec_export(char **args, t_shell *shell)
 	if (!list_args)
 	{
 		print_export_line(shell->env);
-		return (1);
+		return (0);
 	}
 	while (list_args)
 	{
 		if (!export_process_arg(&list_args, shell))
-			return (0);
+			return (1);
 	}
-	return (1);
+	return (0);
 }

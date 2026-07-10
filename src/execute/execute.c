@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/08 15:11:45 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/10 15:10:34 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 	{
 		shell->current_cmd = cmd;
 		shell->exit_value = builtin(real_args, shell);
-		child_exit(shell, 0, real_args);
+		child_exit(shell, shell->exit_value, real_args);
 	}
 	if (cmd->cmd)
 		do_execve(cmd, shell, real_args);

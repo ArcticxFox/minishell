@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 17:51:09 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/10 15:02:52 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	exec_exit(char **args, t_shell *shell)
 	if (!args[1])
 	{
 		shell->should_exit = 1;
-		return (0);
+		return (shell->exit_value);
 	}
 	if (!is_numeric(args[1]))
 	{
@@ -90,7 +90,8 @@ int	exec_exit(char **args, t_shell *shell)
 		return (2);
 	}
 	shell->should_exit = 1;
-	shell->exit_value = (int)(unsigned char)ft_atoll(args[1]);
+	if (!shell->current_cmd->next)
+		shell->exit_value = (int)(unsigned char)ft_atoll(args[1]);
 	return (shell->exit_value);
 }
 

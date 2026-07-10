@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/07 19:06:58 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/10 13:46:57 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ char	*extract_word(char *str, int *i, bool *space)
 		return (NULL);
 	return (word);
 }
+
+char	*assemble_words(char *str, int *i, bool *space)
+{
+	char	*s1;
+	char	*s2;
+
+	s1 = extract_word(str, i, space);
+	while (str[*i] && !ft_is_whitespace(str[*i])
+			&& str[*i] != '|' && str[*i] != '<' && str[*i] != '>')
+	{
+		if (s1)
+			s2 = extract_word(str, i, space);
+		s1 = ft_strjoin_free(s1, s2);
+		free(s2);
+	}
+	return	(s1);
+}
+
 
 int	check_special_char(t_token **token, char *s, int *i)
 {
@@ -74,7 +92,7 @@ int	add_token_word(t_token **tokens, char *line, int *i, t_shell *shell)
 
 	space = false;
 	str = NULL;
-	str = extract_word(line, i, &space);
+	str = assemble_words(line, i, &space);
 	if (!str)
 	{
 		shell->exit_value = 2;
@@ -122,6 +140,7 @@ t_token	*lexer(char *line, t_shell *shell)
 		if (add_token(&tokens, line, &i, shell))
 			error = -2;
 	}
+	print_token(tokens);
 	if (error == -2 || check_for_syntax_error(tokens))
 	{
 		shell->exit_value = 2;

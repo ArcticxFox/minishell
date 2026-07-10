@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/07 15:55:42 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/10 13:36:47 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,6 @@ void	ft_add_token_back(t_token **lst, t_token *new)
 	}
 }
 
-// fonction pour enlever les quotes aux extremiter
-static char	*assign_value(char *value)
-{
-	char	*new_str;
-
-	if (*value == '\'')
-		new_str = ft_strtrim(value, "\'");
-	else if (*value == '"')
-		new_str = ft_strtrim(value, "\"");
-	else
-		return (value);
-	free(value);
-	return (new_str);
-}
-
 t_token	*ft_new_token(char *value, t_tk_type type, int expand, bool space)
 {
 	t_token	*new_token;
@@ -70,9 +55,11 @@ t_token	*ft_new_token(char *value, t_tk_type type, int expand, bool space)
 	new_token->space = space;
 	if (*value == '\'')
 		new_token->expand = 0;
+	else if (*value != '\"')
+		new_token->expand = 2;
 	new_token->type = type;
 	if (type == TOKEN_WORD)
-		new_token->value = assign_value(value);
+		new_token->value = value;
 	else
 		new_token->value = value;
 	if (!new_token->value)

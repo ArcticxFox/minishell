@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 16:07:18 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:14:46 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 	{
 		shell->current_cmd = cmd;
 		shell->exit_value = builtin(cmd->args, shell);
-		child_exit(shell, 0);
+		child_exit(shell, shell->exit_value);
 	}
 	if (cmd->cmd)
 		do_execve(cmd, shell);

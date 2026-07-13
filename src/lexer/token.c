@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/10 13:46:57 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:49:27 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ char	*assemble_words(char *str, int *i, bool *space)
 	{
 		if (s1)
 			s2 = extract_word(str, i, space);
+		if (!s2)
+		{
+			free(s1);
+			return (NULL);
+		}
 		s1 = ft_strjoin_free(s1, s2);
 		free(s2);
 	}
@@ -140,7 +145,6 @@ t_token	*lexer(char *line, t_shell *shell)
 		if (add_token(&tokens, line, &i, shell))
 			error = -2;
 	}
-	print_token(tokens);
 	if (error == -2 || check_for_syntax_error(tokens))
 	{
 		shell->exit_value = 2;

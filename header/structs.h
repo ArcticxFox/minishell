@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 11:08:48 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:30:57 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,6 @@ typedef struct s_redir
 	char			**file;
 	struct s_redir	*next;
 }	t_redir;
-
-// typedef struct s_args
-// {
-// 	char			*value;
-// 	bool			espace;
-// 	struct s_args	*next;
-// }	t_args;
 
 typedef struct s_cmd
 {

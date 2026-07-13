@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 16:57:34 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:27:56 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_env_name(t_shell *shell, char *str, int *i)
 	if (str[*i] == '?')
 	{
 		name = ft_itoa(shell->exit_value);
-		ft_printf("name = %s\n", name);
+		++(*i);
 		return (name);
 	}
 	if (ft_isdigit(str[*i]))

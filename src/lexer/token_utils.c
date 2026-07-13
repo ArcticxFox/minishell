@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:41:16 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/10 17:01:52 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:33:48 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ t_token	*ft_new_token(char *value, t_tk_type type, int expand, bool space)
 	new_token->space = space;
 	if (*value == '\'')
 		new_token->expand = 0;
-	else if (*value != '\"')
-		new_token->expand = 2;
 	new_token->type = type;
 	new_token->value = value;
 	return (new_token);

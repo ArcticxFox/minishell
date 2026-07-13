@@ -6,75 +6,85 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 14:20:16 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 15:25:21 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-// la fonction readline() elle return NULL quand on fait Ctrl+D,
-// line = null print exit car dans bash c'est ce qui ce passe
+int	check_line(char *line, t_token **tokens, t_shell shell)
+{
+	line = readline("minishell> ");
+	if (g_signal_received)
+	{
+		shell.exit_value = 128 + g_signal_received;
+		g_signal_received = 0;
+	}
+	if (!line)
+	{
+		free_memory(shell.env);
+		rl_clear_history();
+		printf("exit\n");
+		exit(shell.exit_value);
+	}
+	if (line[0] != '\0')
+		add_history(line);
+	*tokens = lexer(line, &shell);
+	if (!*tokens)
+	{
+		free(line);
+		return (1);
+	}
+	return (0);
+}
+
+int	shell_execution(char *line, t_shell shell, t_token *tokens)
+{
+	t_cmd	*cmd;
+
+	shell.head = get_commands(tokens, shell.env);
+	while (tokens)
+		ft_delete_front_token(&tokens);
+	cmd = shell.head;
+	while (cmd
+		&& setup_heredocs(shell.head, cmd->redir, shell.env, &shell) == 0)
+		cmd = cmd->next;
+	if (cmd)
+	{
+		ft_delete_cmd(&shell.head);
+		free(line);
+		return (1);
+	}
+	execute(shell.head, &shell);
+	ft_delete_cmd(&shell.head);
+	free(line);
+	return (0);
+}
+
 int	main(int ac, char **av, char **envp)
 {
-	char *line;
+	char	*line;
 	t_token	*tokens;
-	t_cmd	*head;
-	t_cmd	*cmd;
 	t_shell	shell;
 
 	(void)ac;
 	(void)av;
 	shell.env = copy_env(envp);
-	shell.should_exit = 0;
-	shell.exit_value = 0;
+	ft_bzero(&shell, 0);
 	tokens = NULL;
-	head = NULL;
+	line = NULL;
 	init_signals();
 	while (1)
 	{
-		line = readline("minishell> ");
-		if (g_signal_received)
-		{
-			shell.exit_value = 128 + g_signal_received;
-			g_signal_received = 0;
-		}
-		if (!line) // Ctrl+D
-		{
-			free_memory(shell.env);
-			rl_clear_history();
-			printf("exit\n");
-			exit(shell.exit_value);
-		}
-		if (line[0] != '\0')
-			add_history(line);
-		tokens = lexer(line, &shell);
-		if (!tokens)
-		{
-			free(line);
-			continue;
-		}
-		head = get_commands(tokens, shell.env);
-		print_commands(head);
-		shell.head = head;
-		while (tokens)
-			ft_delete_front_token(&tokens);
-		cmd = head;
-		while (cmd && setup_heredocs(head, cmd->redir, shell.env, &shell) == 0)
-			cmd = cmd->next;
-		if (cmd)
-		{
-			ft_delete_cmd(&head);
-			free(line);
+		if (check_line(line, &tokens, shell))
 			continue ;
-		}
-		execute(head, &shell);
-		ft_delete_cmd(&head);
-		free(line);
+		if (shell_execution(line, shell, tokens))
+			continue ;
 		if (shell.should_exit == 1)
 		{
 			rl_clear_history();
 			free_memory(shell.env);
-			break;
+			break ;
 		}
 	}
 	return (shell.exit_value);

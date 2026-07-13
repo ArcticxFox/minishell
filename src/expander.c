@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/11 20:42:59 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 13:57:55 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_get_lenght(char **env, char *str)
 	name = NULL;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != '?')
+		if (str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '$')
 		{
 			++i;
 			name = ft_env_name(str, &i);
@@ -115,7 +115,7 @@ char	*expand_string(char **env, char *str, int len)
 
 	i = 0;
 	n = 0;
-	new_str = malloc(len * sizeof(char) + 1);
+	new_str = malloc(len * sizeof(char) + 2);
 	if (!new_str)
 		return (NULL);
 	while (str[i])

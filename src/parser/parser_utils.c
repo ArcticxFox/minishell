@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 20:20:33 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 12:47:35 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 14:03:10 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	append_split_words(char ***tab, int *n, char *str)
 		++(*n);
 		++i;
 	}
+	free(words[0]);
 	free(words);
 }
 

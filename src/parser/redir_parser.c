@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 13:33:56 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 17:31:33 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:08:20 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ t_redir	*new_redir(t_shell *shell, t_token *tokens)
 	new_redir->file = ft_calloc(2, sizeof(char *));
 	new_redir->file[0] = ft_strdup("\0");
 	if (tokens->next->value)
-		new_redir->file = expand_token(shell, tokens->next, new_redir->file, &current);
+		new_redir->file = expand_token(shell, tokens->next,
+				new_redir->file, &current);
 	new_redir->type = tokens->type;
 	new_redir->delimiter = NULL;
 	if (tokens->type == TOKEN_HEREDOC)

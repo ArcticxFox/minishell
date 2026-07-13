@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:43:46 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 17:49:27 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:06:05 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*assemble_words(char *str, int *i, bool *space)
 
 	s1 = extract_word(str, i, space);
 	while (str[*i] && !ft_is_whitespace(str[*i])
-			&& str[*i] != '|' && str[*i] != '<' && str[*i] != '>')
+		&& str[*i] != '|' && str[*i] != '<' && str[*i] != '>')
 	{
 		if (s1)
 			s2 = extract_word(str, i, space);
@@ -57,9 +57,8 @@ char	*assemble_words(char *str, int *i, bool *space)
 		s1 = ft_strjoin_free(s1, s2);
 		free(s2);
 	}
-	return	(s1);
+	return (s1);
 }
-
 
 int	check_special_char(t_token **token, char *s, int *i)
 {

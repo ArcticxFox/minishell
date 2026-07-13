@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 16:52:35 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 18:57:36 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_cmd	*ft_new_commands(t_shell *shell, t_token **tokens)
 		return (NULL);
 	new_cmd->redir = find_redir(shell, *tokens);
 	new_cmd->args = get_args(shell, tokens);
-	if (!new_cmd->args)
+	if (!new_cmd->args || new_cmd->args[0][0] == '\0')
 		new_cmd->cmd = NULL;
 	else
 		new_cmd->cmd = new_cmd->args[0];

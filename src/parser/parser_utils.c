@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 20:20:33 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 16:33:45 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:07:01 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	count_words(char *arg)
 
 	i = 0;
 	n = 0;
-
 	while (arg[i])
 	{
 		if (arg[i] && !ft_is_whitespace(arg[i]))
@@ -64,6 +63,8 @@ int	count_words(char *arg)
 			while (arg[i] && !ft_is_whitespace(arg[i]))
 				++i;
 		}
+		else
+			++i;
 	}
 	return (n);
 }
@@ -110,7 +111,7 @@ bool	find_token_words(t_token **tokens)
 	return (true);
 }
 
-char **add_arg(char **tab, char *str)
+char	**add_arg(char **tab, char *str)
 {
 	int		i;
 	int		len;

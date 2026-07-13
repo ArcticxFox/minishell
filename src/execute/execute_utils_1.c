@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:43:20 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/10 13:45:50 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:05:14 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*ft_strjoin_free(char *s1, char const *s2)
 	char	*s3;
 	size_t	len1;
 	size_t	lenx;
-
 
 	len1 = ft_strlen(s1);
 	lenx = (len1 + ft_strlen(s2));

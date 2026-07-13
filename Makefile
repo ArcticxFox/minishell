@@ -5,11 +5,10 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/04/13 14:58:30 by ejones            #+#    #+#              #
-#    Updated: 2026/07/05 18:15:14 by ejones           ###   ########.fr        #
+#    Created: 2026/07/13 19:02:22 by ejones            #+#    #+#              #
+#    Updated: 2026/07/13 19:08:55 by ejones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 OBJ_DIR := obj
 SRC_DIR := src
@@ -44,7 +43,6 @@ SRC := \
 	parser/cmd_linked_lst.c \
 	parser/redir_parser.c \
 	parser/parser_utils.c \
-	parser/delete_linked_lists.c \
 	expander.c \
 	execute/execute.c \
 	execute/execute_utils_1.c \

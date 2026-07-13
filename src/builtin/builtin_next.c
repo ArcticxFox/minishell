@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 15:31:55 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:03:35 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	exec_cd(char **args, t_shell *shell)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_putchar_fd(' ', 2);
+		ft_putendl_fd(strerror(errno), 2);
 		return (1);
 	}
 	set_env_value(shell->env, "PWD=", getcwd(buffer, 4096));

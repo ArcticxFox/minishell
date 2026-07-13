@@ -21,6 +21,7 @@ int			is_numeric(char *str);
 int			is_overflowed(char *str);
 long long	ft_atoll(char *str);
 
+int			exec_exit(char **args, t_shell *shell);
 int			exec_cd(char **args, t_shell *shell);
 int			exec_export(char **args, t_shell *shell);
 int			exec_unset(char **args, t_shell *shell);

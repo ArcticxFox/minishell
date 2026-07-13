@@ -32,6 +32,7 @@ void	read_heredoc_lines(t_shell *shell, int fd, t_cmd *head, t_redir *redir);
 //execute_util_2.c
 char	*expand_heredoc(t_shell *shell, char *line);
 void	exit_status(t_pipe_state *state, t_shell *shell);
+void	wait_single_child(pid_t pid, t_shell *shell);
 
 void	free_heredoc(t_cmd *head, char **env, int fd);
 

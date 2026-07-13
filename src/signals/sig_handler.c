@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sig_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:14:06 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 19:13:22 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:42:54 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile sig_atomic_t	g_signal_received = 0;
-volatile int			g_heredoc_interrupt = 0;
+volatile int	g_heredoc_interrupt = 0;
 
 // close(STDIN_FILENO)
 // another way to interrupt readline
@@ -31,7 +30,7 @@ void	handle_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_signal_received = SIGINT;
+	g_heredoc_interrupt = SIGINT;
 }
 
 void	init_signals(void)

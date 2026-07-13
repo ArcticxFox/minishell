@@ -38,7 +38,6 @@ char	*extract_word(char *str, int *i, bool *space)
 	return (word);
 }
 
-
 t_token	*tmp_lexer(char *line, t_shell *shell)
 {
 	int		i;

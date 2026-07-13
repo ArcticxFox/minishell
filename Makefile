@@ -28,10 +28,12 @@ UTILS := libft/libft.a
 SRC := \
 	main.c \
 	lexer/token.c \
+	lexer/token_add.c \
 	lexer/token_utils.c \
 	lexer/token_utils2.c \
 	lexer/syntax_errors.c \
 	builtin/builtin.c \
+	builtin/builtin_exit.c \
 	builtin/builtin_utils.c \
 	builtin/builtin_next.c \
 	builtin/export_utils.c \
@@ -43,7 +45,10 @@ SRC := \
 	parser/cmd_linked_lst.c \
 	parser/redir_parser.c \
 	parser/parser_utils.c \
+	parser/parser_utils2.c \
+	parser/parser_utils3.c \
 	expander.c \
+	expander_str.c \
 	execute/execute.c \
 	execute/execute_utils_1.c \
 	execute/execute_util_2.c \

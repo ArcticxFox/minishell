@@ -32,10 +32,21 @@ void	ft_delete_front_redir(t_redir **stack);
 t_redir	*new_redir(t_shell *shell, t_token *tokens);
 
 // parser_utils.c
-char	**get_args(t_shell *shell, t_token **tokens);
+int		len_arg(char *str);
+char	*extract_expand_type(char *str, int *i);
+int		count_words(char *arg);
+char	**get_expand_with_no_quotes(char *str, int n);
+bool	find_token_words(t_token **tokens);
+
+// parser_utils2.c
+char	**add_arg(char **tab, char *str);
+void	append_split_words(char ***tab, int *n, char *str);
 char	*trim_quotes(char *str);
+char	**expand_token(t_shell *shell, t_token *token, char **tab,
+			int *current);
 
-
-char	**expand_token(t_shell *shell, t_token *token, char **tab, int *current);
+// parser_utils3.c
+char	**expand_arg(t_shell *shell, t_token **tokens);
+char	**get_args(t_shell *shell, t_token **tokens);
 
 #endif

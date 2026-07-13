@@ -98,7 +98,9 @@ void	execute_pipeline(t_cmd *list, t_shell *shell)
 	}
 	pipeline_fork_loop(list, &state, state.pids, shell);
 	close_all_pipes(state.pipes, state.n_cmds - 1);
+	signal(SIGINT, SIG_IGN);
 	exit_status(&state, shell);
+	init_signals();
 	free_pipes(state.pipes, state.n_cmds - 1);
 	free(state.pids);
 }
@@ -106,29 +108,21 @@ void	execute_pipeline(t_cmd *list, t_shell *shell)
 void	execute(t_cmd *cmd, t_shell *shell)
 {
 	pid_t	pid;
-	int		status;
 
-	status = 0;
 	if (cmd->next != NULL)
-		execute_pipeline(cmd, shell);
-	else
 	{
-		if (!cmd->cmd)
-			return ;
-		if (is_builtin(cmd->cmd))
-		{
-			execute_single_builtin(cmd, shell);
-			return ;
-		}
-		pid = fork();
-		if (pid == 0)
-			execute_child(cmd, STDIN_FILENO, STDOUT_FILENO, shell);
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
-		init_signals();
-		if (WIFEXITED(status))
-			shell->exit_value = WEXITSTATUS(status);
-		else
-			shell->exit_value = 128 + WTERMSIG(status);
+		execute_pipeline(cmd, shell);
+		return ;
 	}
+	if (!cmd->cmd)
+		return ;
+	if (is_builtin(cmd->cmd))
+	{
+		execute_single_builtin(cmd, shell);
+		return ;
+	}
+	pid = fork();
+	if (pid == 0)
+		execute_child(cmd, STDIN_FILENO, STDOUT_FILENO, shell);
+	wait_single_child(pid, shell);
 }

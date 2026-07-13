@@ -15,10 +15,10 @@
 int	check_line(char *line, t_token **tokens, t_shell *shell)
 {
 	line = readline("minishell> ");
-	if (g_signal_received)
+	if (g_heredoc_interrupt)
 	{
-		shell->exit_value = 128 + g_signal_received;
-		g_signal_received = 0;
+		shell->exit_value = 128 + g_heredoc_interrupt;
+		g_heredoc_interrupt = 0;
 	}
 	if (!line)
 	{

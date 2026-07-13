@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_util_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 15:58:49 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 16:53:30 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:41:33 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,23 @@ char	*expand_heredoc(t_shell *shell, char *line)
 		return (NULL);
 	free(line);
 	return (tmp);
+}
+
+void	wait_single_child(pid_t pid, t_shell *shell)
+{
+	int	status;
+
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	init_signals();
+	if (WIFEXITED(status))
+		shell->exit_value = WEXITSTATUS(status);
+	else
+	{
+		shell->exit_value = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGINT)
+			write(1, "\n", 1);
+	}
 }
 
 void	exit_status(t_pipe_state *state, t_shell *shell)
@@ -42,5 +59,9 @@ void	exit_status(t_pipe_state *state, t_shell *shell)
 	if (WIFEXITED(last_status))
 		shell->exit_value = WEXITSTATUS(last_status);
 	else if (WIFSIGNALED(last_status))
+	{
 		shell->exit_value = 128 + WTERMSIG(last_status);
+		if (WTERMSIG(last_status) == SIGINT)
+			write(1, "\n", 1);
+	}
 }

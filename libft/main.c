@@ -13,12 +13,12 @@
 #include "header/libft.h"
 #include "stdio.h"
 
-
-int main(void)
+int	main(void)
 {
-	char *str = "42";
+	char	*str;
+
+	str = "42";
 	printf("%d", ft_atoi(str));
-	//ft_printf("hello World %d", 42);
 	ft_printf("hello World %d", 42);
-	return 0;
+	return (0);
 }

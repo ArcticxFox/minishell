@@ -39,9 +39,12 @@
 # include "execute.h"
 # include "pipe.h"
 
-
 char	*expand(t_shell *shell, char *arg, t_tk_type type, int expand);
 char	*ft_strjoin_free(char *s1, char const *s2);
+
+char	*ft_env_name(t_shell *shell, char *str, int *i);
+int		ft_get_env_len(t_shell *shell, char *name);
+char	*expand_string(t_shell *shell, char *str, int len);
 
 void	read_old_history(t_shell *shell);
 void	append_hist(char **env, char *line);

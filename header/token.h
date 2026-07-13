@@ -19,6 +19,11 @@
 t_token	*lexer(char *line, t_shell *shell);
 int		check_special_char(t_token **token, char *s, int *i);
 char	*extract_word(char *str, int *i, bool *space);
+char	*assemble_words(char *str, int *i, bool *space);
+
+//token_add.c
+int		add_token_word(t_token **tokens, char *line, int *i, t_shell *shell);
+int		add_token(t_token **tokens, char *line, int *i, t_shell *shell);
 
 //token_util2.c
 int		ft_is_whitespace(char c);

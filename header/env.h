@@ -18,7 +18,6 @@ char	*get_env_value(char **env, char *name);
 void	set_env_value(char **env, char *name, char *new_val);
 int		len_name(char *args);
 
-//expander
-int	ft_get_lenght(t_shell *shell, char *str);
+int		ft_get_lenght(t_shell *shell, char *str);
 
 #endif

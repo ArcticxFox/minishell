@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 12:15:03 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 13:43:26 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	exec_exit(char **args, t_shell *shell)
 	if (!args[1])
 	{
 		shell->should_exit = 1;
-		return (0);
+		return (shell->exit_value);
 	}
 	if (!is_numeric(args[1]))
 	{
@@ -90,7 +90,8 @@ int	exec_exit(char **args, t_shell *shell)
 		return (2);
 	}
 	shell->should_exit = 1;
-	shell->exit_value = (int)(unsigned char)ft_atoll(args[1]);
+	if (!shell->current_cmd->next)
+		shell->exit_value = (int)(unsigned char)ft_atoll(args[1]);
 	return (shell->exit_value);
 }
 

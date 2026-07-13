@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 14:29:46 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:55:25 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	handle_heredoc(t_cmd *head, t_redir *redir, char **env, t_shell *shell)
 		g_heredoc_interrupt = 0;
 		signal(SIGINT, heredoc_sigint);
 		close(pipefd[0]);
-		read_heredoc_lines(pipefd[1], head, redir, env);
+		read_heredoc_lines(shell, pipefd[1], head, redir);
 		free_heredoc(head, env, pipefd[1]);
 		exit(0);
 	}
@@ -104,7 +104,7 @@ void	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 		dup2(saved_out, STDOUT_FILENO);
 		close(saved_in);
 		close(saved_out);
-		child_exit(shell, 1, cmd->args);
+		child_exit(shell, 1);
 	}
 	shell->exit_value = builtin(cmd->args, shell);
 	dup2(saved_in, STDIN_FILENO);

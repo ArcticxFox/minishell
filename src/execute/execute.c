@@ -6,13 +6,13 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 13:42:43 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:07:18 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-static void	do_execve(t_cmd *cmd, t_shell *shell, char **real_args)
+static void	do_execve(t_cmd *cmd, t_shell *shell)
 {
 	char	*path;
 	int		err;
@@ -22,20 +22,19 @@ static void	do_execve(t_cmd *cmd, t_shell *shell, char **real_args)
 	{
 		write(2, cmd->cmd, ft_strlen(cmd->cmd));
 		ft_putstr_fd(": command not found\n", 2);
-		child_exit(shell, 127, real_args);
+		child_exit(shell, 127);
 	}
-	execve(path, real_args, shell->env);
+	execve(path, cmd->args, shell->env);
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd->cmd, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(strerror(errno), 2);
 	free(path);
-	free_memory(real_args);
 	err = errno;
 	if (err == ENOENT)
-		child_exit(shell, 127, NULL);
+		child_exit(shell, 127);
 	else
-		child_exit(shell, 126, NULL);
+		child_exit(shell, 126);
 }
 
 void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
@@ -51,17 +50,17 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 		close(fd_out);
 	}
 	if (apply_redirs(cmd->redir) < 0)
-		child_exit(shell, 1, cmd->args);
+		child_exit(shell, 1);
 	if (is_builtin(cmd->cmd))
 	{
 		shell->current_cmd = cmd;
 		shell->exit_value = builtin(cmd->args, shell);
-		child_exit(shell, 0, cmd->args);
+		child_exit(shell, 0);
 	}
 	if (cmd->cmd)
-		do_execve(cmd, shell, cmd->args);
+		do_execve(cmd, shell);
 	else
-		child_exit(shell, 0, cmd->args);
+		child_exit(shell, 0);
 }
 
 static void	pipeline_fork_loop(t_cmd *list, t_pipe_state *state,

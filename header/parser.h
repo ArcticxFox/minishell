@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:14:55 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 12:17:49 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:51:11 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structs.h"
 //get_cmds.c
-t_cmd	*get_commands(t_token *tokens, char **env);
+t_cmd	*get_commands(t_shell *shell, t_token *tokens);
 
 //print_structs.c
 void	print_token(t_token *tokens);
@@ -29,14 +29,13 @@ void	ft_delete_cmd(t_cmd **stack);
 int		ft_isspecial(t_token *token);
 void	ft_add_back_redir(t_redir **lst, t_redir *new_cmd);
 void	ft_delete_front_redir(t_redir **stack);
-t_redir	*new_redir(t_token *tokens, char **env);
+t_redir	*new_redir(t_shell *shell, t_token *tokens);
 
 // parser_utils.c
-char	**get_args(t_token **tokens, char **env);
+char	**get_args(t_shell *shell, t_token **tokens);
 char	*trim_quotes(char *str);
 
 
-char	**expand_token(t_token *token, char **env, char **tab, int *current);
-
+char	**expand_token(t_shell *shell, t_token *token, char **tab, int *current);
 
 #endif

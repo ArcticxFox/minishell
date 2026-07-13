@@ -6,18 +6,17 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 13:03:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/08 16:12:16 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:05:23 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_exit(t_shell *shell, int status, char **real_args)
+void	child_exit(t_shell *shell, int status)
 {
 	while (shell->head)
 		ft_delete_cmd(&shell->head);
 	free_memory(shell->env);
-	free_memory(real_args);
 	shell->exit_value = status;
 	exit(shell->exit_value);
 }

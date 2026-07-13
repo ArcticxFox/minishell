@@ -6,17 +6,17 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 15:58:49 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 12:30:16 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:53:30 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_heredoc(char **env, char *line)
+char	*expand_heredoc(t_shell *shell, char *line)
 {
 	char	*tmp;
 
-	tmp = expand(env, line, TOKEN_WORD, 1);
+	tmp = expand(shell, line, TOKEN_WORD, 1);
 	if (!tmp)
 		return (NULL);
 	free(line);

@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 14:59:50 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/08 15:25:30 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:30:00 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # include "pipe.h"
 
 
-char	*expand(char **env, char *arg, t_tk_type type, int expand);
+char	*expand(t_shell *shell, char *arg, t_tk_type type, int expand);
 char	*ft_strjoin_free(char *s1, char const *s2);
 
 void	read_old_history(t_shell *shell);

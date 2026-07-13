@@ -6,19 +6,25 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:27:48 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 13:57:55 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:57:34 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-char	*ft_env_name(char *str, int *i)
+char	*ft_env_name(t_shell *shell, char *str, int *i)
 {
 	int		start;
 	char	*name;
 
 	start = *i;
 	name = NULL;
+	if (str[*i] == '?')
+	{
+		name = ft_itoa(shell->exit_value);
+		ft_printf("name = %s\n", name);
+		return (name);
+	}
 	if (ft_isdigit(str[*i]))
 	{
 		(*i)++;
@@ -35,7 +41,7 @@ char	*ft_env_name(char *str, int *i)
 	return (name);
 }
 
-int	ft_get_env_len(char **env, char *name)
+int	ft_get_env_len(t_shell *shell, char *name)
 {
 	int		len;
 	char	*value;
@@ -43,14 +49,19 @@ int	ft_get_env_len(char **env, char *name)
 	len = 0;
 	if (!name)
 		return (0);
-	value = get_env_value(env, name);
-	if (!value)
-		return (0);
+	if (!ft_isdigit(*name))
+	{
+		value = get_env_value(shell->env, name);
+		if (!value)
+			return (0);
+	}
+	else
+		value = name;
 	len = ft_strlen(value);
 	return (len);
 }
 
-int	ft_get_lenght(char **env, char *str)
+int	ft_get_lenght(t_shell *shell, char *str)
 {
 	int		i;
 	int		len;
@@ -61,11 +72,11 @@ int	ft_get_lenght(char **env, char *str)
 	name = NULL;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '$')
+		if (str[i] == '$' && str[i + 1] != '$')
 		{
 			++i;
-			name = ft_env_name(str, &i);
-			len += ft_get_env_len(env, name);
+			name = ft_env_name(shell, str, &i);
+			len += ft_get_env_len(shell, name);
 			free(name);
 		}
 		else
@@ -91,23 +102,26 @@ bool	check_for_dollar(char *str)
 	return (false);
 }
 
-int	ft_copy_into_env(char **env, char *str, char *new_str, int *i)
+int	ft_copy_into_env(t_shell *shell, char *str, char *new_str, int *i)
 {
 	int		n;
 	char	*env_v;
 	char	*name;
 
 	n = 0;
-	name = ft_env_name(str, i);
-	env_v = get_env_value(env, name);
-	free(name);
+	name = ft_env_name(shell, str, i);
+	if (!ft_isdigit(*name))
+		env_v = get_env_value(shell->env, name);
+	else
+		env_v = name;
 	if (!env_v)
 		return (0);
 	n = ft_strlcpy(new_str, env_v, ft_strlen(env_v) + 1);
+	free(name);
 	return (n);
 }
 
-char	*expand_string(char **env, char *str, int len)
+char	*expand_string(t_shell *shell, char *str, int len)
 {
 	int		i;
 	int		n;
@@ -120,10 +134,10 @@ char	*expand_string(char **env, char *str, int len)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '$')
+		if (str[i] == '$' && str[i + 1] != '$')
 		{
 			++i;
-			n += ft_copy_into_env(env, str, &new_str[n], &i);
+			n += ft_copy_into_env(shell, str, &new_str[n], &i);
 		}
 		else
 		{
@@ -136,7 +150,7 @@ char	*expand_string(char **env, char *str, int len)
 	return (new_str);
 }
 
-char	*expand(char **env, char *arg, t_tk_type type, int expand)
+char	*expand(t_shell *shell, char *arg, t_tk_type type, int expand)
 {
 	int		len;
 	char	*str;
@@ -145,8 +159,8 @@ char	*expand(char **env, char *arg, t_tk_type type, int expand)
 	(void)expand;
 	if (*arg != '\'' && check_for_dollar(arg) && type != TOKEN_HEREDOC)
 	{
-		len = ft_get_lenght(env, arg);
-		str = expand_string(env, arg, len);
+		len = ft_get_lenght(shell, arg);
+		str = expand_string(shell, arg, len);
 	}
 	else
 	{

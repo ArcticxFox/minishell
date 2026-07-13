@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/29 20:20:33 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 14:03:10 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:33:45 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ char	*trim_quotes(char *str)
 	return (tmp);
 }
 
-char	**expand_token(t_token *token, char **env, char **tab, int *current)
+char	**expand_token(t_shell *shell, t_token *token, char **tab, int *current)
 {
 	int		i;
 	char	*piece;
@@ -183,7 +183,7 @@ char	**expand_token(t_token *token, char **env, char **tab, int *current)
 	while (token->value[i])
 	{
 		piece = extract_expand_type(token->value, &i);
-		expanded = expand(env, piece, token->type, 1);
+		expanded = expand(shell, piece, token->type, 1);
 		if (piece && *piece != '\"' && *piece != '\'')
 			append_split_words(&tab, current, expanded);
 		else
@@ -196,7 +196,7 @@ char	**expand_token(t_token *token, char **env, char **tab, int *current)
 	return (tab);
 }
 
-char	**expand_arg(t_token **tokens, char **env)
+char	**expand_arg(t_shell *shell, t_token **tokens)
 {
 	int		current;
 	char	**tab;
@@ -212,7 +212,7 @@ char	**expand_arg(t_token **tokens, char **env)
 			free_memory(tab);
 			return (NULL);
 		}
-		tab = expand_token((*tokens), env, tab, &current);
+		tab = expand_token(shell, (*tokens), tab, &current);
 		(*tokens) = (*tokens)->next;
 		if ((*tokens) && (*tokens)->type == TOKEN_WORD)
 		{
@@ -223,12 +223,11 @@ char	**expand_arg(t_token **tokens, char **env)
 	return (tab);
 }
 
-char	**get_args(t_token **tokens, char **env)
+char	**get_args(t_shell *shell, t_token **tokens)
 {
 	char	**tab;
 
-	(void)env;
 	tab = NULL;
-	tab = expand_arg(tokens, env);
+	tab = expand_arg(shell, tokens);
 	return (tab);
 }

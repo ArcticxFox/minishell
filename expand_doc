@@ -1,0 +1,28 @@
+export test="cho                hello     _--_"
+
+expand == 2
+
+- echo $test
+	-> cho hello _--_	// need to split expand into arguments
+
+
+- e$test = echo hello _--_
+	-> hello _--_		// need to join first arg of split with string stuck to $var
+
+
+
+
+// Do Regular expand if $var is in double quotes
+
+expand == 1
+
+- echo "$test"
+	-> cho                hello     _--_
+- echo "$test hello world"
+	-> cho         heloo      _--_
+
+if there is a string stuck to $var need to join them.
+
+ls > $USER"$USER hello" if the expand turns into more than 1 argument 
+
+bash: $test: ambiguous redirect

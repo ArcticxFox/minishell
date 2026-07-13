@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 12:30:04 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:54:30 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	handle_file_redir(t_redir *redir)
 	return (0);
 }
 
-void	read_heredoc_lines(int fd, t_cmd *head, t_redir *redir, char **env)
+void	read_heredoc_lines(t_shell *shell, int fd, t_cmd *head, t_redir *redir)
 {
 	char	*line;
 
@@ -55,11 +55,11 @@ void	read_heredoc_lines(int fd, t_cmd *head, t_redir *redir, char **env)
 			break ;
 		}
 		if (redir->expand == true)
-			line = expand_heredoc(env, line);
+			line = expand_heredoc(shell, line);
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
-	free_heredoc(head, env, fd);
+	free_heredoc(head, shell->env, fd);
 	if (g_heredoc_interrupt)
 		exit(130);
 	exit(0);

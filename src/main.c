@@ -6,30 +6,30 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 15:25:21 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:56:44 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-int	check_line(char *line, t_token **tokens, t_shell shell)
+int	check_line(char *line, t_token **tokens, t_shell *shell)
 {
 	line = readline("minishell> ");
 	if (g_signal_received)
 	{
-		shell.exit_value = 128 + g_signal_received;
+		shell->exit_value = 128 + g_signal_received;
 		g_signal_received = 0;
 	}
 	if (!line)
 	{
-		free_memory(shell.env);
+		free_memory(shell->env);
 		rl_clear_history();
 		printf("exit\n");
-		exit(shell.exit_value);
+		exit(shell->exit_value);
 	}
 	if (line[0] != '\0')
 		add_history(line);
-	*tokens = lexer(line, &shell);
+	*tokens = lexer(line, shell);
 	if (!*tokens)
 	{
 		free(line);
@@ -38,25 +38,25 @@ int	check_line(char *line, t_token **tokens, t_shell shell)
 	return (0);
 }
 
-int	shell_execution(char *line, t_shell shell, t_token *tokens)
+int	shell_execution(char *line, t_shell *shell, t_token *tokens)
 {
 	t_cmd	*cmd;
 
-	shell.head = get_commands(tokens, shell.env);
+	shell->head = get_commands(shell, tokens);
 	while (tokens)
 		ft_delete_front_token(&tokens);
-	cmd = shell.head;
+	cmd = shell->head;
 	while (cmd
-		&& setup_heredocs(shell.head, cmd->redir, shell.env, &shell) == 0)
+		&& setup_heredocs(shell->head, cmd->redir, shell->env, shell) == 0)
 		cmd = cmd->next;
 	if (cmd)
 	{
-		ft_delete_cmd(&shell.head);
+		ft_delete_cmd(&shell->head);
 		free(line);
 		return (1);
 	}
-	execute(shell.head, &shell);
-	ft_delete_cmd(&shell.head);
+	execute(shell->head, shell);
+	ft_delete_cmd(&shell->head);
 	free(line);
 	return (0);
 }
@@ -69,16 +69,16 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	ft_bzero(&shell, sizeof(t_shell));
 	shell.env = copy_env(envp);
-	ft_bzero(&shell, 0);
 	tokens = NULL;
 	line = NULL;
 	init_signals();
 	while (1)
 	{
-		if (check_line(line, &tokens, shell))
+		if (check_line(line, &tokens, &shell))
 			continue ;
-		if (shell_execution(line, shell, tokens))
+		if (shell_execution(line, &shell, tokens))
 			continue ;
 		if (shell.should_exit == 1)
 		{
@@ -86,6 +86,7 @@ int	main(int ac, char **av, char **envp)
 			free_memory(shell.env);
 			break ;
 		}
+		printf("exit = %d\n", shell.exit_value);
 	}
 	return (shell.exit_value);
 }

@@ -6,13 +6,13 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 15:48:38 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 11:10:32 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 16:52:35 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redir	*find_redir(t_token *tokens, char **env)
+t_redir	*find_redir(t_shell *shell, t_token *tokens)
 {
 	t_token	*tmp;
 	t_redir	*redir;
@@ -23,7 +23,7 @@ t_redir	*find_redir(t_token *tokens, char **env)
 	{
 		if (ft_isspecial(tmp) == 2)
 		{
-			ft_add_back_redir(&redir, new_redir(tmp, env));
+			ft_add_back_redir(&redir, new_redir(shell, tmp));
 			tmp = tmp->next;
 		}
 		if (tmp)
@@ -32,15 +32,15 @@ t_redir	*find_redir(t_token *tokens, char **env)
 	return (redir);
 }
 
-t_cmd	*ft_new_commands(t_token **tokens, char **env)
+t_cmd	*ft_new_commands(t_shell *shell, t_token **tokens)
 {
 	t_cmd	*new_cmd;
 
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);
-	new_cmd->redir = find_redir(*tokens, env);
-	new_cmd->args = get_args(tokens, env);
+	new_cmd->redir = find_redir(shell, *tokens);
+	new_cmd->args = get_args(shell, tokens);
 	if (!new_cmd->args)
 		new_cmd->cmd = NULL;
 	else
@@ -49,7 +49,7 @@ t_cmd	*ft_new_commands(t_token **tokens, char **env)
 	return (new_cmd);
 }
 
-t_cmd	*get_commands(t_token *tokens, char **env)
+t_cmd	*get_commands(t_shell *shell, t_token *tokens)
 {
 	t_token	*tmp;
 	t_cmd	*new_node;
@@ -60,7 +60,7 @@ t_cmd	*get_commands(t_token *tokens, char **env)
 	new_node = NULL;
 	while (tmp)
 	{
-		new_node = ft_new_commands(&tmp, env);
+		new_node = ft_new_commands(shell, &tmp);
 		add_cmd(&head, new_node);
 		if (ft_isspecial(tmp))
 			while (tmp && tmp->type != TOKEN_PIPE)

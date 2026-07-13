@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 15:49:28 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 13:58:35 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 14:27:03 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_delete_cmd(t_cmd **stack)
 	t_cmd	*pstemp;
 
 	pstemp = NULL;
-	if (!stack)
+	if (!stack ||!*stack)
 		return ;
 	while (*stack)
 	{

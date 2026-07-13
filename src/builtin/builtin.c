@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 13:43:26 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 15:10:53 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,40 @@ int	exec_pwd(char **args, t_shell *shell)
 	return (shell->exit_value);
 }
 
+void	echo_write(char **args, int i)
+{
+	int	j;
+
+	j = i + 1;
+	write(1, args[i], ft_strlen(args[i]));
+	while (args[j] && is_n(args[j]))
+		j++;
+	if (args[j])
+		write(1, " ", 1);
+}
+
 int	exec_echo(char **args, t_shell *shell)
 {
-	(void)args;
-	(void)shell;
-	// int		no_newline;
+	int	i;
+	int	no_newline;
 
-	// (void)args;
-	// no_newline = 0;
-	// if (!tmp)
-	// 	return (1);
-	// while (tmp)
-	// {
-	// 	if (is_n(tmp->value))
-	// 		no_newline = 1;
-	// 	else if (!ft_strncmp(tmp->value, "$?", 3))
-	// 		ft_putnbr_fd(shell->exit_value, 1);
-	// 	else
-	// 		write(1, tmp->value, ft_strlen(tmp->value));
-	// 	if (tmp->next && tmp->espace == true && !is_n(tmp->value))
-	// 		write(1, " ", 1);
-	// 	tmp = tmp->next;
-	// }
-	// if (!no_newline)
-	// 	ft_printf("\n");
+	(void)shell;
+	i = 1;
+	no_newline = 0;
+	if (!*args)
+		return (1);
+	while (args[i])
+	{
+		if (!is_n(args[i]))
+		{
+			echo_write(args, i);
+		}
+		else
+			no_newline = 1;
+		++i;
+	}
+	if (!no_newline)
+		ft_printf("\n");
 	return (0);
 }
 

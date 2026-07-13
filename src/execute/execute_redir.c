@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 11:29:33 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 14:29:46 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 		child_exit(shell, 1, cmd->args);
 	}
 	shell->exit_value = builtin(cmd->args, shell);
-	free_memory(cmd->args);
 	dup2(saved_in, STDIN_FILENO);
 	dup2(saved_out, STDOUT_FILENO);
 	close(saved_in);

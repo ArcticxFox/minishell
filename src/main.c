@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/08 16:16:20 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 12:25:56 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(int ac, char **av, char **envp)
 			continue;
 		}
 		head = get_commands(tokens, shell.env);
+		print_commands(head);
 		shell.head = head;
 		while (tokens)
 			ft_delete_front_token(&tokens);
@@ -66,7 +67,7 @@ int	main(int ac, char **av, char **envp)
 			free(line);
 			continue ;
 		}
-		execute(head, &shell);
+		// execute(head, &shell);
 		ft_delete_cmd(&head);
 		free(line);
 		if (shell.should_exit == 1)

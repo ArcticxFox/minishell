@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/08 16:36:11 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 12:30:04 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ int	handle_file_redir(t_redir *redir)
 
 	fd = -1;
 	if (redir->type == TOKEN_REDIR_IN)
-		fd = open(redir->file, O_RDONLY);
+		fd = open(redir->file[0], O_RDONLY);
 	else if (redir->type == TOKEN_REDIR_OUT)
-		fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd = open(redir->file[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (redir->type == TOKEN_APPEND)
-		fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		fd = open(redir->file[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
 		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(redir->file, 2);
+		ft_putstr_fd(redir->file[0], 2);
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd(strerror(errno), 2);
 		return (-1);

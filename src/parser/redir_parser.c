@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 13:33:56 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/07 16:04:57 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 12:32:02 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,26 @@ t_redir	*ft_last_redir(t_redir *lst)
 t_redir	*new_redir(t_token *tokens, char **env)
 {
 	t_redir	*new_redir;
+	int		current;
 
+	current = 0;
 	if (!tokens || !tokens->next)
 		return (NULL);
 	new_redir = malloc(sizeof(t_redir) * 1);
 	if (!new_redir)
 		return (NULL);
 	new_redir->expand = false;
+	new_redir->file = ft_calloc(2, sizeof(char *));
+	new_redir->file[0] = ft_strdup("\0");
 	if (tokens->next->value)
-		new_redir->file = expand(env, tokens->next->value,
-				tokens->type, tokens->next->expand);
-	else
-		new_redir->file = NULL;
+		new_redir->file = expand_token(tokens->next, env, new_redir->file, &current);
 	new_redir->type = tokens->type;
+	new_redir->delimiter = NULL;
 	if (tokens->type == TOKEN_HEREDOC)
 	{
-		new_redir->delimiter = ft_strdup(new_redir->file);
+		new_redir->delimiter = ft_strdup(*new_redir->file);
 		new_redir->expand = tokens->next->expand;
 	}
-	else
-		new_redir->delimiter = NULL;
 	new_redir->heredoc_fd = -1;
 	new_redir->next = NULL;
 	return (new_redir);
@@ -95,7 +95,7 @@ void	ft_delete_front_redir(t_redir **stack)
 		*stack = pstemp->next;
 	if (pstemp->heredoc_fd >= 0)
 		close(pstemp->heredoc_fd);
-	free(pstemp->file);
+	free_memory(pstemp->file);
 	free(pstemp->delimiter);
 	free(pstemp);
 }

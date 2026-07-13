@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:14 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/08 15:11:33 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 11:22:55 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int			is_n(char *arg);
 int			export_add_append(char *arg, t_shell *shell);
 void		print_export_line(char **env);
 
-int			export_append(t_args **args, t_shell *shell);
-int			export_add(t_args **args, t_shell *shell, int len, bool equal);
-char		*new_env_var(t_args **args, int len, bool equal);
+// int			export_append(t_args **args, t_shell *shell);
+// int			export_add(t_args **args, t_shell *shell, int len, bool equal);
+// char		*new_env_var(t_args **args, int len, bool equal);
 
 #endif

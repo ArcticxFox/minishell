@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 17:51:09 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/13 12:15:03 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,28 @@ int	exec_pwd(char **args, t_shell *shell)
 
 int	exec_echo(char **args, t_shell *shell)
 {
-	t_args	*tmp;
-	int		no_newline;
-
 	(void)args;
-	tmp = shell->current_cmd->args->next;
-	no_newline = 0;
-	if (!tmp)
-		return (1);
-	while (tmp)
-	{
-		if (is_n(tmp->value))
-			no_newline = 1;
-		else if (!ft_strncmp(tmp->value, "$?", 3))
-			ft_putnbr_fd(shell->exit_value, 1);
-		else
-			write(1, tmp->value, ft_strlen(tmp->value));
-		if (tmp->next && tmp->espace == true && !is_n(tmp->value))
-			write(1, " ", 1);
-		tmp = tmp->next;
-	}
-	if (!no_newline)
-		ft_printf("\n");
+	(void)shell;
+	// int		no_newline;
+
+	// (void)args;
+	// no_newline = 0;
+	// if (!tmp)
+	// 	return (1);
+	// while (tmp)
+	// {
+	// 	if (is_n(tmp->value))
+	// 		no_newline = 1;
+	// 	else if (!ft_strncmp(tmp->value, "$?", 3))
+	// 		ft_putnbr_fd(shell->exit_value, 1);
+	// 	else
+	// 		write(1, tmp->value, ft_strlen(tmp->value));
+	// 	if (tmp->next && tmp->espace == true && !is_n(tmp->value))
+	// 		write(1, " ", 1);
+	// 	tmp = tmp->next;
+	// }
+	// if (!no_newline)
+	// 	ft_printf("\n");
 	return (0);
 }
 

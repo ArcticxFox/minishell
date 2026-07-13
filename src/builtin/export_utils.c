@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:16:39 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 19:56:24 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 12:16:19 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,57 +68,57 @@ void	print_export_line(char **env)
 	}
 }
 
-int	export_add_append(char *arg, t_shell *shell)
-{
-	char	**tmp;
-	int		i;
+// int	export_add_append(char *arg, t_shell *shell)
+// {
+// 	char	**tmp;
+// 	int		i;
 
-	i = 0;
-	while (shell->env[i])
-		i++;
-	tmp = malloc(sizeof(char *) * (i + 2));
-	if (!tmp)
-		return (0);
-	i = 0;
-	while (shell->env[i])
-	{
-		tmp[i] = shell->env[i];
-		i++;
-	}
-	tmp[i] = ft_strdup(arg);
-	if (!tmp[i])
-	{
-		free(tmp);
-		return (0);
-	}
-	tmp[i + 1] = NULL;
-	free(shell->env);
-	shell->env = tmp;
-	return (1);
-}
+// 	i = 0;
+// 	while (shell->env[i])
+// 		i++;
+// 	tmp = malloc(sizeof(char *) * (i + 2));
+// 	if (!tmp)
+// 		return (0);
+// 	i = 0;
+// 	while (shell->env[i])
+// 	{
+// 		tmp[i] = shell->env[i];
+// 		i++;
+// 	}
+// 	tmp[i] = ft_strdup(arg);
+// 	if (!tmp[i])
+// 	{
+// 		free(tmp);
+// 		return (0);
+// 	}
+// 	tmp[i + 1] = NULL;
+// 	free(shell->env);
+// 	shell->env = tmp;
+// 	return (1);
+// }
 
-int	export_add(t_args **args, t_shell *shell, int len, bool equal)
-{
-	char	**tmp;
-	int		i;
+// int	export_add(t_shell *shell, int len, bool equal)
+// {
+// 	char	**tmp;
+// 	int		i;
 
-	i = 0;
-	while (shell->env[i])
-		i++;
-	tmp = malloc(sizeof(char *) * (i + 2));
-	if (!tmp)
-		return (0);
-	i = -1;
-	while (shell->env[++i])
-		tmp[i] = shell->env[i];
-	tmp[i] = new_env_var(args, len, equal);
-	if (!tmp[i])
-	{
-		free(tmp);
-		return (0);
-	}
-	tmp[i + 1] = NULL;
-	free(shell->env);
-	shell->env = tmp;
-	return (1);
-}
+// 	i = 0;
+// 	while (shell->env[i])
+// 		i++;
+// 	tmp = malloc(sizeof(char *) * (i + 2));
+// 	if (!tmp)
+// 		return (0);
+// 	i = -1;
+// 	while (shell->env[++i])
+// 		tmp[i] = shell->env[i];
+// 	tmp[i] = new_env_var(len, equal);
+// 	if (!tmp[i])
+// 	{
+// 		free(tmp);
+// 		return (0);
+// 	}
+// 	tmp[i + 1] = NULL;
+// 	free(shell->env);
+// 	shell->env = tmp;
+// 	return (1);
+// }

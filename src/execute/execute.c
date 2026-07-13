@@ -6,48 +6,11 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/08 15:11:45 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 11:27:41 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
-int	nbr_args(t_args *lst)
-{
-	int	size;
-
-	size = 0;
-	if (lst != NULL)
-	{
-		size = 1;
-		size += nbr_args(lst->next);
-	}
-	return (size);
-}
-
-char	**get_args_for_execve(t_args *args)
-{
-	int		n;
-	int		i;
-	char	**real_args;
-
-	n = nbr_args(args);
-	i = 0;
-	real_args = malloc(sizeof(char *) * (n + 1));
-	while (i < n && args)
-	{
-		real_args[i] = ft_strdup(args->value);
-		if (!real_args[i])
-		{
-			free_memory(real_args);
-			return (NULL);
-		}
-		++i;
-		args = args->next;
-	}
-	real_args[i] = NULL;
-	return (real_args);
-}
 
 static void	do_execve(t_cmd *cmd, t_shell *shell, char **real_args)
 {
@@ -77,9 +40,6 @@ static void	do_execve(t_cmd *cmd, t_shell *shell, char **real_args)
 
 void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 {
-	char	**real_args;
-
-	real_args = get_args_for_execve(cmd->args);
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -91,17 +51,17 @@ void	execute_child(t_cmd *cmd, int fd_in, int fd_out, t_shell *shell)
 		close(fd_out);
 	}
 	if (apply_redirs(cmd->redir) < 0)
-		child_exit(shell, 1, real_args);
+		child_exit(shell, 1, cmd->args);
 	if (is_builtin(cmd->cmd))
 	{
 		shell->current_cmd = cmd;
-		shell->exit_value = builtin(real_args, shell);
-		child_exit(shell, 0, real_args);
+		shell->exit_value = builtin(cmd->args, shell);
+		child_exit(shell, 0, cmd->args);
 	}
 	if (cmd->cmd)
-		do_execve(cmd, shell, real_args);
+		do_execve(cmd, shell, cmd->args);
 	else
-		child_exit(shell, 0, real_args);
+		child_exit(shell, 0, cmd->args);
 }
 
 static void	pipeline_fork_loop(t_cmd *list, t_pipe_state *state,

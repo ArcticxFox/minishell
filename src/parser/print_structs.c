@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 15:37:27 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/07 20:02:34 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 12:48:27 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,23 @@ void	print_token(t_token *tokens)
 void	print_commands(t_cmd *cmd)
 {
 	t_redir	*redir;
-	t_args	*args;
+	int		i;
 
+	i = 0;
 	while (cmd)
 	{
 		redir = cmd->redir;
-		args = cmd->args;
 		ft_printf("cmd : %s\n", cmd->cmd);
 		ft_printf("args : ");
-		while (args)
+		while (cmd->args[i])
 		{
-			ft_printf("%s, ", args->value);
-			args = args->next;
+			ft_printf("%s, ",cmd->args[i]);
+			++i;
 		}
 		ft_printf("\n");
 		while (redir)
 		{
-			ft_printf("file:%s\ndelimiter:%s\n", redir->file, redir->delimiter);
+			ft_printf("file:%s\ndelimiter:%s\n", redir->file[0], redir->delimiter);
 			redir = redir->next;
 		}
 		ft_printf("\n");

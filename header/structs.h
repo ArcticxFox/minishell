@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 19:15:54 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/05 18:51:42 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 11:08:48 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,21 @@ typedef struct s_redir
 	int				heredoc_fd;
 	int				expand;
 	char			*delimiter;
-	char			*file;
+	char			**file;
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct s_args
-{
-	char			*value;
-	bool			espace;
-	struct s_args	*next;
-}	t_args;
+// typedef struct s_args
+// {
+// 	char			*value;
+// 	bool			espace;
+// 	struct s_args	*next;
+// }	t_args;
 
 typedef struct s_cmd
 {
 	char			*cmd;
-	t_args			*args;
+	char			**args;
 	t_redir			*redir;
 	struct s_cmd	*next;
 }	t_cmd;

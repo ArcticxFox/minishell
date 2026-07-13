@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 19:03:35 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 20:44:04 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	exec_cd(char **args, t_shell *shell)
 	char	buffer[4096];
 	char	*path;
 
+	if (args[2])
+	{
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		return (1);
+	}
 	if (!args[1])
 	{
 		path = get_env_value(shell->env, "HOME");
@@ -85,7 +90,12 @@ int	exec_env(char **args, t_shell *shell)
 	int	i;
 
 	i = 0;
-	(void)args;
+	if (args[1])
+	{
+		ft_printf("minishell: env: ");
+		ft_printf("Arguments and options aren't supportedn\n");
+		return (1);
+	}
 	while (shell->env[i])
 	{
 		if (ft_strchr(shell->env[i], '='))

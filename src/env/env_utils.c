@@ -6,13 +6,13 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 12:22:34 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/07 18:16:52 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 21:10:26 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-char	**hard_code_env(void)
+char	**hard_code_env(t_shell *shell)
 {
 	char	**env;
 	char	buffer[4096];
@@ -26,20 +26,19 @@ char	**hard_code_env(void)
 	name = NULL;
 	if (path)
 	{
-		ft_printf("%s\n", path);
 		name = ft_strjoin("PWD=", path);
-		set_env_value(env, name, NULL);
+		export_add(name, shell);
 		free(name);
 		name = ft_strjoin("OLDPWD=", path);
-		set_env_value(env, name, NULL);
+		export_add(name, shell);
+		export_add("TERM=xterm-256color", shell);
 	}
-	ft_printf("hello world\n", path);
 	env[2] = NULL;
 	free(name);
 	return (env);
 }
 
-char	**copy_env(char **envp)
+void	copy_env(char **envp, t_shell *shell)
 {
 	int		i;
 	char	**cpy;
@@ -47,24 +46,52 @@ char	**copy_env(char **envp)
 	i = 0;
 	if (!envp || !*envp)
 	{
-		cpy = hard_code_env();
-		return (cpy);
+		hard_code_env(shell);
+		return ;
 	}
 	while (envp[i])
 		i++;
 	cpy = ft_calloc(sizeof(char *), i + 1);
 	if (!cpy)
-		return (0);
+		return ;
 	i = 0;
 	while (envp[i])
 	{
 		cpy[i] = ft_strdup(envp[i]);
 		if (!cpy[i])
-			return (0);
+			return ;
 		i++;
 	}
-	return (cpy);
+	shell->env = cpy;
 }
+
+// char	**copy_env(char **envp)
+// {
+// 	int		i;
+// 	char	**cpy;
+
+// 	i = 0;
+// 	if (!envp || !*envp)
+// 	{
+// 		cpy = hard_code_env(shell);
+// 		return (cpy);
+// 	}
+// 	while (envp[i])
+// 		i++;
+// 	cpy = ft_calloc(sizeof(char *), i + 1);
+// 	if (!cpy)
+// 		return (0);
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		cpy[i] = ft_strdup(envp[i]);
+// 		if (!cpy[i])
+// 			return (0);
+// 		i++;
+// 	}
+// 	shell->env = cpy;
+// 	return (cpy);
+// }
 
 char	*get_env_value(char **env, char *name)
 {

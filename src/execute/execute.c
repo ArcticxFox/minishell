@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:16:57 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 18:54:33 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 20:29:10 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void	pipeline_fork_loop(t_cmd *list, t_pipe_state *state,
 	{
 		state->index = i;
 		pids[i] = fork();
+		signal(SIGINT, SIG_IGN);
 		if (pids[i] == 0)
 			child_pipe_setup(current, state, shell);
 		current = current->next;

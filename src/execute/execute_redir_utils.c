@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 16:54:30 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:18:13 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	read_heredoc_lines(t_shell *shell, int fd, t_cmd *head, t_redir *redir)
 {
 	char	*line;
 
-	while (!g_heredoc_interrupt)
+	while (!g_interrupt_signal)
 	{
 		line = readline("> ");
 		if (!line)
@@ -60,7 +60,7 @@ void	read_heredoc_lines(t_shell *shell, int fd, t_cmd *head, t_redir *redir)
 		free(line);
 	}
 	free_heredoc(head, shell->env, fd);
-	if (g_heredoc_interrupt)
+	if (g_interrupt_signal)
 		exit(130);
 	exit(0);
 }

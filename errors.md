@@ -16,18 +16,11 @@ args : echo       Hello      ,
 valgrind --show-leak-kinds=all --leak-check=full --num-callers=200 --track-origins=yes --track-fds=yes --trace-children=yes --suppressions=readline.supp ./minishell
 ```
 
-<< "" leak
 
-echo << "$USER"
-> sdfghjk
-> 
-cat | cat |cat | cat |cat | cat |cat | cat |cat | cat |cat | cat
 
 ----------------------------------------------------------
 
 
-check
-
-ls | ksvdm;ld  il faut check si la commande est bon avant de pipe
-
+minishell: cd: Makefile: No such file or directory
+bash: cd: Makefile: Not a directory
 

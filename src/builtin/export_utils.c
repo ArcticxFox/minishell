@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:16:39 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 15:54:43 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 20:56:08 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ int	export_add(char *arg, t_shell *shell)
 	int		i;
 
 	i = 0;
-	while (shell->env[i])
+	while (shell->env && shell->env[i])
 		i++;
 	tmp = malloc(sizeof(char *) * (i + 2));
 	if (!tmp)
 		return (0);
 	i = 0;
-	while (shell->env[i])
+	while (shell->env && shell->env[i])
 	{
 		tmp[i] = shell->env[i];
 		i++;

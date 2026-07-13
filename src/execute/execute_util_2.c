@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_util_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 15:58:49 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 19:41:33 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/07/13 20:13:09 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	exit_status(t_pipe_state *state, t_shell *shell)
 			last_status = status;
 		i++;
 	}
+	init_signals();
 	if (WIFEXITED(last_status))
 		shell->exit_value = WEXITSTATUS(last_status);
 	else if (WIFSIGNALED(last_status))

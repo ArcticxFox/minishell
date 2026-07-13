@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 15:10:53 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 20:45:40 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ int	exec_pwd(char **args, t_shell *shell)
 {
 	char	buffer[4096];
 
-	(void)args;
+	if (args[1])
+	{
+		ft_putendl_fd("minishell: pwd: options aren't supported", 2);
+		return (1);
+	}
 	if (getcwd(buffer, 4096) == NULL)
 	{
 		write (2, "Error\n", 6);

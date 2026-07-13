@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 16:55:25 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:18:13 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	handle_heredoc(t_cmd *head, t_redir *redir, char **env, t_shell *shell)
 	int		pipefd[2];
 	pid_t	pid;
 
-	g_heredoc_interrupt = 0;
+	g_interrupt_signal = 0;
 	if (pipe(pipefd) < 0)
 		return (-1);
 	signal(SIGINT, SIG_IGN);
@@ -66,7 +66,7 @@ int	handle_heredoc(t_cmd *head, t_redir *redir, char **env, t_shell *shell)
 	}
 	if (pid == 0)
 	{
-		g_heredoc_interrupt = 0;
+		g_interrupt_signal = 0;
 		signal(SIGINT, heredoc_sigint);
 		close(pipefd[0]);
 		read_heredoc_lines(shell, pipefd[1], head, redir);

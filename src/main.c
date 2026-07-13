@@ -6,33 +6,28 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 19:13:49 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/13 20:54:13 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-int	check_line(char *line, t_token **tokens, t_shell *shell)
+int	check_line(char **line, t_token **tokens, t_shell *shell)
 {
-	line = readline("minishell> ");
-	if (g_heredoc_interrupt)
-	{
-		shell->exit_value = 128 + g_heredoc_interrupt;
-		g_heredoc_interrupt = 0;
-	}
-	if (!line)
+	*line = readline("minishell> ");
+	if (!*line)
 	{
 		free_memory(shell->env);
 		rl_clear_history();
 		printf("exit\n");
 		exit(shell->exit_value);
 	}
-	if (line[0] != '\0')
-		add_history(line);
-	*tokens = lexer(line, shell);
+	if ((*line)[0] != '\0')
+		add_history(*line);
+	*tokens = lexer(*line, shell);
 	if (!*tokens)
 	{
-		free(line);
+		free(*line);
 		return (1);
 	}
 	return (0);
@@ -70,13 +65,13 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	ft_bzero(&shell, sizeof(t_shell));
-	shell.env = copy_env(envp);
+	copy_env(envp, &shell);
 	tokens = NULL;
 	line = NULL;
 	init_signals();
 	while (1)
 	{
-		if (check_line(line, &tokens, &shell))
+		if (check_line(&line, &tokens, &shell))
 			continue ;
 		if (shell_execution(line, &shell, tokens))
 			continue ;

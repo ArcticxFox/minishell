@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 14:16:28 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 15:53:39 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 10:40:06 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	export_process_arg(char *arg, t_shell *shell)
 		ft_putstr_fd("minishell: export: `", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
-		return (0);
+		return (1);
 	}
 	if (arg[len] == '+')
 		return (export_append(arg, shell));
@@ -75,7 +75,7 @@ static int	export_process_arg(char *arg, t_shell *shell)
 	}
 	else if (!is_in_env(shell->env, arg, len))
 		export_add(arg, shell);
-	return (1);
+	return (0);
 }
 
 int	exec_export(char **args, t_shell *shell)

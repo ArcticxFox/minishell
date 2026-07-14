@@ -3,20 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_next.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
+/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 20:44:04 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 10:28:35 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_cd(char **args, t_shell *shell)
+int	check_error(char **args, char *path, t_shell *shell)
 {
-	char	buffer[4096];
-	char	*path;
-
 	if (args[2])
 	{
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
@@ -31,6 +28,17 @@ int	exec_cd(char **args, t_shell *shell)
 			return (1);
 		}
 	}
+	return (0);
+}
+
+int	exec_cd(char **args, t_shell *shell)
+{
+	char	buffer[4096];
+	char	*path;
+
+	path = NULL;
+	if (check_error(args, path, shell))
+		return (1);
 	else
 		path = args[1];
 	set_env_value(shell->env, "OLDPWD=", getcwd(buffer, 4096));

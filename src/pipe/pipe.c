@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 14:59:55 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/14 13:38:27 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 15:54:20 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	child_pipe_setup(t_cmd *cmd, t_pipe_state *state, t_shell *shell)
 	int	fd_in;
 	int	fd_out;
 
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	if (state->index == 0)
 		fd_in = STDIN_FILENO;
 	else

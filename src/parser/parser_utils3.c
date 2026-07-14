@@ -6,11 +6,20 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 19:07:01 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/14 15:15:32 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 15:48:09 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	loop_exit(int current, char **tab)
+{
+	if (current > 0)
+	{
+		free(tab[current]);
+		tab[current] = NULL;
+	}
+}
 
 char	**expand_arg(t_shell *shell, t_token **tokens)
 {
@@ -25,11 +34,7 @@ char	**expand_arg(t_shell *shell, t_token **tokens)
 	{
 		if (!find_token_words(tokens))
 		{
-			if (current > 0)
-			{
-				free(tab[current]);
-				tab[current] = NULL;
-			}
+			loop_exit(current, tab);
 			return (tab);
 		}
 		tab = expand_token(shell, (*tokens), tab, &current);

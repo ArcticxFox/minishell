@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:14:06 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 20:16:25 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 17:01:26 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	heredoc_sigint(int sig)
 void	handle_sigint(int sig)
 {
 	(void)sig;
+	if (rl_line_buffer && *rl_line_buffer)
+		add_history(rl_line_buffer);
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -39,7 +41,7 @@ void	init_signals(void)
 
 	sa.sa_handler = handle_sigint;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
+	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }

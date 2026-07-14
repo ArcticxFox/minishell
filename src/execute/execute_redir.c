@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/14 14:04:08 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 16:52:25 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,10 @@ void	execute_single_builtin(t_cmd *cmd, t_shell *shell)
 	dup2(saved_out, STDOUT_FILENO);
 	close(saved_in);
 	close(saved_out);
+	if (shell->exit_value == 2 && !ft_strncmp("exit", cmd->args[0], 5))
+	{
+		ft_delete_cmd(&shell->head);
+		free_memory(shell->env);
+		exit(shell->exit_value);
+	}
 }

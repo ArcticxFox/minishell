@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 19:07:01 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/14 14:00:00 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 16:48:57 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	exec_exit(char **args, t_shell *shell)
 	if (!is_numeric(args[1]))
 	{
 		ft_putstr_fd("exit: numeric argument required\n", 2);
-		exit(2);
+		return (2);
 	}
 	if (args[2])
 	{

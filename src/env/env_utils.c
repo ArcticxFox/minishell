@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 12:22:34 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 21:10:26 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 12:58:36 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,34 +65,6 @@ void	copy_env(char **envp, t_shell *shell)
 	shell->env = cpy;
 }
 
-// char	**copy_env(char **envp)
-// {
-// 	int		i;
-// 	char	**cpy;
-
-// 	i = 0;
-// 	if (!envp || !*envp)
-// 	{
-// 		cpy = hard_code_env(shell);
-// 		return (cpy);
-// 	}
-// 	while (envp[i])
-// 		i++;
-// 	cpy = ft_calloc(sizeof(char *), i + 1);
-// 	if (!cpy)
-// 		return (0);
-// 	i = 0;
-// 	while (envp[i])
-// 	{
-// 		cpy[i] = ft_strdup(envp[i]);
-// 		if (!cpy[i])
-// 			return (0);
-// 		i++;
-// 	}
-// 	shell->env = cpy;
-// 	return (cpy);
-// }
-
 char	*get_env_value(char **env, char *name)
 {
 	int	i;
@@ -118,7 +90,7 @@ void	set_env_value(char **env, char *name, char *new_val)
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], name, len_name(name) + 1))
+		if (!ft_strncmp(env[i], name, len_name(name)))
 		{
 			free(env[i]);
 			if (new_val)

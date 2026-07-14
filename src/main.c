@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:18:05 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 20:54:13 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 13:42:41 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	shell_execution(char *line, t_shell *shell, t_token *tokens)
 	t_cmd	*cmd;
 
 	shell->head = get_commands(shell, tokens);
+	print_commands(shell->head);
 	while (tokens)
 		ft_delete_front_token(&tokens);
 	cmd = shell->head;

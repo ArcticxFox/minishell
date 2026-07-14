@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 15:58:49 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 20:13:09 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 13:35:34 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*expand_heredoc(t_shell *shell, char *line)
 {
 	char	*tmp;
 
-	tmp = expand(shell, line, TOKEN_WORD, 1);
+	tmp = expand(shell, line, TOKEN_HEREDOC, 1);
 	if (!tmp)
 		return (NULL);
 	free(line);

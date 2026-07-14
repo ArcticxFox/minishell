@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_next.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 11:57:17 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/14 10:28:35 by ldubau           ###   ########.fr       */
+/*   Updated: 2026/07/14 14:49:35 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_error(char **args, char *path, t_shell *shell)
+int	check_error(char **args, char **path, t_shell *shell)
 {
-	if (args[2])
+	if (args[1] && args[2])
 	{
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
 		return (1);
 	}
 	if (!args[1])
 	{
-		path = get_env_value(shell->env, "HOME");
-		if (!path)
+		*path = get_env_value(shell->env, "HOME");
+		if (!*path)
 		{
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 			return (1);
@@ -37,9 +37,9 @@ int	exec_cd(char **args, t_shell *shell)
 	char	*path;
 
 	path = NULL;
-	if (check_error(args, path, shell))
+	if (check_error(args, &path, shell))
 		return (1);
-	else
+	if (args[1])
 		path = args[1];
 	set_env_value(shell->env, "OLDPWD=", getcwd(buffer, 4096));
 	if (chdir(path) == -1)

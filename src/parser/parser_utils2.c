@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 19:07:01 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 19:07:01 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 15:24:12 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	append_split_words(char ***tab, int *n, char *str)
 	if (words[0])
 		(*tab)[*n] = ft_strjoin_free((*tab)[*n], words[0]);
 	i = 1;
-	while (words[i])
+	while (words[i] && words[i][0] != '\0')
 	{
 		*tab = add_arg(*tab, words[i]);
 		++(*n);

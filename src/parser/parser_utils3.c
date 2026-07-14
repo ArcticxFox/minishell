@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 19:07:01 by ejones            #+#    #+#             */
-/*   Updated: 2026/07/13 19:07:01 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 15:15:32 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,20 @@ char	**expand_arg(t_shell *shell, t_token **tokens)
 	tab = NULL;
 	tab = ft_calloc(2, sizeof(char *));
 	tab[0] = ft_strdup("\0");
-	while (*tokens && (*tokens)->type == TOKEN_WORD)
+	while (*tokens && (*tokens)->type != TOKEN_PIPE)
 	{
 		if (!find_token_words(tokens))
 		{
-			free_memory(tab);
-			return (NULL);
+			if (current > 0)
+			{
+				free(tab[current]);
+				tab[current] = NULL;
+			}
+			return (tab);
 		}
 		tab = expand_token(shell, (*tokens), tab, &current);
 		(*tokens) = (*tokens)->next;
-		if ((*tokens) && (*tokens)->type == TOKEN_WORD)
+		if ((*tokens) && (*tokens)->type != TOKEN_PIPE)
 		{
 			tab = add_arg(tab, ft_strdup(""));
 			current++;

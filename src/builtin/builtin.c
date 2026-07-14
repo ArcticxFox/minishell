@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:12:25 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 20:45:40 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 15:27:52 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	exec_echo(char **args, t_shell *shell)
 	no_newline = 0;
 	if (!*args)
 		return (1);
-	while (args[i])
+	while (args[i] && args[i][0] != '\0')
 	{
 		if (!is_n(args[i]))
 		{

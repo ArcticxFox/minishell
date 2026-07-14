@@ -6,7 +6,7 @@
 /*   By: ejones <ejones.42angouleme@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/05 00:00:00 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/07/13 19:18:13 by ejones           ###   ########.fr       */
+/*   Updated: 2026/07/14 14:10:47 by ejones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ int	handle_file_redir(t_redir *redir)
 	close(fd);
 	return (0);
 }
+void	print_here_doc_warning(char *delimiter)
+{
+	ft_putstr_fd("minishell:  warning: here-documentn ", 2);
+	ft_putstr_fd("delimited by end-of-file (wanted `", 2);
+	write(2, delimiter, ft_strlen(delimiter));
+	ft_putendl_fd("')", 2);
+}
 
 void	read_heredoc_lines(t_shell *shell, int fd, t_cmd *head, t_redir *redir)
 {
@@ -59,6 +66,8 @@ void	read_heredoc_lines(t_shell *shell, int fd, t_cmd *head, t_redir *redir)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+	if (!line)
+		print_here_doc_warning(redir->delimiter);
 	free_heredoc(head, shell->env, fd);
 	if (g_interrupt_signal)
 		exit(130);

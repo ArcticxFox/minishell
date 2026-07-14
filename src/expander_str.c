@@ -74,7 +74,10 @@ int	ft_copy_into_env(t_shell *shell, char *str, char *new_str, int *i)
 	else
 		env_v = name;
 	if (!env_v)
+	{
+		free(name);
 		return (0);
+	}
 	n = ft_strlcpy(new_str, env_v, ft_strlen(env_v) + 1);
 	free(name);
 	return (n);

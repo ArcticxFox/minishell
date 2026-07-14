@@ -44,8 +44,12 @@ void	append_split_words(char ***tab, int *n, char *str)
 	words = get_expand_with_no_quotes(str, count_words(str));
 	if (!words)
 		return ;
-	if (words[0])
-		(*tab)[*n] = ft_strjoin_free((*tab)[*n], words[0]);
+	if (!words[0])
+	{
+		free(words);
+		return ;
+	}
+	(*tab)[*n] = ft_strjoin_free((*tab)[*n], words[0]);
 	i = 1;
 	while (words[i] && words[i][0] != '\0')
 	{
